@@ -73,11 +73,7 @@
       "node_modules",
       "src"
     ],
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
+    "moduleFileExtensions": ["js", "json", "ts"],
     "roots": [
       "<rootDir>/src",
       "<rootDir>/test"
