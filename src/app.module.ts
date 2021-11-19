@@ -1,5 +1,3 @@
-import { AppController } from '@/app.controller';
-import { AppService } from '@/app.service';
 import config from '@/config/app.config';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
@@ -15,7 +13,5 @@ import { GraphQLModule } from '@nestjs/graphql';
       playground: true,
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
