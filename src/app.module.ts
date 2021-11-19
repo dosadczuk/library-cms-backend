@@ -1,7 +1,9 @@
 import config from '@/config/app.config';
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import * as path from 'path';
 
 @Module({
   imports: [
@@ -10,8 +12,18 @@ import { GraphQLModule } from '@nestjs/graphql';
       load: [config],
     }),
     GraphQLModule.forRoot({
+      autoSchemaFile: path.join(process.cwd(), 'src/app.schema.gql'),
+      sortSchema: true,
       playground: true,
     }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory(service: ConfigService) {
+        return service.get('database');
+      },
+      inject: [ConfigService],
+    }),
   ],
+  providers: [],
 })
 export class AppModule {}
