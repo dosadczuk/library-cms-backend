@@ -1,20 +1,14 @@
 import config from '@/config/app.config';
+import { BooksModule } from '@/modules/books/books.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import * as path from 'path';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       load: [config],
-    }),
-    GraphQLModule.forRoot({
-      autoSchemaFile: path.join(process.cwd(), 'src/app.schema.gql'),
-      sortSchema: true,
-      playground: true,
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -23,6 +17,7 @@ import * as path from 'path';
       },
       inject: [ConfigService],
     }),
+    BooksModule,
   ],
   providers: [],
 })

@@ -1,8 +1,8 @@
 {
-  "name": "nest-typescript-starter",
+  "name": "library-backend",
   "private": true,
   "version": "1.0.0",
-  "description": "Nest TypeScript starter repository",
+  "description": "System do wspomagania pracy biblioteki",
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",

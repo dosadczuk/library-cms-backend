@@ -14,7 +14,6 @@ input CreateBookInput {
 
 type Mutation {
   createBook(createBookInput: CreateBookInput!): Book!
-  register: User!
   removeBook(id: Int!): Book!
   updateBook(updateBookInput: UpdateBookInput!): Book!
 }
@@ -28,9 +27,4 @@ input UpdateBookInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!
-}
-
-type User {
-  """Example field (placeholder)"""
-  exampleField: Int!
 }
