@@ -1,3 +1,4 @@
+import { database } from '@/config/db.config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
@@ -9,13 +10,4 @@ type Configuration = {
   database: TypeOrmModuleOptions;
 };
 
-export default (): Configuration => ({
-  database: {
-    type: process.env.DB_TYPE,
-    host: process.env.DB_HOST,
-    database: process.env.DB_NAME,
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    migrations: ['database/migrations'],
-  },
-});
+export default (): Configuration => ({ database });

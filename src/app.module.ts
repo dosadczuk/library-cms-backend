@@ -1,4 +1,4 @@
-import config from '@/config/app.config';
+import Config from '@/config/app.config';
 import { BooksModule } from '@/modules/books/books.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -8,7 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [config],
+      load: [Config],
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
