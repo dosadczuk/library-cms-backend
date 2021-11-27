@@ -8,11 +8,15 @@ import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
   },
 })
 export class Tag {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({
+    comment: 'Identyfikator rekordu',
+    name: 'id',
+  })
   id: number;
 
   @Column({
     comment: 'Wartość',
+    name: 'value',
     type: 'varchar',
     length: 100,
     nullable: false,

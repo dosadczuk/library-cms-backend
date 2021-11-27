@@ -15,11 +15,15 @@ import {
   },
 })
 export class Publisher {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({
+    comment: 'Identyfikator rekordu',
+    name: 'id',
+  })
   id: number;
 
   @Column({
     comment: 'Nazwa',
+    name: 'name',
     type: 'varchar',
     length: 250,
     nullable: false,
@@ -33,12 +37,14 @@ export class Publisher {
 
   @CreateDateColumn({
     comment: 'Moment utworzenia rekordu',
+    name: 'created_at',
     nullable: false,
   })
   createdAt: Date;
 
   @UpdateDateColumn({
     comment: 'Moment modyfikacji rekordu',
+    name: 'modified_at',
     nullable: true,
   })
   modifiedAt?: Date;

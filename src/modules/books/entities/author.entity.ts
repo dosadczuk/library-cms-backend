@@ -17,11 +17,13 @@ import {
 export class Author {
   @PrimaryGeneratedColumn({
     comment: 'Identyfikator rekordu',
+    name: 'id',
   })
   id: number;
 
   @Column({
     comment: 'Imię',
+    name: 'first_name',
     type: 'varchar',
     length: 50,
     nullable: false,
@@ -30,6 +32,7 @@ export class Author {
 
   @Column({
     comment: 'Nazwisko',
+    name: 'last_name',
     type: 'varchar',
     length: 50,
     nullable: false,
@@ -43,12 +46,14 @@ export class Author {
 
   @CreateDateColumn({
     comment: 'Moment utworzenia rekordu',
+    name: 'created_at',
     nullable: false,
   })
   createdAt: Date;
 
   @UpdateDateColumn({
     comment: 'Moment modyfikacji rekordu',
+    name: 'modified_at',
     nullable: true,
   })
   modifiedAt?: Date;

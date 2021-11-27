@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -15,11 +16,15 @@ import {
   },
 })
 export class Borrow {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({
+    comment: 'Identyfikator rekordu',
+    name: 'id',
+  })
   id: number;
 
   @Column({
     comment: 'Data od',
+    name: 'date_from',
     type: 'date',
     nullable: false,
   })
@@ -27,6 +32,7 @@ export class Borrow {
 
   @Column({
     comment: 'Data do',
+    name: 'date_to',
     type: 'date',
     nullable: true,
   })
@@ -35,16 +41,22 @@ export class Borrow {
   @ManyToOne(() => Copy, (copy) => copy.borrows, {
     nullable: false,
   })
+  @JoinColumn({
+    name: 'copy_id',
+    referencedColumnName: 'id',
+  })
   copy: Copy;
 
   @CreateDateColumn({
     comment: 'Moment utworzenia rekordu',
+    name: 'created_at',
     nullable: false,
   })
   createdAt: Date;
 
   @UpdateDateColumn({
     comment: 'Moment modyfikacji rekordu',
+    name: 'modified_at',
     nullable: true,
   })
   modifiedAt?: Date;

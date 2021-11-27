@@ -9,6 +9,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -33,11 +34,13 @@ export enum BookType {
 export class Book {
   @PrimaryGeneratedColumn({
     comment: 'Identyfikator rekordu',
+    name: 'id',
   })
   id: number;
 
   @Column({
     comment: 'ISBN',
+    name: 'isbn',
     type: 'varchar',
     length: 13,
     unique: true,
@@ -47,6 +50,7 @@ export class Book {
 
   @Column({
     comment: 'Tytuł',
+    name: 'title',
     type: 'varchar',
     length: 255,
     nullable: false,
@@ -55,6 +59,7 @@ export class Book {
 
   @Column({
     comment: 'Data wydania',
+    name: 'issue_date',
     type: 'date',
     nullable: false,
   })
@@ -64,17 +69,32 @@ export class Book {
     cascade: ['insert'],
     nullable: false,
   })
+  @JoinColumn({
+    name: 'publisher_id',
+    referencedColumnName: 'id',
+  })
   publisher: Publisher;
 
   @ManyToMany(() => Author, {
     cascade: ['insert'],
     nullable: false,
   })
-  @JoinTable({ name: 'books_authors' })
+  @JoinTable({
+    name: 'books_authors',
+    joinColumn: {
+      name: 'book_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'author_id',
+      referencedColumnName: 'id',
+    },
+  })
   authors: Author[];
 
   @Column({
     comment: 'Rodzaj',
+    name: 'type',
     type: 'enum',
     enum: BookType,
   })
@@ -84,30 +104,50 @@ export class Book {
     cascade: ['insert'],
     nullable: false,
   })
+  @JoinColumn({
+    name: 'genre_id',
+    referencedColumnName: 'id',
+  })
   genre: Genre;
 
   @ManyToOne(() => Language, (language) => language.books, {
     cascade: ['insert'],
     nullable: false,
   })
+  @JoinColumn({
+    name: 'language_id',
+    referencedColumnName: 'id',
+  })
   language: Language;
 
   @Column({
     comment: 'Liczba stron',
+    name: 'pages',
     type: 'int',
     nullable: false,
   })
-  pagesCount: number;
+  pages: number;
 
   @ManyToMany(() => Tag, {
     cascade: ['insert'],
     nullable: false,
   })
-  @JoinTable({ name: 'books_tags' })
+  @JoinTable({
+    name: 'books_tags',
+    joinColumn: {
+      name: 'book_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'tag_id',
+      referencedColumnName: 'id',
+    },
+  })
   tags: Tag[];
 
   @Column({
     comment: 'Szczegółowe informacje',
+    name: 'details',
     type: 'jsonb',
     nullable: false,
   })
@@ -125,12 +165,14 @@ export class Book {
 
   @CreateDateColumn({
     comment: 'Moment utworzenia rekordu',
+    name: 'created_at',
     nullable: false,
   })
   createdAt: Date;
 
   @UpdateDateColumn({
     comment: 'Moment modyfikacji rekordu',
+    name: 'modified_at',
     nullable: true,
   })
   modifiedAt?: Date;

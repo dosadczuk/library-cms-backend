@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -17,11 +18,15 @@ import {
   },
 })
 export class Copy {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({
+    comment: 'Identyfikator rekordu',
+    name: 'id',
+  })
   id: number;
 
   @Column({
     comment: 'Numer',
+    name: 'number',
     type: 'uuid',
     nullable: false,
   })
@@ -29,6 +34,10 @@ export class Copy {
 
   @ManyToOne(() => Book, (book) => book.copies, {
     nullable: false,
+  })
+  @JoinColumn({
+    name: 'book_id',
+    referencedColumnName: 'id',
   })
   book: Book;
 
@@ -39,12 +48,14 @@ export class Copy {
 
   @CreateDateColumn({
     comment: 'Moment utworzenia rekordu',
+    name: 'created_at',
     nullable: false,
   })
   createdAt: Date;
 
   @UpdateDateColumn({
     comment: 'Moment modyfikacji rekordu',
+    name: 'modified_at',
     nullable: true,
   })
   modifiedAt: Date;

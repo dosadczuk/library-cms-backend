@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -14,11 +15,15 @@ import {
   },
 })
 export class Rating {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({
+    comment: 'Identyfikator rekordu',
+    name: 'id',
+  })
   id: number;
 
   @Column({
     comment: 'Wartość',
+    name: 'value',
     type: 'int',
     nullable: false,
   })
@@ -26,6 +31,7 @@ export class Rating {
 
   @Column({
     comment: 'Komentarz',
+    name: 'comment',
     type: 'text',
     nullable: false,
   })
@@ -34,10 +40,15 @@ export class Rating {
   @ManyToOne(() => Book, (book) => book.ratings, {
     nullable: false,
   })
+  @JoinColumn({
+    name: 'book_id',
+    referencedColumnName: 'id',
+  })
   book: Book;
 
   @CreateDateColumn({
     comment: 'Moment utworzenia rekordu',
+    name: 'created_at',
     nullable: false,
   })
   createdAt: Date;

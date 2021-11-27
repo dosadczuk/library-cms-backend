@@ -1,4 +1,4 @@
-import { FindBooksDto } from '@/modules/books/dto/find-books.dto';
+import { BooksFilter } from '@/modules/books/filters/books.filter';
 import {
   Body,
   Controller,
@@ -21,8 +21,8 @@ export class BooksController {
   }
 
   @Get()
-  findAll(@Query() findBooksDto: FindBooksDto) {
-    return this.booksService.findAll(findBooksDto);
+  findAll(@Query() filter: BooksFilter) {
+    return this.booksService.findAll(filter);
   }
 
   @Get(':id')
