@@ -5,7 +5,6 @@ import { Language } from '@/modules/books/entities/language.entity';
 import { Publisher } from '@/modules/books/entities/publisher.entity';
 import { Rating } from '@/modules/books/entities/rating.entity';
 import { Tag } from '@/modules/books/entities/tag.entity';
-import { Type } from '@/modules/books/entities/type.entity';
 import {
   Column,
   CreateDateColumn,
@@ -17,6 +16,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+
+export type BookType = 'book' | 'magazine' | 'article' | 'thesis';
 
 @Entity({
   name: 'books',
@@ -55,27 +56,33 @@ export class Book {
   issueDate: Date;
 
   @ManyToOne(() => Publisher, (publisher) => publisher.books, {
+    cascade: ['insert'],
     nullable: false,
   })
   publisher: Publisher;
 
   @ManyToMany(() => Author, {
+    cascade: ['insert'],
     nullable: false,
   })
   @JoinTable({ name: 'books_authors' })
   authors: Author[];
 
-  @ManyToOne(() => Type, (type) => type.books, {
-    nullable: false,
+  @Column({
+    comment: 'Rodzaj',
+    type: 'enum',
+    enum: ['book', 'magazine', 'article', 'thesis'],
   })
-  type: Type;
+  type: BookType;
 
   @ManyToOne(() => Genre, (genre) => genre.books, {
+    cascade: ['insert'],
     nullable: false,
   })
   genre: Genre;
 
   @ManyToOne(() => Language, (language) => language.books, {
+    cascade: ['insert'],
     nullable: false,
   })
   language: Language;
@@ -88,6 +95,7 @@ export class Book {
   pagesCount: number;
 
   @ManyToMany(() => Tag, {
+    cascade: ['insert'],
     nullable: false,
   })
   @JoinTable({ name: 'books_tags' })
@@ -120,5 +128,5 @@ export class Book {
     comment: 'Moment modyfikacji rekordu',
     nullable: true,
   })
-  modifiedAt: Date;
+  modifiedAt?: Date;
 }

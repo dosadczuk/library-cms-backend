@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class InitBooks1638007613121 implements MigrationInterface {
-  name = 'InitBooks1638007613121';
+export class InitBooks1638013352347 implements MigrationInterface {
+  name = 'InitBooks1638013352347';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -26,10 +26,10 @@ export class InitBooks1638007613121 implements MigrationInterface {
       `CREATE TABLE "tags" ("id" SERIAL NOT NULL, "value" character varying(100) NOT NULL, CONSTRAINT "PK_e7dc17249a1148a1970748eda99" PRIMARY KEY ("id")); COMMENT ON COLUMN "tags"."value" IS 'Wartość'`,
     );
     await queryRunner.query(
-      `CREATE TABLE "types" ("id" SERIAL NOT NULL, "value" character varying(100) NOT NULL, CONSTRAINT "PK_33b81de5358589c738907c3559b" PRIMARY KEY ("id")); COMMENT ON COLUMN "types"."value" IS 'Wartość'`,
+      `CREATE TYPE "public"."books_type_enum" AS ENUM('book', 'magazine', 'article', 'thesis')`,
     );
     await queryRunner.query(
-      `CREATE TABLE "books" ("id" SERIAL NOT NULL, "isbn" character varying(13) NOT NULL, "title" character varying(255) NOT NULL, "issueDate" date NOT NULL, "pagesCount" integer NOT NULL, "details" jsonb NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "modifiedAt" TIMESTAMP DEFAULT now(), "publisherId" integer NOT NULL, "typeId" integer NOT NULL, "genreId" integer NOT NULL, "languageId" integer NOT NULL, CONSTRAINT "UQ_54337dc30d9bb2c3fadebc69094" UNIQUE ("isbn"), CONSTRAINT "PK_f3f2f25a099d24e12545b70b022" PRIMARY KEY ("id")); COMMENT ON COLUMN "books"."id" IS 'Identyfikator rekordu'; COMMENT ON COLUMN "books"."isbn" IS 'ISBN'; COMMENT ON COLUMN "books"."title" IS 'Tytuł'; COMMENT ON COLUMN "books"."issueDate" IS 'Data wydania'; COMMENT ON COLUMN "books"."pagesCount" IS 'Liczba stron'; COMMENT ON COLUMN "books"."details" IS 'Szczegółowe informacje'; COMMENT ON COLUMN "books"."createdAt" IS 'Moment utworzenia rekordu'; COMMENT ON COLUMN "books"."modifiedAt" IS 'Moment modyfikacji rekordu'`,
+      `CREATE TABLE "books" ("id" SERIAL NOT NULL, "isbn" character varying(13) NOT NULL, "title" character varying(255) NOT NULL, "issueDate" date NOT NULL, "type" "public"."books_type_enum" NOT NULL, "pagesCount" integer NOT NULL, "details" jsonb NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "modifiedAt" TIMESTAMP DEFAULT now(), "publisherId" integer NOT NULL, "genreId" integer NOT NULL, "languageId" integer NOT NULL, CONSTRAINT "UQ_54337dc30d9bb2c3fadebc69094" UNIQUE ("isbn"), CONSTRAINT "PK_f3f2f25a099d24e12545b70b022" PRIMARY KEY ("id")); COMMENT ON COLUMN "books"."id" IS 'Identyfikator rekordu'; COMMENT ON COLUMN "books"."isbn" IS 'ISBN'; COMMENT ON COLUMN "books"."title" IS 'Tytuł'; COMMENT ON COLUMN "books"."issueDate" IS 'Data wydania'; COMMENT ON COLUMN "books"."type" IS 'Rodzaj'; COMMENT ON COLUMN "books"."pagesCount" IS 'Liczba stron'; COMMENT ON COLUMN "books"."details" IS 'Szczegółowe informacje'; COMMENT ON COLUMN "books"."createdAt" IS 'Moment utworzenia rekordu'; COMMENT ON COLUMN "books"."modifiedAt" IS 'Moment modyfikacji rekordu'`,
     );
     await queryRunner.query(
       `CREATE TABLE "authors" ("id" SERIAL NOT NULL, "firstName" character varying(50) NOT NULL, "lastName" character varying(50) NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "modifiedAt" TIMESTAMP DEFAULT now(), CONSTRAINT "PK_d2ed02fabd9b52847ccb85e6b88" PRIMARY KEY ("id")); COMMENT ON COLUMN "authors"."id" IS 'Identyfikator rekordu'; COMMENT ON COLUMN "authors"."firstName" IS 'Imię'; COMMENT ON COLUMN "authors"."lastName" IS 'Nazwisko'; COMMENT ON COLUMN "authors"."createdAt" IS 'Moment utworzenia rekordu'; COMMENT ON COLUMN "authors"."modifiedAt" IS 'Moment modyfikacji rekordu'`,
@@ -63,9 +63,6 @@ export class InitBooks1638007613121 implements MigrationInterface {
     );
     await queryRunner.query(
       `ALTER TABLE "books" ADD CONSTRAINT "FK_594ad92cc478a33e51fd0e31bf3" FOREIGN KEY ("publisherId") REFERENCES "publishers"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "books" ADD CONSTRAINT "FK_33c137f31cd6be298d7925cca5c" FOREIGN KEY ("typeId") REFERENCES "types"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
       `ALTER TABLE "books" ADD CONSTRAINT "FK_331478ffd59f87a68b1255b2b6a" FOREIGN KEY ("genreId") REFERENCES "genres"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
@@ -107,9 +104,6 @@ export class InitBooks1638007613121 implements MigrationInterface {
       `ALTER TABLE "books" DROP CONSTRAINT "FK_331478ffd59f87a68b1255b2b6a"`,
     );
     await queryRunner.query(
-      `ALTER TABLE "books" DROP CONSTRAINT "FK_33c137f31cd6be298d7925cca5c"`,
-    );
-    await queryRunner.query(
       `ALTER TABLE "books" DROP CONSTRAINT "FK_594ad92cc478a33e51fd0e31bf3"`,
     );
     await queryRunner.query(
@@ -137,7 +131,7 @@ export class InitBooks1638007613121 implements MigrationInterface {
     await queryRunner.query(`DROP TABLE "books_authors"`);
     await queryRunner.query(`DROP TABLE "authors"`);
     await queryRunner.query(`DROP TABLE "books"`);
-    await queryRunner.query(`DROP TABLE "types"`);
+    await queryRunner.query(`DROP TYPE "public"."books_type_enum"`);
     await queryRunner.query(`DROP TABLE "tags"`);
     await queryRunner.query(`DROP TABLE "ratings"`);
     await queryRunner.query(`DROP TABLE "publishers"`);
