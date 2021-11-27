@@ -1,3 +1,4 @@
+import { FindBooksDto } from '@/modules/books/dto/find-books.dto';
 import { Book } from '@/modules/books/entities/book.entity';
 import { BooksRepository } from '@/modules/books/repositories/books.repository';
 import { Injectable } from '@nestjs/common';
@@ -11,15 +12,15 @@ export class BooksService {
     return 'This action adds a new book';
   }
 
-  findAll(): Promise<Book[]> {
+  findAll(findBooksDto: FindBooksDto): Promise<Book[]> {
     return this.booksRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} book`;
+    return this.booksRepository.findById(id);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} book`;
+    return this.booksRepository.delete(id);
   }
 }

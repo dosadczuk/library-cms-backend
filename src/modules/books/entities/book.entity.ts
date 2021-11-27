@@ -17,7 +17,12 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-export type BookType = 'book' | 'magazine' | 'article' | 'thesis';
+export enum BookType {
+  BOOK = 'book',
+  MAGAZINE = 'magazine',
+  ARTICLE = 'article',
+  THESIS = 'thesis',
+}
 
 @Entity({
   name: 'books',
@@ -71,7 +76,7 @@ export class Book {
   @Column({
     comment: 'Rodzaj',
     type: 'enum',
-    enum: ['book', 'magazine', 'article', 'thesis'],
+    enum: BookType,
   })
   type: BookType;
 

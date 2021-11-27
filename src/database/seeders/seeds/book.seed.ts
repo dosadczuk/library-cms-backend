@@ -1,4 +1,4 @@
-import { Book } from '@/modules/books/entities/book.entity';
+import { Book, BookType } from '@/modules/books/entities/book.entity';
 
 export const BookSeed: Book[] = Array.from({ length: 5 }, (_, i) => {
   const id = i + 1;
@@ -27,7 +27,7 @@ export const BookSeed: Book[] = Array.from({ length: 5 }, (_, i) => {
         createdAt: new Date(),
       },
     ],
-    type: 'book',
+    type: BookType.BOOK,
     genre: {
       id: 1,
       value: 'horror',
