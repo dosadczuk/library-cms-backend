@@ -1,14 +1,18 @@
+import { Book } from '@/modules/books/entities/book.entity';
+import { BooksRepository } from '@/modules/books/repositories/books.repository';
 import { Injectable } from '@nestjs/common';
 import { CreateBookDto } from './dto/create-book.dto';
 
 @Injectable()
 export class BooksService {
+  constructor(private readonly booksRepository: BooksRepository) {}
+
   create(createBookDto: CreateBookDto) {
     return 'This action adds a new book';
   }
 
-  findAll() {
-    return `This action returns all books`;
+  findAll(): Promise<Book[]> {
+    return this.booksRepository.find();
   }
 
   findOne(id: number) {
