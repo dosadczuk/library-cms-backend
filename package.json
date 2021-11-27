@@ -103,5 +103,9 @@
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     }
+  },
+  "engines": {
+    "node": "v16.13.0",
+    "npm": "7.5.6"
   }
 }
