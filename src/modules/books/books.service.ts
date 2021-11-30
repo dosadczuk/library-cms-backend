@@ -1,9 +1,10 @@
+import { CreateBook } from '@/modules/books/dto/create-book.dto';
+import { UpdateBook } from '@/modules/books/dto/update-book.dto';
 import { Book } from '@/modules/books/entities/book.entity';
 import { BooksFilter } from '@/modules/books/filters/books.filter';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Equal, ILike, In, Repository } from 'typeorm';
-import { CreateBookDto } from './dto/create-book.dto';
 
 @Injectable()
 export class BooksService {
@@ -12,8 +13,12 @@ export class BooksService {
     private readonly booksRepository: Repository<Book>,
   ) {}
 
-  create(createBookDto: CreateBookDto) {
+  create(book: CreateBook) {
     return 'This action adds a new book';
+  }
+
+  update(book: UpdateBook) {
+    return 'This action updates a new book';
   }
 
   findAll(filter: BooksFilter): Promise<Book[]> {

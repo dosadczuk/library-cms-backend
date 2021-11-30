@@ -8,25 +8,38 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+export const METADATA = {
+  id: { title: 'Identyfikator rekordu' },
+  name: { title: 'Nazwa' },
+  createdAt: { title: 'Moment utworzenia rekordu' },
+  modifiedAt: { title: 'Moment modyfikacji rekordu' },
+};
+
+export const CONSTRAINTS = {
+  name: {
+    maxLength: 250,
+    nullable: false,
+  },
+};
+
 @Entity({
   name: 'publishers',
-  orderBy: {
-    id: 'ASC',
-  },
+  orderBy: { id: 'ASC' },
 })
 export class Publisher {
   @PrimaryGeneratedColumn({
-    comment: 'Identyfikator rekordu',
+    comment: METADATA.id.title,
     name: 'id',
   })
   id: number;
 
   @Column({
-    comment: 'Nazwa',
+    comment: METADATA.name.title,
     name: 'name',
     type: 'varchar',
-    length: 250,
-    nullable: false,
+    unique: true,
+    length: CONSTRAINTS.name.maxLength,
+    nullable: CONSTRAINTS.name.nullable,
   })
   name: string;
 
@@ -36,14 +49,14 @@ export class Publisher {
   books?: Book[];
 
   @CreateDateColumn({
-    comment: 'Moment utworzenia rekordu',
+    comment: METADATA.createdAt.title,
     name: 'created_at',
     nullable: false,
   })
   createdAt: Date;
 
   @UpdateDateColumn({
-    comment: 'Moment modyfikacji rekordu',
+    comment: METADATA.modifiedAt.title,
     name: 'modified_at',
     nullable: true,
   })

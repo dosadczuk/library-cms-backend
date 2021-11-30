@@ -1,25 +1,36 @@
 import { Book } from '@/modules/books/entities/book.entity';
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
+export const METADATA = {
+  id: { title: 'Identyfikator rekordu' },
+  value: { title: 'Wartość' },
+};
+
+export const CONSTRAINTS = {
+  value: {
+    maxLength: 100,
+    nullable: false,
+  },
+};
+
 @Entity({
   name: 'tags',
-  orderBy: {
-    id: 'ASC',
-  },
+  orderBy: { id: 'ASC' },
 })
 export class Tag {
   @PrimaryGeneratedColumn({
-    comment: 'Identyfikator rekordu',
+    comment: METADATA.id.title,
     name: 'id',
   })
   id: number;
 
   @Column({
-    comment: 'Wartość',
+    comment: METADATA.value.title,
     name: 'value',
     type: 'varchar',
-    length: 100,
-    nullable: false,
+    unique: true,
+    length: CONSTRAINTS.value.maxLength,
+    nullable: CONSTRAINTS.value.nullable,
   })
   value: string;
 

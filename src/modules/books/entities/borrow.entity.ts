@@ -9,32 +9,43 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+export const METADATA = {
+  id: { title: 'Identyfikator rekordu' },
+  dateFrom: { title: 'Data od' },
+  dateTo: { title: 'Data do' },
+  createdAt: { title: 'Moment utworzenia rekordu' },
+  modifiedAt: { title: 'Moment modyfikacji rekordu' },
+};
+
+export const CONSTRAINTS = {
+  dateFrom: { nullable: false },
+  dateTo: { nullable: true },
+};
+
 @Entity({
   name: 'borrows',
-  orderBy: {
-    id: 'ASC',
-  },
+  orderBy: { id: 'ASC' },
 })
 export class Borrow {
   @PrimaryGeneratedColumn({
-    comment: 'Identyfikator rekordu',
+    comment: METADATA.id.title,
     name: 'id',
   })
   id: number;
 
   @Column({
-    comment: 'Data od',
+    comment: METADATA.dateFrom.title,
     name: 'date_from',
     type: 'date',
-    nullable: false,
+    nullable: CONSTRAINTS.dateFrom.nullable,
   })
   dateFrom: Date;
 
   @Column({
-    comment: 'Data do',
+    comment: METADATA.dateTo.title,
     name: 'date_to',
     type: 'date',
-    nullable: true,
+    nullable: CONSTRAINTS.dateTo.nullable,
   })
   dateTo?: Date;
 
@@ -48,14 +59,14 @@ export class Borrow {
   copy: Copy;
 
   @CreateDateColumn({
-    comment: 'Moment utworzenia rekordu',
+    comment: METADATA.createdAt.title,
     name: 'created_at',
     nullable: false,
   })
   createdAt: Date;
 
   @UpdateDateColumn({
-    comment: 'Moment modyfikacji rekordu',
+    comment: METADATA.modifiedAt.title,
     name: 'modified_at',
     nullable: true,
   })

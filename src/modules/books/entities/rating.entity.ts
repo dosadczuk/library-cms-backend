@@ -6,34 +6,46 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
+
+export const METADATA = {
+  id: { title: 'Identyfikator rekordu' },
+  value: { title: 'Wartość' },
+  comment: { title: 'Komentarz' },
+  createdAt: { title: 'Moment utworzenia rekordu' },
+  modifiedAt: { title: 'Moment modyfikacji rekordu' },
+};
+
+export const CONSTRAINTS = {
+  value: { nullable: false },
+  comment: { nullable: false },
+};
 
 @Entity({
   name: 'ratings',
-  orderBy: {
-    id: 'ASC',
-  },
+  orderBy: { id: 'ASC' },
 })
 export class Rating {
   @PrimaryGeneratedColumn({
-    comment: 'Identyfikator rekordu',
+    comment: METADATA.id.title,
     name: 'id',
   })
   id: number;
 
   @Column({
-    comment: 'Wartość',
+    comment: METADATA.value.title,
     name: 'value',
     type: 'int',
-    nullable: false,
+    nullable: CONSTRAINTS.value.nullable,
   })
   value: number;
 
   @Column({
-    comment: 'Komentarz',
+    comment: METADATA.comment.title,
     name: 'comment',
     type: 'text',
-    nullable: false,
+    nullable: CONSTRAINTS.comment.nullable,
   })
   comment: string;
 
@@ -47,9 +59,16 @@ export class Rating {
   book: Book;
 
   @CreateDateColumn({
-    comment: 'Moment utworzenia rekordu',
+    comment: METADATA.createdAt.title,
     name: 'created_at',
     nullable: false,
   })
   createdAt: Date;
+
+  @UpdateDateColumn({
+    comment: METADATA.modifiedAt.title,
+    name: 'modified_at',
+    nullable: false,
+  })
+  modifiedAt: Date;
 }

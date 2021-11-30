@@ -11,24 +11,34 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+export const METADATA = {
+  id: { title: 'Identyfikator rekordu' },
+  number: { title: 'Numer' },
+  createdAt: { title: 'Moment utworzenia rekordu' },
+  modifiedAt: { title: 'Moment modyfikacji rekordu' },
+};
+
+export const CONSTRAINTS = {
+  number: { nullable: false },
+};
+
 @Entity({
   name: 'copies',
-  orderBy: {
-    id: 'ASC',
-  },
+  orderBy: { id: 'ASC' },
 })
 export class Copy {
   @PrimaryGeneratedColumn({
-    comment: 'Identyfikator rekordu',
+    comment: METADATA.id.title,
     name: 'id',
   })
   id: number;
 
   @Column({
-    comment: 'Numer',
+    comment: METADATA.number.title,
     name: 'number',
     type: 'uuid',
-    nullable: false,
+    unique: true,
+    nullable: CONSTRAINTS.number.nullable,
   })
   number: string;
 
@@ -47,14 +57,14 @@ export class Copy {
   borrows: Borrow[];
 
   @CreateDateColumn({
-    comment: 'Moment utworzenia rekordu',
+    comment: METADATA.createdAt.title,
     name: 'created_at',
     nullable: false,
   })
   createdAt: Date;
 
   @UpdateDateColumn({
-    comment: 'Moment modyfikacji rekordu',
+    comment: METADATA.modifiedAt.title,
     name: 'modified_at',
     nullable: true,
   })

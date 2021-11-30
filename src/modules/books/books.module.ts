@@ -1,3 +1,5 @@
+import { BooksController } from '@/modules/books/books.controller';
+import { BooksService } from '@/modules/books/books.service';
 import { Author } from '@/modules/books/entities/author.entity';
 import { Book } from '@/modules/books/entities/book.entity';
 import { Borrow } from '@/modules/books/entities/borrow.entity';
@@ -9,8 +11,6 @@ import { Rating } from '@/modules/books/entities/rating.entity';
 import { Tag } from '@/modules/books/entities/tag.entity';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { BooksController } from './books.controller';
-import { BooksService } from './books.service';
 
 @Module({
   imports: [

@@ -1,6 +1,6 @@
 import { Transform } from 'class-transformer';
 
-export const TransformNumberArray = () => {
+export const TransformArray = <T>(transform: (value: string) => T) => {
   return Transform((params) => {
     const { obj, key } = params;
 
@@ -9,6 +9,6 @@ export const TransformNumberArray = () => {
       return value;
     }
 
-    return value.split(',').map(Number);
+    return value.split(',').map(transform);
   });
 };
