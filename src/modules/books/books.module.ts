@@ -1,3 +1,4 @@
+import { AuthorsController } from '@/modules/books/controllers/authors.controller';
 import { BooksController } from '@/modules/books/controllers/books.controller';
 import { PublishersController } from '@/modules/books/controllers/publishers.controller';
 import { Author } from '@/modules/books/entities/author.entity';
@@ -9,6 +10,7 @@ import { Language } from '@/modules/books/entities/language.entity';
 import { Publisher } from '@/modules/books/entities/publisher.entity';
 import { Rating } from '@/modules/books/entities/rating.entity';
 import { Tag } from '@/modules/books/entities/tag.entity';
+import { AuthorsService } from '@/modules/books/services/authors.service';
 import { BooksService } from '@/modules/books/services/books.service';
 import { PublishersService } from '@/modules/books/services/publishers.service';
 import { Module } from '@nestjs/common';
@@ -28,7 +30,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       Tag,
     ]),
   ],
-  controllers: [BooksController, PublishersController],
-  providers: [BooksService, PublishersService],
+  controllers: [AuthorsController, BooksController, PublishersController],
+  providers: [AuthorsService, BooksService, PublishersService],
 })
 export class BooksModule {}

@@ -3,7 +3,7 @@ import { PublishersService } from '@/modules/books/services/publishers.service';
 import { Controller, Get, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('publishers')
+@ApiTags('books')
 @Controller('publishers')
 export class PublishersController {
   constructor(private readonly publishersService: PublishersService) {}
