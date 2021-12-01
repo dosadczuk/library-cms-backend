@@ -1,0 +1,16 @@
+export const METADATA = {
+  id: { title: 'Identyfikator rekordu' },
+  isbn: { title: 'ISBN' },
+  title: { title: 'Tytuł' },
+  issueDate: { title: 'Data wydania' },
+  publisher: { title: 'Wydawca' },
+  authors: { title: 'Autorzy' },
+  type: { title: 'Rodzaj' },
+  genre: { title: 'Gatunek' },
+  language: { title: 'Język' },
+  pages: { title: 'Liczba stron' },
+  tags: { title: 'Tagi' },
+  details: { title: 'Szczegółowe informacje' },
+  createdAt: { title: 'Moment utworzenia rekordu' },
+  modifiedAt: { title: 'Moment modyfikacji rekordu' },
+};

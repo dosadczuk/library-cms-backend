@@ -1,4 +1,6 @@
+import { CONSTRAINTS } from '@/modules/books/entities/constraints/borrow.constraints';
 import { Copy } from '@/modules/books/entities/copy.entity';
+import { METADATA } from '@/modules/books/entities/metadata/borrow.metadata';
 import {
   Column,
   CreateDateColumn,
@@ -8,19 +10,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-
-export const METADATA = {
-  id: { title: 'Identyfikator rekordu' },
-  dateFrom: { title: 'Data od' },
-  dateTo: { title: 'Data do' },
-  createdAt: { title: 'Moment utworzenia rekordu' },
-  modifiedAt: { title: 'Moment modyfikacji rekordu' },
-};
-
-export const CONSTRAINTS = {
-  dateFrom: { nullable: false },
-  dateTo: { nullable: true },
-};
 
 @Entity({
   name: 'borrows',

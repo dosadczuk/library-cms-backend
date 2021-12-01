@@ -1,3 +1,4 @@
+import { METADATA } from '@/modules/books/entities/metadata/book.metadata';
 import { BookType } from '@/modules/books/enums/book-type.enum';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
@@ -7,14 +8,14 @@ export class BooksFilter {
   @IsString()
   @IsOptional()
   @ApiPropertyOptional({
-    title: 'Tytuł',
+    title: METADATA.title.title,
   })
   title?: string;
 
   @IsEnum(BookType)
   @IsOptional()
   @ApiPropertyOptional({
-    title: 'Rodzaj',
+    title: METADATA.type.title,
     enum: BookType,
   })
   type?: string;
@@ -23,7 +24,7 @@ export class BooksFilter {
   @IsOptional()
   @Type(() => Number)
   @ApiPropertyOptional({
-    title: 'Gatunki',
+    title: METADATA.genre.title,
   })
   genreIds?: number[];
 
@@ -31,7 +32,7 @@ export class BooksFilter {
   @IsOptional()
   @Type(() => Number)
   @ApiPropertyOptional({
-    title: 'Języki',
+    title: METADATA.language.title,
   })
   languageIds?: number[];
 }

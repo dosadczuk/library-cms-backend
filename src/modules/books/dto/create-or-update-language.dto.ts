@@ -1,8 +1,6 @@
-import {
-  CONSTRAINTS,
-  Language as Entity,
-  METADATA,
-} from '@/modules/books/entities/language.entity';
+import { CONSTRAINTS } from '@/modules/books/entities/constraints/language.constraints';
+import { Language as Entity } from '@/modules/books/entities/language.entity';
+import { METADATA } from '@/modules/books/entities/metadata/language.metadata';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsNotEmpty,

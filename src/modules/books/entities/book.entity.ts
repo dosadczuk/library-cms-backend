@@ -1,7 +1,9 @@
 import { Author } from '@/modules/books/entities/author.entity';
+import { CONSTRAINTS } from '@/modules/books/entities/constraints/book.constraints';
 import { Copy } from '@/modules/books/entities/copy.entity';
 import { Genre } from '@/modules/books/entities/genre.entity';
 import { Language } from '@/modules/books/entities/language.entity';
+import { METADATA } from '@/modules/books/entities/metadata/book.metadata';
 import { Publisher } from '@/modules/books/entities/publisher.entity';
 import { Rating } from '@/modules/books/entities/rating.entity';
 import { Tag } from '@/modules/books/entities/tag.entity';
@@ -18,46 +20,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-
-export const METADATA = {
-  id: { title: 'Identyfikator rekordu' },
-  isbn: { title: 'ISBN' },
-  title: { title: 'Tytuł' },
-  issueDate: { title: 'Data wydania' },
-  publisher: { title: 'Wydawca' },
-  authors: { title: 'Autorzy' },
-  type: { title: 'Rodzaj' },
-  genre: { title: 'Gatunek' },
-  language: { title: 'Język' },
-  pages: { title: 'Liczba stron' },
-  tags: { title: 'Tagi' },
-  details: { title: 'Szczegółowe informacje' },
-  createdAt: { title: 'Moment utworzenia rekordu' },
-  modifiedAt: { title: 'Moment modyfikacji rekordu' },
-};
-
-export const CONSTRAINTS = {
-  isbn: {
-    minLength: 10,
-    maxLength: 13,
-    nullable: false,
-  },
-  title: {
-    maxLength: 255,
-    nullable: false,
-  },
-  issueDate: { nullable: false },
-  publisher: { nullable: false },
-  authors: { nullable: false },
-  type: { nullable: false },
-  genre: { nullable: false },
-  language: { nullable: false },
-  pages: { nullable: false },
-  tags: { nullable: false },
-  details: { nullable: false },
-  copies: { nullable: true },
-  ratings: { nullable: true },
-};
 
 @Entity({
   name: 'books',

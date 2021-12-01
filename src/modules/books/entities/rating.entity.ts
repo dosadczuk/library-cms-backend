@@ -1,4 +1,6 @@
 import { Book } from '@/modules/books/entities/book.entity';
+import { CONSTRAINTS } from '@/modules/books/entities/constraints/rating.constraints';
+import { METADATA } from '@/modules/books/entities/metadata/rating.metadata';
 import {
   Column,
   CreateDateColumn,
@@ -8,19 +10,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-
-export const METADATA = {
-  id: { title: 'Identyfikator rekordu' },
-  value: { title: 'Wartość' },
-  comment: { title: 'Komentarz' },
-  createdAt: { title: 'Moment utworzenia rekordu' },
-  modifiedAt: { title: 'Moment modyfikacji rekordu' },
-};
-
-export const CONSTRAINTS = {
-  value: { nullable: false },
-  comment: { nullable: false },
-};
 
 @Entity({
   name: 'ratings',

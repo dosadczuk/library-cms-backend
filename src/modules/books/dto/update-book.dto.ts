@@ -1,5 +1,6 @@
 import { CreateBook } from '@/modules/books/dto/create-book.dto';
-import { Book as Entity, METADATA } from '@/modules/books/entities/book.entity';
+import { Book as Entity } from '@/modules/books/entities/book.entity';
+import { METADATA } from '@/modules/books/entities/metadata/book.metadata';
 import { ApiProperty, OmitType } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber } from 'class-validator';
 

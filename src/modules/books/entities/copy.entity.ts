@@ -1,5 +1,7 @@
 import { Book } from '@/modules/books/entities/book.entity';
 import { Borrow } from '@/modules/books/entities/borrow.entity';
+import { CONSTRAINTS } from '@/modules/books/entities/constraints/copy.constraints';
+import { METADATA } from '@/modules/books/entities/metadata/copy.metadata';
 import {
   Column,
   CreateDateColumn,
@@ -10,17 +12,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-
-export const METADATA = {
-  id: { title: 'Identyfikator rekordu' },
-  number: { title: 'Numer' },
-  createdAt: { title: 'Moment utworzenia rekordu' },
-  modifiedAt: { title: 'Moment modyfikacji rekordu' },
-};
-
-export const CONSTRAINTS = {
-  number: { nullable: false },
-};
 
 @Entity({
   name: 'copies',

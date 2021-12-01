@@ -1,8 +1,6 @@
-import {
-  CONSTRAINTS,
-  Genre as Entity,
-  METADATA,
-} from '@/modules/books/entities/genre.entity';
+import { CONSTRAINTS } from '@/modules/books/entities/constraints/genre.constraints';
+import { Genre as Entity } from '@/modules/books/entities/genre.entity';
+import { METADATA } from '@/modules/books/entities/metadata/genre.metadata';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsNotEmpty,

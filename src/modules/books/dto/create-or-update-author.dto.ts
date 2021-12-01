@@ -1,8 +1,6 @@
-import {
-  Author as Entity,
-  CONSTRAINTS,
-  METADATA,
-} from '@/modules/books/entities/author.entity';
+import { Author as Entity } from '@/modules/books/entities/author.entity';
+import { CONSTRAINTS } from '@/modules/books/entities/constraints/author.constraints';
+import { METADATA } from '@/modules/books/entities/metadata/author.metadata';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsNotEmpty, IsNumber, IsString, MaxLength } from 'class-validator';
 

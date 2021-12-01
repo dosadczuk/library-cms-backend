@@ -1,4 +1,4 @@
-import { METADATA } from '@/modules/books/entities/publisher.entity';
+import { METADATA } from '@/modules/books/entities/metadata/publisher.metadata';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsOptional, IsString } from 'class-validator';
 

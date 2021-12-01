@@ -1,3 +1,5 @@
+import { CONSTRAINTS } from '@/modules/books/entities/constraints/author.constraints';
+import { METADATA } from '@/modules/books/entities/metadata/author.metadata';
 import {
   Column,
   CreateDateColumn,
@@ -5,25 +7,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-
-export const METADATA = {
-  id: { title: 'Identyfikator rekordu' },
-  firstName: { title: 'Imię' },
-  lastName: { title: 'Nazwisko' },
-  createdAt: { title: 'Moment utworzenia rekordu' },
-  modifiedAt: { title: 'Moment modyfikacji rekordu' },
-};
-
-export const CONSTRAINTS = {
-  firstName: {
-    maxLength: 50,
-    nullable: false,
-  },
-  lastName: {
-    maxLength: 50,
-    nullable: false,
-  },
-};
 
 @Entity({
   name: 'authors',

@@ -1,16 +1,6 @@
+import { CONSTRAINTS } from '@/modules/books/entities/constraints/language.constraints';
+import { METADATA } from '@/modules/books/entities/metadata/language.metadata';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-
-export const METADATA = {
-  id: { title: 'Identyfikator rekordu' },
-  value: { title: 'Wartość' },
-};
-
-export const CONSTRAINTS = {
-  value: {
-    maxLength: 100,
-    nullable: false,
-  },
-};
 
 @Entity({
   name: 'languages',
