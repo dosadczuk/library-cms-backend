@@ -170,7 +170,12 @@ export class BooksService {
     return query.getMany();
   }
 
-  findOne(id: number): Promise<Book> {
-    return this.bookRepository.findOne(id);
+  async findOne(id: number): Promise<Book> {
+    const book = await this.bookRepository.findOne(id);
+    if (book == null) {
+      throw new BookNotFoundError(id);
+    }
+
+    return book;
   }
 }
