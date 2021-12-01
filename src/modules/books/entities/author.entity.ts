@@ -1,9 +1,7 @@
-import { Book } from '@/modules/books/entities/book.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -55,11 +53,6 @@ export class Author {
     nullable: CONSTRAINTS.lastName.nullable,
   })
   lastName: string;
-
-  @ManyToMany(() => Book, {
-    nullable: true,
-  })
-  books?: Book[];
 
   @CreateDateColumn({
     comment: METADATA.createdAt.title,

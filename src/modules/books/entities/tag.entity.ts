@@ -1,5 +1,4 @@
-import { Book } from '@/modules/books/entities/book.entity';
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 export const METADATA = {
   id: { title: 'Identyfikator rekordu' },
@@ -33,9 +32,4 @@ export class Tag {
     nullable: CONSTRAINTS.value.nullable,
   })
   value: string;
-
-  @ManyToMany(() => Book, (book) => book.tags, {
-    nullable: true,
-  })
-  books?: Book[];
 }

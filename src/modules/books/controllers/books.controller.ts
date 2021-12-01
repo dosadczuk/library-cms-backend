@@ -1,7 +1,7 @@
-import { BooksService } from '@/modules/books/books.service';
 import { CreateBook } from '@/modules/books/dto/create-book.dto';
 import { UpdateBook } from '@/modules/books/dto/update-book.dto';
 import { BooksFilter } from '@/modules/books/filters/books.filter';
+import { BooksService } from '@/modules/books/services/books.service';
 import {
   Body,
   Controller,

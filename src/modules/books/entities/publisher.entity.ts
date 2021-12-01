@@ -1,9 +1,7 @@
-import { Book } from '@/modules/books/entities/book.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -42,11 +40,6 @@ export class Publisher {
     nullable: CONSTRAINTS.name.nullable,
   })
   name: string;
-
-  @OneToMany(() => Book, (book) => book.publisher, {
-    nullable: true,
-  })
-  books?: Book[];
 
   @CreateDateColumn({
     comment: METADATA.createdAt.title,

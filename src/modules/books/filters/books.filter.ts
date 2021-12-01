@@ -1,27 +1,34 @@
 import { BookType } from '@/modules/books/enums/book-type.enum';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsArray, IsEnum, IsNotEmpty, IsOptional } from 'class-validator';
+import {
+  IsArray,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class BooksFilter {
-  @IsOptional()
+  @IsString()
   @IsNotEmpty()
+  @IsOptional()
   @ApiPropertyOptional({
     title: 'Tytuł',
     example: 'Kod Gutenberga',
   })
   title?: string;
 
-  @IsOptional()
   @IsEnum(BookType)
+  @IsOptional()
   @ApiPropertyOptional({
     title: 'Rodzaj',
     enum: BookType,
   })
   type?: string;
 
-  @IsOptional()
   @IsArray()
+  @IsOptional()
   @Type(() => Number)
   @ApiPropertyOptional({
     title: 'Gatunki',
@@ -29,8 +36,8 @@ export class BooksFilter {
   })
   genreIds?: number[];
 
-  @IsOptional()
   @IsArray()
+  @IsOptional()
   @Type(() => Number)
   @ApiPropertyOptional({
     title: 'Języki',

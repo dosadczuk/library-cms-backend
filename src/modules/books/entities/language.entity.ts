@@ -1,5 +1,4 @@
-import { Book } from '@/modules/books/entities/book.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 export const METADATA = {
   id: { title: 'Identyfikator rekordu' },
@@ -33,9 +32,4 @@ export class Language {
     nullable: CONSTRAINTS.value.nullable,
   })
   value: string;
-
-  @OneToMany(() => Book, (book) => book.language, {
-    nullable: true,
-  })
-  books?: Book[];
 }
