@@ -1,17 +1,10 @@
 import { BookType } from '@/modules/books/enums/book-type.enum';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import {
-  IsArray,
-  IsEnum,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsArray, IsEnum, IsOptional, IsString } from 'class-validator';
 
 export class BooksFilter {
   @IsString()
-  @IsNotEmpty()
   @IsOptional()
   @ApiPropertyOptional({
     title: 'Tytuł',
