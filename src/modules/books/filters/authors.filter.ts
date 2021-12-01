@@ -6,7 +6,6 @@ export class AuthorsFilter {
   @IsString()
   @IsOptional()
   @ApiPropertyOptional({
-    example: 'Adam',
     title: METADATA.firstName.title,
   })
   firstName?: string;
@@ -14,7 +13,6 @@ export class AuthorsFilter {
   @IsString()
   @IsOptional()
   @ApiPropertyOptional({
-    example: 'Nowak',
     title: METADATA.lastName.title,
   })
   lastName?: string;

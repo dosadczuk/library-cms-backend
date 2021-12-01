@@ -6,7 +6,6 @@ export class PublishersFilter {
   @IsString()
   @IsOptional()
   @ApiPropertyOptional({
-    example: 'Wydawnictwo',
     title: METADATA.name.title,
   })
   name?: string;

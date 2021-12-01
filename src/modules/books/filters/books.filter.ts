@@ -8,7 +8,6 @@ export class BooksFilter {
   @IsOptional()
   @ApiPropertyOptional({
     title: 'Tytuł',
-    example: 'Kod Gutenberga',
   })
   title?: string;
 
@@ -25,7 +24,6 @@ export class BooksFilter {
   @Type(() => Number)
   @ApiPropertyOptional({
     title: 'Gatunki',
-    example: [1, 2, 3],
   })
   genreIds?: number[];
 
@@ -34,7 +32,6 @@ export class BooksFilter {
   @Type(() => Number)
   @ApiPropertyOptional({
     title: 'Języki',
-    example: [1, 2],
   })
   languageIds?: number[];
 }

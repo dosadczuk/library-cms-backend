@@ -1,16 +1,16 @@
-import { Language } from '@/modules/books/entities/language.entity';
 import { LanguagesFilter } from '@/modules/books/filters/languages.filter';
+import { LanguageRepository } from '@/modules/books/repositories/language.repository';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ILike, Repository } from 'typeorm';
+import { ILike } from 'typeorm';
 
 export class LanguagesService {
   constructor(
-    @InjectRepository(Language)
-    private readonly languagesRepository: Repository<Language>,
+    @InjectRepository(LanguageRepository)
+    private readonly languageRepository: LanguageRepository,
   ) {}
 
   findAll(filter: LanguagesFilter) {
-    const query = this.languagesRepository.createQueryBuilder();
+    const query = this.languageRepository.createQueryBuilder();
 
     if (filter.value != null) {
       query.andWhere({ value: ILike(`%${filter.value}%`) });

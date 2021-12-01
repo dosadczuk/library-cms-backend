@@ -6,7 +6,6 @@ export class LanguagesFilter {
   @IsString()
   @IsOptional()
   @ApiPropertyOptional({
-    example: 'polski',
     title: METADATA.value.title,
   })
   value?: string;

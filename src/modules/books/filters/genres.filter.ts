@@ -6,7 +6,6 @@ export class GenresFilter {
   @IsString()
   @IsOptional()
   @ApiPropertyOptional({
-    example: 'komedia',
     title: METADATA.value.title,
   })
   value?: string;

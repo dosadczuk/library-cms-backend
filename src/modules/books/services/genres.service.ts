@@ -1,16 +1,16 @@
-import { Genre } from '@/modules/books/entities/genre.entity';
 import { GenresFilter } from '@/modules/books/filters/genres.filter';
+import { GenreRepository } from '@/modules/books/repositories/genre.repository';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ILike, Repository } from 'typeorm';
+import { ILike } from 'typeorm';
 
 export class GenresService {
   constructor(
-    @InjectRepository(Genre)
-    private readonly genresRepository: Repository<Genre>,
+    @InjectRepository(GenreRepository)
+    private readonly genreRepository: GenreRepository,
   ) {}
 
   findAll(filter: GenresFilter) {
-    const query = this.genresRepository.createQueryBuilder();
+    const query = this.genreRepository.createQueryBuilder();
 
     if (filter.value != null) {
       query.andWhere({ value: ILike(`%${filter.value}%`) });

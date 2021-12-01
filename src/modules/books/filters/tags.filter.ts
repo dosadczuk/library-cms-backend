@@ -6,7 +6,6 @@ export class TagsFilter {
   @IsString()
   @IsOptional()
   @ApiPropertyOptional({
-    example: 'XX wiek',
     title: METADATA.value.title,
   })
   value?: string;
