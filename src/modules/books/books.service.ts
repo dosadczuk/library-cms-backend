@@ -65,11 +65,6 @@ export class BooksService {
   }
 
   findOne(id: number): Promise<Book> {
-    return this.booksRepository.findOne(id, {
-      relations: ['publisher', 'authors', 'genre', 'language', 'tags'],
-      loadRelationIds: {
-        relations: ['copies', 'ratings'],
-      },
-    });
+    return this.booksRepository.findOne(id);
   }
 }

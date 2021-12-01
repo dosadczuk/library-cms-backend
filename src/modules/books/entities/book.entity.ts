@@ -98,6 +98,7 @@ export class Book {
   issueDate: Date;
 
   @ManyToOne(() => Publisher, (publisher) => publisher.books, {
+    eager: true,
     cascade: ['insert'],
     nullable: CONSTRAINTS.publisher.nullable,
   })
@@ -108,6 +109,7 @@ export class Book {
   publisher: Publisher;
 
   @ManyToMany(() => Author, {
+    eager: true,
     cascade: ['insert'],
     nullable: CONSTRAINTS.authors.nullable,
   })
@@ -134,6 +136,7 @@ export class Book {
   type: BookType;
 
   @ManyToOne(() => Genre, (genre) => genre.books, {
+    eager: true,
     cascade: ['insert'],
     nullable: CONSTRAINTS.genre.nullable,
   })
@@ -144,6 +147,7 @@ export class Book {
   genre: Genre;
 
   @ManyToOne(() => Language, (language) => language.books, {
+    eager: true,
     cascade: ['insert'],
     nullable: CONSTRAINTS.language.nullable,
   })
@@ -162,6 +166,7 @@ export class Book {
   pages: number;
 
   @ManyToMany(() => Tag, {
+    eager: true,
     cascade: ['insert'],
     nullable: CONSTRAINTS.tags.nullable,
   })

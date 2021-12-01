@@ -29,6 +29,11 @@ export class BooksController {
     return this.booksService.update(data);
   }
 
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.booksService.remove(+id);
+  }
+
   @Get()
   findAll(@Query() filter: BooksFilter) {
     return this.booksService.findAll(filter);
@@ -37,10 +42,5 @@ export class BooksController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.booksService.findOne(+id);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.booksService.remove(+id);
   }
 }
