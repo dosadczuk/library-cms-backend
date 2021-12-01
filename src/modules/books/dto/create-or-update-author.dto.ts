@@ -1,16 +1,13 @@
-import { CONSTRAINTS, METADATA } from '@/modules/books/entities/author.entity';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-  MaxLength,
-} from 'class-validator';
+  Author as Entity,
+  CONSTRAINTS,
+  METADATA,
+} from '@/modules/books/entities/author.entity';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsNotEmpty, IsNumber, IsString, MaxLength } from 'class-validator';
 
-export class Author {
+export class CreateOrUpdateAuthor {
   @IsNumber()
-  @IsOptional()
   @ApiPropertyOptional({
     example: 1,
     title: METADATA.id.title,
@@ -38,4 +35,13 @@ export class Author {
     nullable: CONSTRAINTS.lastName.nullable,
   })
   lastName: string;
+
+  toEntity(): Entity {
+    const author = new Entity();
+    author.id = this.id;
+    author.firstName = this.firstName;
+    author.lastName = this.lastName;
+
+    return author;
+  }
 }

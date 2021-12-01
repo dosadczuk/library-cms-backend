@@ -1,4 +1,8 @@
-import { CONSTRAINTS, METADATA } from '@/modules/books/entities/tag.entity';
+import {
+  CONSTRAINTS,
+  METADATA,
+  Tag as Entity,
+} from '@/modules/books/entities/tag.entity';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsNotEmpty,
@@ -8,7 +12,7 @@ import {
   MaxLength,
 } from 'class-validator';
 
-export class Tag {
+export class CreateOrUpdateTag {
   @IsNumber()
   @IsOptional()
   @ApiPropertyOptional({
@@ -27,4 +31,12 @@ export class Tag {
     nullable: CONSTRAINTS.value.nullable,
   })
   value: string;
+
+  toEntity(): Entity {
+    const tag = new Entity();
+    tag.id = this.id;
+    tag.value = this.value;
+
+    return tag;
+  }
 }

@@ -1,6 +1,8 @@
 import { CreateBook } from '@/modules/books/dto/create-book.dto';
 import { UpdateBook } from '@/modules/books/dto/update-book.dto';
 import { Book } from '@/modules/books/entities/book.entity';
+import { BookAlreadyExistsError } from '@/modules/books/errors/book-already-exists.error';
+import { BookNotFoundError } from '@/modules/books/errors/book-not-found.error';
 import { BooksFilter } from '@/modules/books/filters/books.filter';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,12 +15,31 @@ export class BooksService {
     private readonly booksRepository: Repository<Book>,
   ) {}
 
-  create(book: CreateBook) {
-    return 'This action adds a new book';
+  async create(dto: CreateBook) {
+    const book = await this.booksRepository.findOne({ isbn: Equal(dto.isbn) });
+    if (book != null) {
+      throw new BookAlreadyExistsError(dto.isbn);
+    }
+
+    return this.booksRepository.save(dto.toEntity());
   }
 
-  update(book: UpdateBook) {
-    return 'This action updates a new book';
+  async update(dto: UpdateBook) {
+    const book = await this.booksRepository.findOne(dto.id);
+    if (book == null) {
+      throw new BookNotFoundError(dto.id);
+    }
+
+    return this.booksRepository.update(dto.id, dto.toEntity());
+  }
+
+  async remove(id: number) {
+    const book = await this.booksRepository.findOne(id);
+    if (book == null) {
+      throw new BookNotFoundError(id);
+    }
+
+    return this.booksRepository.delete(id);
   }
 
   findAll(filter: BooksFilter): Promise<Book[]> {
@@ -50,9 +71,5 @@ export class BooksService {
         relations: ['copies', 'ratings'],
       },
     });
-  }
-
-  remove(id: number) {
-    return this.booksRepository.delete(id);
   }
 }

@@ -1,6 +1,7 @@
 import {
   CONSTRAINTS,
   METADATA,
+  Publisher as Entity,
 } from '@/modules/books/entities/publisher.entity';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
@@ -11,7 +12,7 @@ import {
   MaxLength,
 } from 'class-validator';
 
-export class Publisher {
+export class CreateOrUpdatePublisher {
   @IsNumber()
   @IsOptional()
   @ApiPropertyOptional({
@@ -30,4 +31,12 @@ export class Publisher {
     nullable: CONSTRAINTS.name.nullable,
   })
   name: string;
+
+  toEntity(): Entity {
+    const publisher = new Entity();
+    publisher.id = this.id;
+    publisher.name = this.name;
+
+    return publisher;
+  }
 }

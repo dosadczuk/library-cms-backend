@@ -1,4 +1,8 @@
-import { CONSTRAINTS, METADATA } from '@/modules/books/entities/genre.entity';
+import {
+  CONSTRAINTS,
+  Genre as Entity,
+  METADATA,
+} from '@/modules/books/entities/genre.entity';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsNotEmpty,
@@ -8,7 +12,7 @@ import {
   MaxLength,
 } from 'class-validator';
 
-export class Genre {
+export class CreateOrUpdateGenre {
   @IsNumber()
   @IsOptional()
   @ApiPropertyOptional({
@@ -27,4 +31,12 @@ export class Genre {
     nullable: CONSTRAINTS.value.nullable,
   })
   value: string;
+
+  toEntity(): Entity {
+    const genre = new Entity();
+    genre.id = this.id;
+    genre.value = this.value;
+
+    return genre;
+  }
 }

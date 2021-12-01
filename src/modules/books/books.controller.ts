@@ -2,6 +2,7 @@ import { BooksService } from '@/modules/books/books.service';
 import { CreateBook } from '@/modules/books/dto/create-book.dto';
 import { UpdateBook } from '@/modules/books/dto/update-book.dto';
 import { BooksFilter } from '@/modules/books/filters/books.filter';
+import { ErrorInterceptor } from '@/modules/books/http/error.interceptor';
 import {
   Body,
   Controller,
@@ -11,11 +12,13 @@ import {
   Post,
   Put,
   Query,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-@Controller('books')
 @ApiTags('books')
+@Controller('books')
+@UseInterceptors(ErrorInterceptor)
 export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 

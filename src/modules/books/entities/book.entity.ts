@@ -1,11 +1,11 @@
 import { Author } from '@/modules/books/entities/author.entity';
 import { Copy } from '@/modules/books/entities/copy.entity';
-import { BookType } from '@/modules/books/entities/enums/book-type.enum';
 import { Genre } from '@/modules/books/entities/genre.entity';
 import { Language } from '@/modules/books/entities/language.entity';
 import { Publisher } from '@/modules/books/entities/publisher.entity';
 import { Rating } from '@/modules/books/entities/rating.entity';
 import { Tag } from '@/modules/books/entities/tag.entity';
+import { BookType } from '@/modules/books/enums/book-type.enum';
 import {
   Column,
   CreateDateColumn,

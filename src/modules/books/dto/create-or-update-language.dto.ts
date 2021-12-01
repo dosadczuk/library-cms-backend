@@ -1,5 +1,6 @@
 import {
   CONSTRAINTS,
+  Language as Entity,
   METADATA,
 } from '@/modules/books/entities/language.entity';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
@@ -11,7 +12,7 @@ import {
   MaxLength,
 } from 'class-validator';
 
-export class Language {
+export class CreateOrUpdateLanguage {
   @IsNumber()
   @IsOptional()
   @ApiPropertyOptional({
@@ -30,4 +31,12 @@ export class Language {
     nullable: CONSTRAINTS.value.nullable,
   })
   value: string;
+
+  toEntity(): Entity {
+    const language = new Entity();
+    language.id = this.id;
+    language.value = this.value;
+
+    return language;
+  }
 }

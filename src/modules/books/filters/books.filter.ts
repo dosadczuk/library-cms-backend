@@ -1,4 +1,4 @@
-import { BookType } from '@/modules/books/entities/enums/book-type.enum';
+import { BookType } from '@/modules/books/enums/book-type.enum';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsArray, IsEnum, IsNotEmpty, IsOptional } from 'class-validator';
