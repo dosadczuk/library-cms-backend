@@ -1,5 +1,11 @@
 import { CreateBook } from '@/modules/books/dto/create-book.dto';
 import { UpdateBook } from '@/modules/books/dto/update-book.dto';
+import { Author } from '@/modules/books/entities/author.entity';
+import { Book } from '@/modules/books/entities/book.entity';
+import { Genre } from '@/modules/books/entities/genre.entity';
+import { Language } from '@/modules/books/entities/language.entity';
+import { Publisher } from '@/modules/books/entities/publisher.entity';
+import { Tag } from '@/modules/books/entities/tag.entity';
 import { AuthorsFilter } from '@/modules/books/filters/authors.filter';
 import { BooksFilter } from '@/modules/books/filters/books.filter';
 import { GenresFilter } from '@/modules/books/filters/genres.filter';
@@ -37,48 +43,48 @@ export class BooksController {
   ) {}
 
   @Get('authors')
-  findAuthors(@Query() filter: AuthorsFilter) {
+  findAuthors(@Query() filter: AuthorsFilter): Promise<Author[]> {
     return this.authorsService.findAll(filter);
   }
 
   @Get('genres')
-  findGenres(@Query() filter: GenresFilter) {
+  findGenres(@Query() filter: GenresFilter): Promise<Genre[]> {
     return this.genresService.findAll(filter);
   }
 
   @Get('languages')
-  findLanguages(@Query() filter: LanguagesFilter) {
+  findLanguages(@Query() filter: LanguagesFilter): Promise<Language[]> {
     return this.languagesService.findAll(filter);
   }
 
   @Get('publishers')
-  findPublishers(@Query() filter: PublishersFilter) {
+  findPublishers(@Query() filter: PublishersFilter): Promise<Publisher[]> {
     return this.publishersService.findAll(filter);
   }
 
   @Get('tags')
-  findTags(@Query() filter: TagsFilter) {
+  findTags(@Query() filter: TagsFilter): Promise<Tag[]> {
     return this.tagsService.findAll(filter);
   }
 
   @Get()
-  findAll(@Query() filter: BooksFilter) {
+  findAll(@Query() filter: BooksFilter): Promise<Book[]> {
     return this.booksService.findAll(filter);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string): Promise<Book> {
     return this.booksService.findOne(+id);
   }
 
   @Post()
-  create(@Body() data: CreateBook) {
+  create(@Body() data: CreateBook): Promise<Book> {
     return this.booksService.create(data);
   }
 
-  @Put()
-  update(@Body() data: UpdateBook) {
-    return this.booksService.update(data);
+  @Put(':id')
+  update(@Param('id') id: string, @Body() data: UpdateBook) {
+    return this.booksService.update(id, data);
   }
 
   @Delete(':id')

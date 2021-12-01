@@ -51,10 +51,10 @@ export class BooksService {
     return this.bookRepository.save(dto.toEntity());
   }
 
-  async update(dto: UpdateBook) {
-    const book = await this.bookRepository.findOne(dto.id);
+  async update(id: string, dto: UpdateBook) {
+    const book = await this.bookRepository.findOne(id);
     if (book == null) {
-      throw new BookNotFoundError(dto.id);
+      throw new BookNotFoundError(id);
     }
 
     await this.tryAssigningPublisher(dto.publisher);
@@ -63,7 +63,7 @@ export class BooksService {
     await this.tryAssigningLanguage(dto.language);
     await this.tryAssigningTags(dto.tags);
 
-    return this.bookRepository.update(dto.id, dto.toEntity());
+    return this.bookRepository.update(id, dto.toEntity());
   }
 
   async tryAssigningPublisher(publisher: CreateOrUpdatePublisher) {
