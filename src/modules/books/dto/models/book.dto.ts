@@ -1,10 +1,10 @@
-import { Author } from '@/modules/books/dto/model/author.dto';
-import { Genre } from '@/modules/books/dto/model/genre.dto';
-import { Language } from '@/modules/books/dto/model/language.dto';
-import { Publisher } from '@/modules/books/dto/model/publisher.dto';
-import { Tag } from '@/modules/books/dto/model/tag.dto';
+import { Author } from '@/modules/books/dto/models/author.dto';
+import { Genre } from '@/modules/books/dto/models/genre.dto';
+import { Language } from '@/modules/books/dto/models/language.dto';
+import { Publisher } from '@/modules/books/dto/models/publisher.dto';
+import { Tag } from '@/modules/books/dto/models/tag.dto';
 import { CONSTRAINTS, METADATA } from '@/modules/books/entities/book.entity';
-import { BookType } from '@/modules/books/entities/enum/book-type.enum';
+import { BookType } from '@/modules/books/entities/enums/book-type.enum';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {

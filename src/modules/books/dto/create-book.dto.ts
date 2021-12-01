@@ -1,3 +1,3 @@
-import { Book } from '@/modules/books/dto/model/book.dto';
+import { Book } from '@/modules/books/dto/models/book.dto';
 
 export class CreateBook extends Book {}

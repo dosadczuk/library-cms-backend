@@ -1,6 +1,6 @@
 import { Author } from '@/modules/books/entities/author.entity';
 import { Copy } from '@/modules/books/entities/copy.entity';
-import { BookType } from '@/modules/books/entities/enum/book-type.enum';
+import { BookType } from '@/modules/books/entities/enums/book-type.enum';
 import { Genre } from '@/modules/books/entities/genre.entity';
 import { Language } from '@/modules/books/entities/language.entity';
 import { Publisher } from '@/modules/books/entities/publisher.entity';

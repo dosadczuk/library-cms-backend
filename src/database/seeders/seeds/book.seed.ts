@@ -5,7 +5,7 @@ import { getRandomPublisher } from '@/database/seeders/seeds/publisher.seed';
 import { getRandomTag } from '@/database/seeders/seeds/tag.seed';
 import { Author } from '@/modules/books/entities/author.entity';
 import { Book } from '@/modules/books/entities/book.entity';
-import { BookType } from '@/modules/books/entities/enum/book-type.enum';
+import { BookType } from '@/modules/books/entities/enums/book-type.enum';
 import { Tag } from '@/modules/books/entities/tag.entity';
 import { getRandomNumber } from '@/utils/random';
 
