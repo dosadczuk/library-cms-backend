@@ -1,3 +1,6 @@
 export const CONSTRAINTS = {
-  number: { nullable: false },
+  number: {
+    maxLength: 50,
+    nullable: false,
+  },
 };

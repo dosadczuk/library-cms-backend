@@ -6,7 +6,7 @@ export class BookAlreadyExistsError extends Error implements HttpError {
     super(message ?? `Book with ISBN "${isbn}" already exists`);
   }
 
-  public getHttpError(): HttpException {
+  getHttpError(): HttpException {
     return new BadRequestException(this.message);
   }
 }

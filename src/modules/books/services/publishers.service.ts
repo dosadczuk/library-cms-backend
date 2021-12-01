@@ -9,7 +9,7 @@ export class PublishersService {
     private readonly publisherRepository: PublisherRepository,
   ) {}
 
-  public findAll(filter: PublishersFilter): any {
+  findAll(filter: PublishersFilter): any {
     const query = this.publisherRepository.createQueryBuilder();
 
     if (filter.name != null) {

@@ -10,7 +10,7 @@ export class AuthorsService {
     private readonly authorRepository: AuthorRepository,
   ) {}
 
-  public findAll(filter: AuthorsFilter): Promise<Author[]> {
+  findAll(filter: AuthorsFilter): Promise<Author[]> {
     const query = this.authorRepository.createQueryBuilder();
 
     if (filter.firstName != null) {

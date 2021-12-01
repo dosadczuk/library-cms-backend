@@ -27,8 +27,9 @@ export class Copy {
   @Column({
     comment: METADATA.number.title,
     name: 'number',
-    type: 'uuid',
+    type: 'varchar',
     unique: true,
+    length: CONSTRAINTS.number.maxLength,
     nullable: CONSTRAINTS.number.nullable,
   })
   number: string;

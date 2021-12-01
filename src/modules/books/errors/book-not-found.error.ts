@@ -8,7 +8,7 @@ export class BookNotFoundError extends NotFoundError implements HttpError {
     super(Book, criteria);
   }
 
-  public getHttpError(): HttpException {
+  getHttpError(): HttpException {
     return new NotFoundException(this.message);
   }
 }

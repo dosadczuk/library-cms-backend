@@ -1,20 +1,16 @@
-import { AuthorsController } from '@/modules/books/controllers/authors.controller';
+import { BookController } from '@/modules/books/controllers/book.controller';
 import { BooksController } from '@/modules/books/controllers/books.controller';
-import { GenresController } from '@/modules/books/controllers/genres.controller';
-import { LanguagesController } from '@/modules/books/controllers/languages.controller';
-import { PublishersController } from '@/modules/books/controllers/publishers.controller';
-import { TagsController } from '@/modules/books/controllers/tags.controller';
-import { Borrow } from '@/modules/books/entities/borrow.entity';
-import { Copy } from '@/modules/books/entities/copy.entity';
 import { Rating } from '@/modules/books/entities/rating.entity';
 import { AuthorRepository } from '@/modules/books/repositories/author.repository';
 import { BookRepository } from '@/modules/books/repositories/book.repository';
+import { CopyRepository } from '@/modules/books/repositories/copy.repository';
 import { GenreRepository } from '@/modules/books/repositories/genre.repository';
 import { LanguageRepository } from '@/modules/books/repositories/language.repository';
 import { PublisherRepository } from '@/modules/books/repositories/publisher.repository';
 import { TagRepository } from '@/modules/books/repositories/tag.repository';
 import { AuthorsService } from '@/modules/books/services/authors.service';
 import { BooksService } from '@/modules/books/services/books.service';
+import { CopiesService } from '@/modules/books/services/copies.service';
 import { GenresService } from '@/modules/books/services/genres.service';
 import { LanguagesService } from '@/modules/books/services/languages.service';
 import { PublishersService } from '@/modules/books/services/publishers.service';
@@ -27,8 +23,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     TypeOrmModule.forFeature([
       AuthorRepository,
       BookRepository,
-      Borrow,
-      Copy,
+      CopyRepository,
       GenreRepository,
       LanguageRepository,
       PublisherRepository,
@@ -36,17 +31,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       TagRepository,
     ]),
   ],
-  controllers: [
-    AuthorsController,
-    BooksController,
-    GenresController,
-    LanguagesController,
-    PublishersController,
-    TagsController,
-  ],
+  controllers: [BookController, BooksController],
   providers: [
     AuthorsService,
     BooksService,
+    CopiesService,
     GenresService,
     LanguagesService,
     PublishersService,
