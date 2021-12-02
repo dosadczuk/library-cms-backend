@@ -50,4 +50,13 @@ export class File {
     nullable: CONSTRAINTS.mime.nullable,
   })
   mime: string;
+
+  @Column({
+    comment: METADATA.checksum.title,
+    name: 'checksum',
+    type: 'varchar',
+    length: CONSTRAINTS.checksum.maxLength,
+    nullable: CONSTRAINTS.checksum.nullable,
+  })
+  checksum: string;
 }

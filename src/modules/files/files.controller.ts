@@ -1,16 +1,19 @@
+import { UploadFile } from '@/modules/files/dto/upload-file.dto';
 import {
+  BadRequestException,
+  Body,
   Controller,
   Delete,
   Get,
   Param,
   Post,
+  Req,
   Res,
   StreamableFile,
-  UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { createReadStream } from 'fs';
 import { FilesService } from './files.service';
 
@@ -21,20 +24,15 @@ export class FilesController {
 
   @Post('upload')
   @ApiConsumes('multipart/form-data')
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        file: {
-          type: 'string',
-          format: 'binary',
-        },
-      },
-      required: ['file'],
-    },
-  })
   @UseInterceptors(FileInterceptor('file'))
-  async upload(@UploadedFile() data) {
+  async upload(@Body() data: UploadFile, @Req() req) {
+    if (req.file == null) {
+      throw new BadRequestException('No file to upload');
+    }
+
+    // trzeba przypisać ręcznie
+    data.file = req.file;
+
     const file = await this.filesService.save(data);
 
     return file.id;

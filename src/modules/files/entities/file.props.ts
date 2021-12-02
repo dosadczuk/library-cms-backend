@@ -4,6 +4,7 @@ export const METADATA = {
   path: { title: 'Ścieżka na dysku' },
   size: { title: 'Rozmiar' },
   mime: { title: 'Typ MIME' },
+  checksum: { title: 'Suma kontrolna' },
 };
 
 export const CONSTRAINTS = {
@@ -17,6 +18,10 @@ export const CONSTRAINTS = {
   },
   size: { nullable: false },
   mime: {
+    nullable: false,
+    maxLength: 50,
+  },
+  checksum: {
     nullable: false,
     maxLength: 50,
   },
