@@ -23,6 +23,7 @@ import { PublishersService } from '@/modules/books/services/publishers.service';
 import { TagsService } from '@/modules/books/services/tags.service';
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
@@ -30,11 +31,13 @@ import {
   Post,
   Put,
   Query,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('books')
 @Controller('books')
+@UseInterceptors(ClassSerializerInterceptor)
 export class BooksController {
   constructor(
     private readonly authorsService: AuthorsService,

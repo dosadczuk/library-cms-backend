@@ -14,7 +14,12 @@ export class CopiesService {
     private readonly copyRepository: Repository<Copy>,
   ) {}
 
-  findByBook(bookId: string): Promise<Copy[]> {
+  async findByBook(bookId: string): Promise<Copy[]> {
+    const book = await this.bookRepository.findOne(bookId);
+    if (book == null) {
+      throw new BookNotFoundError(bookId);
+    }
+
     return this.copyRepository.find({
       where: { book: { id: Equal(bookId) } },
     });

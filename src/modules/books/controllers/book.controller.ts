@@ -1,11 +1,21 @@
 import { CreateCopy } from '@/modules/books/dto';
 import { Copy } from '@/modules/books/entities';
 import { CopiesService } from '@/modules/books/services/copies.service';
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('books')
 @Controller('book/:book_id')
+@UseInterceptors(ClassSerializerInterceptor)
 export class BookController {
   constructor(private readonly copiesService: CopiesService) {}
 

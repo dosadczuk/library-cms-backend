@@ -1,6 +1,7 @@
 import { Book } from '@/modules/books/entities/book.entity';
 import { Borrow } from '@/modules/books/entities/borrow.entity';
 import { CONSTRAINTS, METADATA } from '@/modules/books/entities/copy.props';
+import { Exclude } from 'class-transformer';
 import {
   Column,
   CreateDateColumn,
@@ -62,6 +63,7 @@ export class Copy {
   })
   modifiedAt: Date;
 
+  @Exclude()
   @DeleteDateColumn({
     comment: METADATA.removedAt.title,
     name: 'removed_at',
