@@ -5,3 +5,14 @@ export const METADATA = {
   createdAt: { title: 'Moment utworzenia rekordu' },
   modifiedAt: { title: 'Moment modyfikacji rekordu' },
 };
+
+export const CONSTRAINTS = {
+  firstName: {
+    maxLength: 50,
+    nullable: false,
+  },
+  lastName: {
+    maxLength: 50,
+    nullable: false,
+  },
+};

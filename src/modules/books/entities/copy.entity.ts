@@ -1,7 +1,6 @@
 import { Book } from '@/modules/books/entities/book.entity';
 import { Borrow } from '@/modules/books/entities/borrow.entity';
-import { CONSTRAINTS } from '@/modules/books/entities/constraints/copy.constraints';
-import { METADATA } from '@/modules/books/entities/metadata/copy.metadata';
+import { CONSTRAINTS, METADATA } from '@/modules/books/entities/copy.props';
 import {
   Column,
   CreateDateColumn,

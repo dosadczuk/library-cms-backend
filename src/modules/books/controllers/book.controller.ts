@@ -1,5 +1,5 @@
-import { CreateCopy } from '@/modules/books/dto/create-copy.dto';
-import { Copy } from '@/modules/books/entities/copy.entity';
+import { CreateCopy } from '@/modules/books/dto';
+import { Copy } from '@/modules/books/entities';
 import { CopiesService } from '@/modules/books/services/copies.service';
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';

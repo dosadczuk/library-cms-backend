@@ -1,7 +1,12 @@
 export const METADATA = {
   id: { title: 'Identyfikator rekordu' },
-  value: { title: 'Wartość' },
-  comment: { title: 'Komentarz' },
+  dateFrom: { title: 'Data od' },
+  dateTo: { title: 'Data do' },
   createdAt: { title: 'Moment utworzenia rekordu' },
   modifiedAt: { title: 'Moment modyfikacji rekordu' },
+};
+
+export const CONSTRAINTS = {
+  dateFrom: { nullable: false },
+  dateTo: { nullable: true },
 };

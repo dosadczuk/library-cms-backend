@@ -1,15 +1,15 @@
-import { PublishersFilter } from '@/modules/books/filters/publishers.filter';
-import { PublisherRepository } from '@/modules/books/repositories/publisher.repository';
+import { Publisher } from '@/modules/books/entities';
+import { PublishersFilter } from '@/modules/books/filters';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ILike } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 
 export class PublishersService {
   constructor(
-    @InjectRepository(PublisherRepository)
-    private readonly publisherRepository: PublisherRepository,
+    @InjectRepository(Publisher)
+    private readonly publisherRepository: Repository<Publisher>,
   ) {}
 
-  findAll(filter: PublishersFilter): any {
+  findAllWith(filter: PublishersFilter): Promise<Publisher[]> {
     const query = this.publisherRepository.createQueryBuilder();
 
     if (filter.name != null) {

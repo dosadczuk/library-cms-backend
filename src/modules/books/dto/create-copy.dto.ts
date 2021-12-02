@@ -1,6 +1,5 @@
-import { CONSTRAINTS } from '@/modules/books/entities/constraints/copy.constraints';
 import { Copy as Entity } from '@/modules/books/entities/copy.entity';
-import { METADATA } from '@/modules/books/entities/metadata/copy.metadata';
+import { CONSTRAINTS, METADATA } from '@/modules/books/entities/copy.props';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, MaxLength } from 'class-validator';
 

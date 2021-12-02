@@ -1,5 +1,4 @@
-import { CONSTRAINTS } from '@/modules/books/entities/constraints/author.constraints';
-import { METADATA } from '@/modules/books/entities/metadata/author.metadata';
+import { CONSTRAINTS, METADATA } from '@/modules/books/entities/author.props';
 import {
   Column,
   CreateDateColumn,

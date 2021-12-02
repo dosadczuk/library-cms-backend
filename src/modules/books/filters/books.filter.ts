@@ -1,4 +1,4 @@
-import { METADATA } from '@/modules/books/entities/metadata/book.metadata';
+import { METADATA } from '@/modules/books/entities/book.props';
 import { BookType } from '@/modules/books/enums/book-type.enum';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';

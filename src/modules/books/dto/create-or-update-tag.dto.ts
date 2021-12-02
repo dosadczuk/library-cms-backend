@@ -1,6 +1,5 @@
-import { CONSTRAINTS } from '@/modules/books/entities/constraints/tag.constraints';
-import { METADATA } from '@/modules/books/entities/metadata/tag.metadata';
 import { Tag as Entity } from '@/modules/books/entities/tag.entity';
+import { CONSTRAINTS, METADATA } from '@/modules/books/entities/tag.props';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsNotEmpty,

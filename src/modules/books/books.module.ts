@@ -1,13 +1,13 @@
 import { BookController } from '@/modules/books/controllers/book.controller';
 import { BooksController } from '@/modules/books/controllers/books.controller';
+import { Author } from '@/modules/books/entities/author.entity';
+import { Book } from '@/modules/books/entities/book.entity';
+import { Copy } from '@/modules/books/entities/copy.entity';
+import { Genre } from '@/modules/books/entities/genre.entity';
+import { Language } from '@/modules/books/entities/language.entity';
+import { Publisher } from '@/modules/books/entities/publisher.entity';
 import { Rating } from '@/modules/books/entities/rating.entity';
-import { AuthorRepository } from '@/modules/books/repositories/author.repository';
-import { BookRepository } from '@/modules/books/repositories/book.repository';
-import { CopyRepository } from '@/modules/books/repositories/copy.repository';
-import { GenreRepository } from '@/modules/books/repositories/genre.repository';
-import { LanguageRepository } from '@/modules/books/repositories/language.repository';
-import { PublisherRepository } from '@/modules/books/repositories/publisher.repository';
-import { TagRepository } from '@/modules/books/repositories/tag.repository';
+import { Tag } from '@/modules/books/entities/tag.entity';
 import { AuthorsService } from '@/modules/books/services/authors.service';
 import { BooksService } from '@/modules/books/services/books.service';
 import { CopiesService } from '@/modules/books/services/copies.service';
@@ -21,14 +21,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      AuthorRepository,
-      BookRepository,
-      CopyRepository,
-      GenreRepository,
-      LanguageRepository,
-      PublisherRepository,
+      Author,
+      Book,
+      Copy,
+      Genre,
+      Language,
+      Publisher,
       Rating,
-      TagRepository,
+      Tag,
     ]),
   ],
   controllers: [BookController, BooksController],

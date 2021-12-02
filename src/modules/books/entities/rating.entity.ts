@@ -1,6 +1,5 @@
 import { Book } from '@/modules/books/entities/book.entity';
-import { CONSTRAINTS } from '@/modules/books/entities/constraints/rating.constraints';
-import { METADATA } from '@/modules/books/entities/metadata/rating.metadata';
+import { CONSTRAINTS, METADATA } from '@/modules/books/entities/rating.props';
 import {
   Column,
   CreateDateColumn,

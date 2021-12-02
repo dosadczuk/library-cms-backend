@@ -1,5 +1,4 @@
-import { CONSTRAINTS } from '@/modules/books/entities/constraints/language.constraints';
-import { METADATA } from '@/modules/books/entities/metadata/language.metadata';
+import { CONSTRAINTS, METADATA } from '@/modules/books/entities/language.props';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({

@@ -1,20 +1,21 @@
-import { CreateCopy } from '@/modules/books/dto/create-copy.dto';
-import { Copy } from '@/modules/books/entities/copy.entity';
+import { CreateCopy } from '@/modules/books/dto';
+import { Book, Copy } from '@/modules/books/entities';
 import { BookNotFoundError } from '@/modules/books/errors/book-not-found.error';
-import { BookRepository } from '@/modules/books/repositories/book.repository';
-import { CopyRepository } from '@/modules/books/repositories/copy.repository';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Equal, Repository } from 'typeorm';
 
 export class CopiesService {
   constructor(
-    @InjectRepository(BookRepository)
-    private readonly bookRepository: BookRepository,
-    @InjectRepository(CopyRepository)
-    private readonly copyRepository: CopyRepository,
+    @InjectRepository(Book)
+    private readonly bookRepository: Repository<Book>,
+    @InjectRepository(Copy)
+    private readonly copyRepository: Repository<Copy>,
   ) {}
 
   findByBook(bookId: string): Promise<Copy[]> {
-    return this.copyRepository.findByBook(bookId);
+    return this.copyRepository.find({
+      where: { book: { id: Equal(bookId) } },
+    });
   }
 
   async create(bookId: string, data: CreateCopy): Promise<Copy> {

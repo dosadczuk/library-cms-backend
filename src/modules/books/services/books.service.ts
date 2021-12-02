@@ -1,39 +1,42 @@
-import { CreateBook } from '@/modules/books/dto/create-book.dto';
-import { CreateOrUpdateAuthor } from '@/modules/books/dto/create-or-update-author.dto';
-import { CreateOrUpdateGenre } from '@/modules/books/dto/create-or-update-genre.dto';
-import { CreateOrUpdateLanguage } from '@/modules/books/dto/create-or-update-language.dto';
-import { CreateOrUpdatePublisher } from '@/modules/books/dto/create-or-update-publisher.dto';
-import { CreateOrUpdateTag } from '@/modules/books/dto/create-or-update-tag.dto';
-import { UpdateBook } from '@/modules/books/dto/update-book.dto';
-import { Book } from '@/modules/books/entities/book.entity';
+import {
+  CreateBook,
+  CreateOrUpdateAuthor,
+  CreateOrUpdateGenre,
+  CreateOrUpdateLanguage,
+  CreateOrUpdatePublisher,
+  CreateOrUpdateTag,
+  UpdateBook,
+} from '@/modules/books/dto';
+import {
+  Author,
+  Book,
+  Genre,
+  Language,
+  Publisher,
+  Tag,
+} from '@/modules/books/entities';
 import { BookAlreadyExistsError } from '@/modules/books/errors/book-already-exists.error';
 import { BookNotFoundError } from '@/modules/books/errors/book-not-found.error';
-import { BooksFilter } from '@/modules/books/filters/books.filter';
-import { AuthorRepository } from '@/modules/books/repositories/author.repository';
-import { BookRepository } from '@/modules/books/repositories/book.repository';
-import { GenreRepository } from '@/modules/books/repositories/genre.repository';
-import { LanguageRepository } from '@/modules/books/repositories/language.repository';
-import { PublisherRepository } from '@/modules/books/repositories/publisher.repository';
-import { TagRepository } from '@/modules/books/repositories/tag.repository';
+import { BooksFilter } from '@/modules/books/filters';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Equal, ILike, In } from 'typeorm';
+import { Equal, ILike, In, Repository } from 'typeorm';
 
 @Injectable()
 export class BooksService {
   constructor(
-    @InjectRepository(AuthorRepository)
-    private readonly authorRepository: AuthorRepository,
-    @InjectRepository(BookRepository)
-    private readonly bookRepository: BookRepository,
-    @InjectRepository(GenreRepository)
-    private readonly genreRepository: GenreRepository,
-    @InjectRepository(LanguageRepository)
-    private readonly languageRepository: LanguageRepository,
-    @InjectRepository(PublisherRepository)
-    private readonly publisherRepository: PublisherRepository,
-    @InjectRepository(TagRepository)
-    private readonly tagRepository: TagRepository,
+    @InjectRepository(Author)
+    private readonly authorRepository: Repository<Author>,
+    @InjectRepository(Book)
+    private readonly bookRepository: Repository<Book>,
+    @InjectRepository(Genre)
+    private readonly genreRepository: Repository<Genre>,
+    @InjectRepository(Language)
+    private readonly languageRepository: Repository<Language>,
+    @InjectRepository(Publisher)
+    private readonly publisherRepository: Repository<Publisher>,
+    @InjectRepository(Tag)
+    private readonly tagRepository: Repository<Tag>,
   ) {}
 
   async create(dto: CreateBook) {
@@ -71,7 +74,10 @@ export class BooksService {
       return; // już dopasowany
     }
 
-    const entity = await this.publisherRepository.findByName(publisher.name);
+    const entity = await this.publisherRepository.findOne({
+      where: { name: ILike(publisher.name) },
+    });
+
     if (entity == null) {
       return; // nie istnieje
     }
@@ -85,10 +91,12 @@ export class BooksService {
         continue; // już dopasowany
       }
 
-      const entity = await this.authorRepository.findByNames(
-        author.firstName,
-        author.lastName,
-      );
+      const entity = await this.authorRepository.findOne({
+        where: {
+          firstName: ILike(author.firstName), // bez %...%
+          lastName: ILike(author.lastName), // bez %...%
+        },
+      });
 
       if (entity == null) {
         continue; // nie istnieje
@@ -103,7 +111,10 @@ export class BooksService {
       return; // już dopasowany
     }
 
-    const entity = await this.genreRepository.findByValue(genre.value);
+    const entity = await this.genreRepository.findOne({
+      where: { value: ILike(genre.value) },
+    });
+
     if (entity == null) {
       return; // nie istnieje
     }
@@ -116,7 +127,10 @@ export class BooksService {
       return; // już dopasowany
     }
 
-    const entity = await this.languageRepository.findByValue(language.value);
+    const entity = await this.languageRepository.findOne({
+      where: { value: ILike(language.value) },
+    });
+
     if (entity == null) {
       return; // nie istnieje
     }
@@ -130,7 +144,10 @@ export class BooksService {
         continue; // już dopasowany
       }
 
-      const entity = await this.tagRepository.findByValue(tag.value);
+      const entity = await this.tagRepository.findOne({
+        where: { value: ILike(tag.value) },
+      });
+
       if (entity == null) {
         continue; // nie istnieje
       }
@@ -148,7 +165,7 @@ export class BooksService {
     return this.bookRepository.delete(id);
   }
 
-  findAll(filter: BooksFilter): Promise<Book[]> {
+  findAllWith(filter: BooksFilter): Promise<Book[]> {
     const query = this.bookRepository.createQueryBuilder();
 
     if (filter.title != null) {
@@ -170,8 +187,13 @@ export class BooksService {
     return query.getMany();
   }
 
-  async findOne(id: number): Promise<Book> {
-    const book = await this.bookRepository.findOne(id);
+  async findById(id: number): Promise<Book> {
+    const book = await this.bookRepository.findOne(id, {
+      loadRelationIds: {
+        relations: ['copies', 'ratings'],
+      },
+    });
+
     if (book == null) {
       throw new BookNotFoundError(id);
     }

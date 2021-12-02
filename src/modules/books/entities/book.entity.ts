@@ -1,9 +1,8 @@
 import { Author } from '@/modules/books/entities/author.entity';
-import { CONSTRAINTS } from '@/modules/books/entities/constraints/book.constraints';
+import { CONSTRAINTS, METADATA } from '@/modules/books/entities/book.props';
 import { Copy } from '@/modules/books/entities/copy.entity';
 import { Genre } from '@/modules/books/entities/genre.entity';
 import { Language } from '@/modules/books/entities/language.entity';
-import { METADATA } from '@/modules/books/entities/metadata/book.metadata';
 import { Publisher } from '@/modules/books/entities/publisher.entity';
 import { Rating } from '@/modules/books/entities/rating.entity';
 import { Tag } from '@/modules/books/entities/tag.entity';

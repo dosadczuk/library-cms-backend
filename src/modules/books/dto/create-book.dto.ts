@@ -4,8 +4,7 @@ import { CreateOrUpdateLanguage } from '@/modules/books/dto/create-or-update-lan
 import { CreateOrUpdatePublisher } from '@/modules/books/dto/create-or-update-publisher.dto';
 import { CreateOrUpdateTag } from '@/modules/books/dto/create-or-update-tag.dto';
 import { Book as Entity } from '@/modules/books/entities/book.entity';
-import { CONSTRAINTS } from '@/modules/books/entities/constraints/book.constraints';
-import { METADATA } from '@/modules/books/entities/metadata/book.metadata';
+import { CONSTRAINTS, METADATA } from '@/modules/books/entities/book.props';
 import { BookType } from '@/modules/books/enums/book-type.enum';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';

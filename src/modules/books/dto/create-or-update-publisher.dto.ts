@@ -1,6 +1,8 @@
-import { CONSTRAINTS } from '@/modules/books/entities/constraints/publisher.constraints';
-import { METADATA } from '@/modules/books/entities/metadata/publisher.metadata';
 import { Publisher as Entity } from '@/modules/books/entities/publisher.entity';
+import {
+  CONSTRAINTS,
+  METADATA,
+} from '@/modules/books/entities/publisher.props';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsNotEmpty,

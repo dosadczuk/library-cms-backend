@@ -1,15 +1,15 @@
-import { TagsFilter } from '@/modules/books/filters/tags.filter';
-import { TagRepository } from '@/modules/books/repositories/tag.repository';
+import { Tag } from '@/modules/books/entities';
+import { TagsFilter } from '@/modules/books/filters';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ILike } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 
 export class TagsService {
   constructor(
-    @InjectRepository(TagRepository)
-    private readonly tagRepository: TagRepository,
+    @InjectRepository(Tag)
+    private readonly tagRepository: Repository<Tag>,
   ) {}
 
-  findAll(filter: TagsFilter) {
+  findAllWith(filter: TagsFilter): Promise<Tag[]> {
     const query = this.tagRepository.createQueryBuilder();
 
     if (filter.value != null) {
