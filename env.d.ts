@@ -10,6 +10,9 @@ declare global {
       DB_NAME: string;
       DB_USERNAME: string;
       DB_PASSWORD: string;
+
+      DB_PGADMIN_EMAIL: string;
+      DB_PGADMIN_PASSWORD: string;
     }
   }
 }
