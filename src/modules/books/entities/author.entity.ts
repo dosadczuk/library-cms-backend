@@ -1,5 +1,5 @@
 import { CONSTRAINTS, METADATA } from '@/modules/books/entities/author.props';
-import { Expose } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 import {
   Column,
   CreateDateColumn,
@@ -49,6 +49,7 @@ export class Author {
   })
   createdAt: Date;
 
+  @Exclude()
   @UpdateDateColumn({
     comment: METADATA.modifiedAt.title,
     name: 'modified_at',

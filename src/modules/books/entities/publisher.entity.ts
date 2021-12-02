@@ -2,6 +2,7 @@ import {
   CONSTRAINTS,
   METADATA,
 } from '@/modules/books/entities/publisher.props';
+import { Exclude } from 'class-transformer';
 import {
   Column,
   CreateDateColumn,
@@ -38,6 +39,7 @@ export class Publisher {
   })
   createdAt: Date;
 
+  @Exclude()
   @UpdateDateColumn({
     comment: METADATA.modifiedAt.title,
     name: 'modified_at',

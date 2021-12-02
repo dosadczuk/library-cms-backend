@@ -171,6 +171,7 @@ export class Book {
   })
   createdAt: Date;
 
+  @Exclude()
   @UpdateDateColumn({
     comment: METADATA.modifiedAt.title,
     name: 'modified_at',

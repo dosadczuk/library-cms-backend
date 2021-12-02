@@ -1,5 +1,6 @@
 import { CONSTRAINTS, METADATA } from '@/modules/books/entities/borrow.props';
 import { Copy } from '@/modules/books/entities/copy.entity';
+import { Exclude } from 'class-transformer';
 import {
   Column,
   CreateDateColumn,
@@ -53,6 +54,7 @@ export class Borrow {
   })
   createdAt: Date;
 
+  @Exclude()
   @UpdateDateColumn({
     comment: METADATA.modifiedAt.title,
     name: 'modified_at',

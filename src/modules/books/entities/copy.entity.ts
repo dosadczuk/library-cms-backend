@@ -56,12 +56,13 @@ export class Copy {
   })
   createdAt: Date;
 
+  @Exclude()
   @UpdateDateColumn({
     comment: METADATA.modifiedAt.title,
     name: 'modified_at',
     nullable: true,
   })
-  modifiedAt: Date;
+  modifiedAt?: Date;
 
   @Exclude()
   @DeleteDateColumn({
