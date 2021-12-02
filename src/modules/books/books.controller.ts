@@ -97,8 +97,8 @@ export class BooksController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.booksService.remove(+id);
+  async remove(@Param('id') id: string) {
+    await this.booksService.remove(+id);
   }
 
   @Get(':id/copies')
@@ -112,7 +112,7 @@ export class BooksController {
   }
 
   @Delete(':id/copy/:copy_id')
-  removeCopy(@Param('id') id: string, @Param('copy_id') copyId: string) {
-    return this.copiesService.remove(id, copyId);
+  async removeCopy(@Param('id') id: string, @Param('copy_id') copyId: string) {
+    await this.copiesService.remove(id, copyId);
   }
 }

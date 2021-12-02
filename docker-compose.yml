@@ -9,6 +9,7 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
+      - uploads:/usr/src/app/uploads
     ports:
       - ${APP_PORT}:${APP_PORT}
       - "9229:9229"
@@ -52,3 +53,4 @@ services:
 
 volumes:
   pgdata:
+  uploads:
