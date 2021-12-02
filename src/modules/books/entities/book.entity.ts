@@ -7,6 +7,7 @@ import { Publisher } from '@/modules/books/entities/publisher.entity';
 import { Rating } from '@/modules/books/entities/rating.entity';
 import { Tag } from '@/modules/books/entities/tag.entity';
 import { BookType } from '@/modules/books/enums/book-type.enum';
+import { File } from '@/modules/files/entities/file.entity';
 import { Exclude } from 'class-transformer';
 import {
   Column,
@@ -18,6 +19,7 @@ import {
   ManyToMany,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -51,6 +53,24 @@ export class Book {
     nullable: CONSTRAINTS.title.nullable,
   })
   title: string;
+
+  @Column({
+    comment: METADATA.description.title,
+    name: 'description',
+    type: 'text',
+    nullable: CONSTRAINTS.description.nullable,
+  })
+  description?: string;
+
+  @OneToOne(() => File, {
+    eager: true,
+    cascade: false,
+  })
+  @JoinColumn({
+    name: 'image_id',
+    referencedColumnName: 'id',
+  })
+  image?: File;
 
   @Column({
     comment: METADATA.issueDate.title,

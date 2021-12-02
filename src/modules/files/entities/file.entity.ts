@@ -1,4 +1,5 @@
 import { CONSTRAINTS, METADATA } from '@/modules/files/entities/file.props';
+import { Exclude } from 'class-transformer';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({
@@ -10,7 +11,7 @@ export class File {
     comment: METADATA.id.title,
     name: 'id',
   })
-  id: number;
+  id: string;
 
   @Column({
     comment: METADATA.name.title,
@@ -21,6 +22,7 @@ export class File {
   })
   name: string;
 
+  @Exclude()
   @Column({
     comment: METADATA.path.title,
     name: 'path',
@@ -30,6 +32,7 @@ export class File {
   })
   path: string;
 
+  @Exclude()
   @Column({
     comment: METADATA.size.title,
     name: 'size',
@@ -38,6 +41,7 @@ export class File {
   })
   size: number;
 
+  @Exclude()
   @Column({
     comment: METADATA.mime.title,
     name: 'mime',

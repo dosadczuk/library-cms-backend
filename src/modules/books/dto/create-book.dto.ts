@@ -6,6 +6,7 @@ import { CreateOrUpdateTag } from '@/modules/books/dto/create-or-update-tag.dto'
 import { Book as Entity } from '@/modules/books/entities/book.entity';
 import { CONSTRAINTS, METADATA } from '@/modules/books/entities/book.props';
 import { BookType } from '@/modules/books/enums/book-type.enum';
+import { File } from '@/modules/files/entities/file.entity';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
@@ -45,6 +46,22 @@ export class CreateBook {
     nullable: CONSTRAINTS.title.nullable,
   })
   title: string;
+
+  @IsString()
+  @IsOptional()
+  @ApiPropertyOptional({
+    title: METADATA.description.title,
+    nullable: CONSTRAINTS.description.nullable,
+  })
+  description?: string;
+
+  @IsString()
+  @IsOptional()
+  @ApiPropertyOptional({
+    title: METADATA.image.title,
+    nullable: CONSTRAINTS.image.nullable,
+  })
+  imageId?: string;
 
   @IsDateString()
   @IsNotEmpty()
@@ -136,6 +153,7 @@ export class CreateBook {
     const book = new Entity();
     book.isbn = this.isbn;
     book.title = this.title;
+    book.description = this.description;
     book.issueDate = this.issueDate;
     book.publisher = this.publisher.toEntity();
     book.authors = this.authors.map((it) => it.toEntity());
@@ -145,6 +163,13 @@ export class CreateBook {
     book.pages = this.pages;
     book.tags = this.tags.map((it) => it.toEntity());
     book.details = this.details;
+
+    if (this.imageId != null) {
+      const image = new File();
+      image.id = this.imageId;
+
+      book.image = image;
+    }
 
     return book;
   }
