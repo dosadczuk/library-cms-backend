@@ -1,5 +1,4 @@
-import { BookController } from '@/modules/books/controllers/book.controller';
-import { BooksController } from '@/modules/books/controllers/books.controller';
+import { BooksController } from '@/modules/books/books.controller';
 import { Author } from '@/modules/books/entities/author.entity';
 import { Book } from '@/modules/books/entities/book.entity';
 import { Copy } from '@/modules/books/entities/copy.entity';
@@ -31,7 +30,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       Tag,
     ]),
   ],
-  controllers: [BookController, BooksController],
+  controllers: [BooksController],
   providers: [
     AuthorsService,
     BooksService,

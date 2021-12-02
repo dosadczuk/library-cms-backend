@@ -1,7 +1,8 @@
-import { CreateBook, UpdateBook } from '@/modules/books/dto';
+import { CreateBook, CreateCopy, UpdateBook } from '@/modules/books/dto';
 import {
   Author,
   Book,
+  Copy,
   Genre,
   Language,
   Publisher,
@@ -17,6 +18,7 @@ import {
 } from '@/modules/books/filters';
 import { AuthorsService } from '@/modules/books/services/authors.service';
 import { BooksService } from '@/modules/books/services/books.service';
+import { CopiesService } from '@/modules/books/services/copies.service';
 import { GenresService } from '@/modules/books/services/genres.service';
 import { LanguagesService } from '@/modules/books/services/languages.service';
 import { PublishersService } from '@/modules/books/services/publishers.service';
@@ -42,6 +44,7 @@ export class BooksController {
   constructor(
     private readonly authorsService: AuthorsService,
     private readonly booksService: BooksService,
+    private readonly copiesService: CopiesService,
     private readonly genresService: GenresService,
     private readonly languagesService: LanguagesService,
     private readonly publishersService: PublishersService,
@@ -96,5 +99,20 @@ export class BooksController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.booksService.remove(+id);
+  }
+
+  @Get(':id/copies')
+  findCopies(@Param('id') id: string): Promise<Copy[]> {
+    return this.copiesService.findByBook(id);
+  }
+
+  @Post(':id/copies')
+  createCopy(@Param('id') id: string, @Body() data: CreateCopy): Promise<Copy> {
+    return this.copiesService.create(id, data);
+  }
+
+  @Delete(':id/copy/:copy_id')
+  removeCopy(@Param('id') id: string, @Param('copy_id') copyId: string) {
+    return this.copiesService.remove(id, copyId);
   }
 }
