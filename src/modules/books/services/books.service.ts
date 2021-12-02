@@ -162,7 +162,7 @@ export class BooksService {
       throw new BookNotFoundError(id);
     }
 
-    return this.bookRepository.delete(id);
+    return this.bookRepository.softDelete(id);
   }
 
   findAllWith(filter: BooksFilter): Promise<Book[]> {

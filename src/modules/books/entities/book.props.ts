@@ -13,6 +13,7 @@ export const METADATA = {
   details: { title: 'Szczegółowe informacje' },
   createdAt: { title: 'Moment utworzenia rekordu' },
   modifiedAt: { title: 'Moment modyfikacji rekordu' },
+  removedAt: { title: 'Moment usunięcia rekordu' },
 };
 
 export const CONSTRAINTS = {

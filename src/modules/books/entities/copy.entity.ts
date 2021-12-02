@@ -4,6 +4,7 @@ import { CONSTRAINTS, METADATA } from '@/modules/books/entities/copy.props';
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -60,4 +61,11 @@ export class Copy {
     nullable: true,
   })
   modifiedAt: Date;
+
+  @DeleteDateColumn({
+    comment: METADATA.removedAt.title,
+    name: 'removed_at',
+    nullable: true,
+  })
+  removedAt: Date;
 }

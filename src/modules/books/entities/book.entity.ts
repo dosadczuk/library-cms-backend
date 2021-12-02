@@ -10,6 +10,7 @@ import { BookType } from '@/modules/books/enums/book-type.enum';
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   JoinTable,
@@ -175,4 +176,11 @@ export class Book {
     nullable: true,
   })
   modifiedAt?: Date;
+
+  @DeleteDateColumn({
+    comment: METADATA.removedAt.title,
+    name: 'removed_at',
+    nullable: true,
+  })
+  removedAt?: Date;
 }

@@ -3,6 +3,7 @@ export const METADATA = {
   number: { title: 'Numer' },
   createdAt: { title: 'Moment utworzenia rekordu' },
   modifiedAt: { title: 'Moment modyfikacji rekordu' },
+  removedAt: { title: 'Moment usunięcie rekordu' },
 };
 
 export const CONSTRAINTS = {
