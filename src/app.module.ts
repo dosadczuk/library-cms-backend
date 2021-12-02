@@ -8,6 +8,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from '@/modules/auth/auth.module';
+import { UsersModule } from '@/modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { HeaderResolver, I18nJsonParser, I18nModule } from 'nestjs-i18n';
 import * as path from 'path';
@@ -43,6 +45,7 @@ import * as path from 'path';
     }),
     BooksModule,
     AuthModule,
+    UsersModule,
     FilesModule,
   ],
   providers: [
