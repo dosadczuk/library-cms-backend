@@ -1,4 +1,5 @@
 import { CONSTRAINTS, METADATA } from '@/modules/books/entities/author.props';
+import { Expose } from 'class-transformer';
 import {
   Column,
   CreateDateColumn,
@@ -35,6 +36,11 @@ export class Author {
     nullable: CONSTRAINTS.lastName.nullable,
   })
   lastName: string;
+
+  @Expose()
+  get fullName(): string {
+    return `${this.firstName} ${this.lastName}`;
+  }
 
   @CreateDateColumn({
     comment: METADATA.createdAt.title,

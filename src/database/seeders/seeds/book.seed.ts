@@ -1,11 +1,16 @@
-import { getRandomAuthor } from '@/database/seeders/seeds/author.seed';
+import { getRandomAuthors } from '@/database/seeders/seeds/author.seed';
 import { getRandomGenre } from '@/database/seeders/seeds/genre.seed';
 import { getRandomLanguage } from '@/database/seeders/seeds/language.seed';
 import { getRandomPublisher } from '@/database/seeders/seeds/publisher.seed';
-import { getRandomTag } from '@/database/seeders/seeds/tag.seed';
-import { Author } from '@/modules/books/entities/author.entity';
+import { getRandomTags } from '@/database/seeders/seeds/tag.seed';
+import {
+  Author,
+  Genre,
+  Language,
+  Publisher,
+  Tag,
+} from '@/modules/books/entities';
 import { Book } from '@/modules/books/entities/book.entity';
-import { Tag } from '@/modules/books/entities/tag.entity';
 import { BookType } from '@/modules/books/enums/book-type.enum';
 import { getRandomNumber } from '@/utils/random';
 
@@ -39,23 +44,6 @@ const getRandomIssueDate = (): Date => {
   return new Date(+new Date() - Math.floor(Math.random() * 1000000000000));
 };
 
-const getRandomAuthors = (): Author[] => {
-  const authorsCount = getRandomNumber(3, 1);
-
-  const authors: Author[] = [];
-  for (let i = 0; i < authorsCount; i++) {
-    let author = getRandomAuthor();
-
-    while (authors.find((it) => it.id === author.id)) {
-      author = getRandomAuthor();
-    }
-
-    authors.push(author);
-  }
-
-  return authors;
-};
-
 const getRandomType = (): BookType => {
   const types = Object.values(BookType);
   const typeIdx = getRandomNumber(types.length - 1);
@@ -67,36 +55,19 @@ const getRandomPages = (): number => {
   return getRandomNumber(1000, 50);
 };
 
-const getRandomTags = (): Tag[] => {
-  const tagsCount = getRandomNumber(5, 2);
-
-  const tags: Tag[] = [];
-  for (let i = 0; i < tagsCount; i++) {
-    let tag = getRandomTag();
-
-    while (tags.find((it) => it.id === tag.id)) {
-      tag = getRandomTag();
-    }
-
-    tags.push(tag);
-  }
-
-  return tags;
-};
-
 export const BookSeed: Book[] = Array.from({ length: 10 }, (_, i) => {
   return {
     id: i + 1,
     isbn: getRandomIsbn(),
     title: getRandomTitle(),
     issueDate: getRandomIssueDate(),
-    publisher: getRandomPublisher(),
-    authors: getRandomAuthors(),
+    publisher: getRandomPublisher() as Publisher,
+    authors: getRandomAuthors() as Author[],
     type: getRandomType(),
-    genre: getRandomGenre(),
-    language: getRandomLanguage(),
+    genre: getRandomGenre() as Genre,
+    language: getRandomLanguage() as Language,
     pages: getRandomPages(),
-    tags: getRandomTags(),
+    tags: getRandomTags() as Tag[],
     details: {},
     createdAt: new Date(),
   };

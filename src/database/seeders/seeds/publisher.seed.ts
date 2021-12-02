@@ -1,7 +1,9 @@
 import { Publisher } from '@/modules/books/entities/publisher.entity';
 import { getRandomNumber } from '@/utils/random';
 
-const publishers: Omit<Publisher, 'id'>[] = [
+type IPublisher = Partial<Publisher>;
+
+const publishers: IPublisher[] = [
   {
     name: 'Tajfuny',
     createdAt: new Date(),
@@ -28,13 +30,13 @@ const publishers: Omit<Publisher, 'id'>[] = [
   },
 ];
 
-export const getRandomPublisher = (): Publisher => {
+export const getRandomPublisher = (): IPublisher => {
   const idx = getRandomNumber(publishers.length - 1);
 
   return Object.assign({ id: idx + 1 }, publishers[idx]);
 };
 
-export const PublisherSeed: Publisher[] = publishers.map((publisher, i) => {
+export const PublisherSeed: IPublisher[] = publishers.map((publisher, i) => {
   return {
     id: i + 1,
     name: publisher.name,
