@@ -1,6 +1,8 @@
 import { CreateCopy } from '@/modules/books/dto';
 import { Book, Copy } from '@/modules/books/entities';
 import { BookNotFoundError } from '@/modules/books/errors/book-not-found.error';
+import { CopyInvalidBookError } from '@/modules/books/errors/copy-invalid-book.error';
+import { CopyNotFoundError } from '@/modules/books/errors/copy-not-found.error';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Equal, Repository } from 'typeorm';
 
@@ -28,5 +30,20 @@ export class CopiesService {
     copy.book = book;
 
     return this.copyRepository.save(copy);
+  }
+
+  async remove(bookId: string, copyId: string) {
+    const copy = await this.copyRepository.findOne(copyId, {
+      relations: ['book'],
+    });
+    if (copy == null) {
+      throw new CopyNotFoundError(copyId);
+    }
+
+    if (copy.book.id !== Number(bookId)) {
+      throw new CopyInvalidBookError(copyId, bookId);
+    }
+
+    return this.copyRepository.softDelete(copyId);
   }
 }
