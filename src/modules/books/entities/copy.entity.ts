@@ -1,8 +1,8 @@
 import { Book } from '@/modules/books/entities/book.entity';
 import { Borrow } from '@/modules/books/entities/borrow.entity';
-import { CONSTRAINTS, METADATA } from '@/modules/books/entities/copy.props';
 import { Exclude } from 'class-transformer';
 import {
+  BaseEntity,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -18,20 +18,20 @@ import {
   name: 'copies',
   orderBy: { id: 'ASC' },
 })
-export class Copy {
+export class Copy extends BaseEntity {
   @PrimaryGeneratedColumn({
-    comment: METADATA.id.title,
     name: 'id',
+    comment: 'Identyfikator rekordu',
   })
   id: number;
 
   @Column({
-    comment: METADATA.number.title,
     name: 'number',
+    comment: 'Numer',
     type: 'varchar',
     unique: true,
-    length: CONSTRAINTS.number.maxLength,
-    nullable: CONSTRAINTS.number.nullable,
+    length: 50,
+    nullable: false,
   })
   number: string;
 
@@ -50,24 +50,24 @@ export class Copy {
   borrows: Borrow[];
 
   @CreateDateColumn({
-    comment: METADATA.createdAt.title,
     name: 'created_at',
+    comment: 'Moment utworzenia rekordu',
     nullable: false,
   })
   createdAt: Date;
 
   @Exclude()
   @UpdateDateColumn({
-    comment: METADATA.modifiedAt.title,
     name: 'modified_at',
+    comment: 'Moment modyfikacji rekordu',
     nullable: true,
   })
   modifiedAt?: Date;
 
   @Exclude()
   @DeleteDateColumn({
-    comment: METADATA.removedAt.title,
     name: 'removed_at',
+    comment: 'Moment usunięcie rekordu',
     nullable: true,
   })
   removedAt: Date;

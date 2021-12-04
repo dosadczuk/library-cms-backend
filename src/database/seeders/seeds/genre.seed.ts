@@ -1,9 +1,7 @@
 import { Genre } from '@/modules/books/entities/genre.entity';
-import { getRandomNumber } from '@/utils/random';
+import { randomNumber } from '@/utils/random';
 
-type IGenre = Partial<Genre>;
-
-const genres: string[] = [
+const samples: string[] = [
   'horror',
   'thriller',
   'komedia',
@@ -14,18 +12,20 @@ const genres: string[] = [
   'edukacyjny',
 ];
 
-export const getRandomGenre = (): IGenre => {
-  const idx = getRandomNumber(genres.length - 1);
+export const GenreSeed: Genre[] = samples.map((it, idx) => {
+  const genre = new Genre();
+  genre.id = idx + 1;
+  genre.value = it;
 
-  return {
-    id: idx + 1,
-    value: genres[idx],
-  };
-};
-
-export const GenreSeed: IGenre[] = genres.map((genre, i) => {
-  return {
-    id: i + 1,
-    value: genre,
-  };
+  return genre;
 });
+
+export const randomGenre = (): Genre => {
+  const idx = randomNumber(samples.length - 1, 0);
+
+  const genre = new Genre();
+  genre.id = idx + 1;
+  genre.value = samples[idx];
+
+  return genre;
+};

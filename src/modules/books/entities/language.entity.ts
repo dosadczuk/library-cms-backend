@@ -1,24 +1,23 @@
-import { CONSTRAINTS, METADATA } from '@/modules/books/entities/language.props';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({
   name: 'languages',
   orderBy: { id: 'ASC' },
 })
-export class Language {
+export class Language extends BaseEntity {
   @PrimaryGeneratedColumn({
-    comment: METADATA.id.title,
     name: 'id',
+    comment: 'Identyfikator rekordu',
   })
   id: number;
 
   @Column({
-    comment: METADATA.value.title,
     name: 'value',
+    comment: 'Wartość',
     type: 'varchar',
     unique: true,
-    length: CONSTRAINTS.value.maxLength,
-    nullable: CONSTRAINTS.value.nullable,
+    length: 100,
+    nullable: false,
   })
   value: string;
 }

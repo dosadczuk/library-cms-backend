@@ -1,15 +1,15 @@
 import { Author } from '@/modules/books/entities/author.entity';
-import { CONSTRAINTS, METADATA } from '@/modules/books/entities/book.props';
 import { Copy } from '@/modules/books/entities/copy.entity';
+import { BookType } from '@/modules/books/entities/enums/book-type.enum';
 import { Genre } from '@/modules/books/entities/genre.entity';
 import { Language } from '@/modules/books/entities/language.entity';
 import { Publisher } from '@/modules/books/entities/publisher.entity';
 import { Rating } from '@/modules/books/entities/rating.entity';
 import { Tag } from '@/modules/books/entities/tag.entity';
-import { BookType } from '@/modules/books/enums/book-type.enum';
 import { File } from '@/modules/files/entities/file.entity';
 import { Exclude } from 'class-transformer';
 import {
+  BaseEntity,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -28,62 +28,61 @@ import {
   name: 'books',
   orderBy: { id: 'ASC' },
 })
-export class Book {
+export class Book extends BaseEntity {
   @PrimaryGeneratedColumn({
-    comment: METADATA.id.title,
     name: 'id',
+    comment: 'Identyfikator rekordu',
   })
   id: number;
 
   @Column({
-    comment: METADATA.isbn.title,
     name: 'isbn',
+    comment: 'ISBN',
     type: 'varchar',
     unique: true,
-    length: CONSTRAINTS.isbn.maxLength,
-    nullable: CONSTRAINTS.isbn.nullable,
+    length: 13,
+    nullable: false,
   })
   isbn: string;
 
   @Column({
-    comment: METADATA.title.title,
+    name: 'type',
+    comment: 'Rodzaj',
+    type: 'enum',
+    enum: BookType,
+    nullable: false,
+  })
+  type: BookType;
+
+  @Column({
     name: 'title',
+    comment: 'Tytuł',
     type: 'varchar',
-    length: CONSTRAINTS.title.maxLength,
-    nullable: CONSTRAINTS.title.nullable,
+    length: 255,
+    nullable: false,
   })
   title: string;
 
   @Column({
-    comment: METADATA.description.title,
     name: 'description',
+    comment: 'Opis',
     type: 'text',
-    nullable: CONSTRAINTS.description.nullable,
+    nullable: true,
   })
   description?: string;
 
-  @OneToOne(() => File, {
-    eager: true,
-    cascade: false,
-  })
-  @JoinColumn({
-    name: 'image_id',
-    referencedColumnName: 'id',
-  })
-  image?: File;
-
   @Column({
-    comment: METADATA.issueDate.title,
     name: 'issue_date',
+    comment: 'Data wydania',
     type: 'date',
-    nullable: CONSTRAINTS.issueDate.nullable,
+    nullable: false,
   })
   issueDate: Date;
 
   @ManyToOne(() => Publisher, {
     eager: true,
     cascade: ['insert'],
-    nullable: CONSTRAINTS.publisher.nullable,
+    nullable: false,
   })
   @JoinColumn({
     name: 'publisher_id',
@@ -94,7 +93,7 @@ export class Book {
   @ManyToMany(() => Author, {
     eager: true,
     cascade: ['insert'],
-    nullable: CONSTRAINTS.authors.nullable,
+    nullable: false,
   })
   @JoinTable({
     name: 'books_authors',
@@ -109,19 +108,10 @@ export class Book {
   })
   authors: Author[];
 
-  @Column({
-    comment: METADATA.type.title,
-    name: 'type',
-    type: 'enum',
-    enum: BookType,
-    nullable: CONSTRAINTS.type.nullable,
-  })
-  type: BookType;
-
   @ManyToOne(() => Genre, {
     eager: true,
     cascade: ['insert'],
-    nullable: CONSTRAINTS.genre.nullable,
+    nullable: false,
   })
   @JoinColumn({
     name: 'genre_id',
@@ -132,7 +122,7 @@ export class Book {
   @ManyToOne(() => Language, {
     eager: true,
     cascade: ['insert'],
-    nullable: CONSTRAINTS.language.nullable,
+    nullable: false,
   })
   @JoinColumn({
     name: 'language_id',
@@ -141,17 +131,35 @@ export class Book {
   language: Language;
 
   @Column({
-    comment: METADATA.pages.title,
     name: 'pages',
+    comment: 'Liczba stron',
     type: 'int',
-    nullable: CONSTRAINTS.pages.nullable,
+    nullable: false,
   })
   pages: number;
+
+  @OneToOne(() => File, {
+    eager: true,
+    cascade: false,
+  })
+  @JoinColumn({
+    name: 'image_id',
+    referencedColumnName: 'id',
+  })
+  image?: File;
+
+  @Column({
+    name: 'details',
+    comment: 'Szczegóły',
+    type: 'jsonb',
+    nullable: false,
+  })
+  details: Record<string, unknown>;
 
   @ManyToMany(() => Tag, {
     eager: true,
     cascade: ['insert'],
-    nullable: CONSTRAINTS.tags.nullable,
+    nullable: false,
   })
   @JoinTable({
     name: 'books_tags',
@@ -166,43 +174,35 @@ export class Book {
   })
   tags: Tag[];
 
-  @Column({
-    comment: METADATA.details.title,
-    name: 'details',
-    type: 'jsonb',
-    nullable: CONSTRAINTS.details.nullable,
-  })
-  details: Record<string, unknown>;
-
   @OneToMany(() => Copy, (copy) => copy.book, {
-    nullable: CONSTRAINTS.copies.nullable,
+    nullable: true,
   })
   copies?: Copy[];
 
   @OneToMany(() => Rating, (rating) => rating.book, {
-    nullable: CONSTRAINTS.ratings.nullable,
+    nullable: true,
   })
   ratings?: Rating[];
 
   @CreateDateColumn({
-    comment: METADATA.createdAt.title,
     name: 'created_at',
+    comment: 'Moment utworzenia rekordu',
     nullable: false,
   })
   createdAt: Date;
 
   @Exclude()
   @UpdateDateColumn({
-    comment: METADATA.modifiedAt.title,
     name: 'modified_at',
+    comment: 'Moment modyfikacji rekordu',
     nullable: true,
   })
   modifiedAt?: Date;
 
   @Exclude()
   @DeleteDateColumn({
-    comment: METADATA.removedAt.title,
     name: 'removed_at',
+    comment: 'Moment usunięcia rekordu',
     nullable: true,
   })
   removedAt?: Date;

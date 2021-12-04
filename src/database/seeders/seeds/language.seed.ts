@@ -1,9 +1,7 @@
 import { Language } from '@/modules/books/entities/language.entity';
-import { getRandomNumber } from '@/utils/random';
+import { randomNumber } from '@/utils/random';
 
-type ILanguage = Partial<Language>;
-
-const languages: string[] = [
+const samples: string[] = [
   'polski',
   'angielski',
   'niemiecki',
@@ -13,18 +11,20 @@ const languages: string[] = [
   'japoński',
 ];
 
-export const getRandomLanguage = (): ILanguage => {
-  const idx = getRandomNumber(languages.length - 1);
+export const LanguageSeed: Language[] = samples.map((it, idx) => {
+  const language = new Language();
+  language.id = idx + 1;
+  language.value = it;
 
-  return {
-    id: idx + 1,
-    value: languages[idx],
-  };
-};
-
-export const LanguageSeed: ILanguage[] = languages.map((language, i) => {
-  return {
-    id: i + 1,
-    value: language,
-  };
+  return language;
 });
+
+export const randomLanguage = (): Language => {
+  const idx = randomNumber(samples.length - 1, 0);
+
+  const language = new Language();
+  language.id = idx + 1;
+  language.value = samples[idx];
+
+  return language;
+};

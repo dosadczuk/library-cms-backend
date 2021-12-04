@@ -1,14 +1,8 @@
-import { HttpError } from '@/errors/http.error';
 import { Book } from '@/modules/books/entities/book.entity';
-import { HttpException, NotFoundException } from '@nestjs/common';
-import { EntityNotFoundError as NotFoundError } from 'typeorm';
+import { EntityNotFoundError } from 'typeorm';
 
-export class BookNotFoundError extends NotFoundError implements HttpError {
+export class BookNotFoundError extends EntityNotFoundError {
   constructor(criteria: any) {
     super(Book, criteria);
-  }
-
-  getHttpError(): HttpException {
-    return new NotFoundException(this.message);
   }
 }

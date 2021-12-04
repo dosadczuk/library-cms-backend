@@ -1,75 +1,71 @@
 import { Author } from '@/modules/books/entities/author.entity';
-import { getRandomNumber } from '@/utils/random';
+import { randomNumber } from '@/utils/random';
 
-type IAuthor = Partial<Author>;
-
-const authors: IAuthor[] = [
+const samples: Partial<Author>[] = [
   {
     firstName: 'Antoni',
     lastName: 'Nowak',
-    createdAt: new Date(),
   },
   {
     firstName: 'Antoni',
     lastName: 'Kowalski',
-    createdAt: new Date(),
   },
   {
     firstName: 'Jan',
     lastName: 'Wiśniewski',
-    createdAt: new Date(),
   },
   {
     firstName: 'Jan',
     lastName: 'Kamiński',
-    createdAt: new Date(),
   },
   {
     firstName: 'Aleksander',
     lastName: 'Nowak',
-    createdAt: new Date(),
   },
   {
     firstName: 'Aleksander',
     lastName: 'Kamiński',
-    createdAt: new Date(),
   },
   {
     firstName: 'Jakub',
     lastName: 'Kowalski',
-    createdAt: new Date(),
   },
   {
     firstName: 'Jakub',
     lastName: 'Wiśniewski',
-    createdAt: new Date(),
   },
 ];
 
-export const AuthorSeed: IAuthor[] = authors.map((author, i) => {
-  return {
-    id: i + 1,
-    firstName: author.firstName,
-    lastName: author.lastName,
-    createdAt: new Date(),
-  };
+export const AuthorSeed: Author[] = samples.map((it, idx) => {
+  const author = new Author();
+  author.id = idx + 1;
+  author.firstName = it.firstName;
+  author.lastName = it.lastName;
+
+  return author;
 });
 
-export const getRandomAuthor = (): IAuthor => {
-  const idx = getRandomNumber(authors.length - 1);
+export const randomAuthor = (): Author => {
+  const idx = randomNumber(samples.length - 1, 0);
+  const data = samples[idx];
 
-  return Object.assign({ id: idx + 1 }, authors[idx]);
+  const author = new Author();
+  author.id = idx + 1;
+  author.firstName = data.firstName;
+  author.lastName = data.lastName;
+
+  return author;
 };
 
-export const getRandomAuthors = (): IAuthor[] => {
-  const count = getRandomNumber(3, 1);
+export const randomAuthors = (): Author[] => {
+  const count = randomNumber(3, 1);
 
-  const authors: IAuthor[] = [];
-  for (let i = 0; i < count; i++) {
-    let author = getRandomAuthor();
+  const authors: Author[] = [];
 
+  for (let idx = 0; idx < count; idx++) {
+    let author = randomAuthor();
     while (authors.find((it) => it.id === author.id)) {
-      author = getRandomAuthor();
+      author = randomAuthor();
     }
 
     authors.push(author);

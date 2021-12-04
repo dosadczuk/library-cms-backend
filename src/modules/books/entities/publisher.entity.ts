@@ -1,9 +1,6 @@
-import {
-  CONSTRAINTS,
-  METADATA,
-} from '@/modules/books/entities/publisher.props';
 import { Exclude } from 'class-transformer';
 import {
+  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
@@ -15,34 +12,34 @@ import {
   name: 'publishers',
   orderBy: { id: 'ASC' },
 })
-export class Publisher {
+export class Publisher extends BaseEntity {
   @PrimaryGeneratedColumn({
-    comment: METADATA.id.title,
     name: 'id',
+    comment: 'Identyfikator rekordu',
   })
   id: number;
 
   @Column({
-    comment: METADATA.name.title,
     name: 'name',
+    comment: 'Nazwa',
     type: 'varchar',
     unique: true,
-    length: CONSTRAINTS.name.maxLength,
-    nullable: CONSTRAINTS.name.nullable,
+    length: 250,
+    nullable: false,
   })
   name: string;
 
   @CreateDateColumn({
-    comment: METADATA.createdAt.title,
     name: 'created_at',
+    comment: 'Moment utworzenia rekordu',
     nullable: false,
   })
   createdAt: Date;
 
   @Exclude()
   @UpdateDateColumn({
-    comment: METADATA.modifiedAt.title,
     name: 'modified_at',
+    comment: 'Moment modyfikacji rekordu',
     nullable: true,
   })
   modifiedAt?: Date;

@@ -37,7 +37,7 @@ services:
     restart: unless-stopped
 
   pgadmin:
-    container_name: pgadmin4
+    container_name: pgadmin
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: ${DB_PGADMIN_EMAIL}
@@ -48,7 +48,7 @@ services:
     env_file:
       - .env
     depends_on:
-      - postgresss
+      - postgres
     restart: unless-stopped
 
 volumes:

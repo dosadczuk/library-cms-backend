@@ -1,9 +1,7 @@
 import { Tag } from '@/modules/books/entities/tag.entity';
-import { getRandomNumber } from '@/utils/random';
+import { randomNumber } from '@/utils/random';
 
-type ITag = Partial<Tag>;
-
-const tags: string[] = [
+const samples: string[] = [
   'historia',
   'dramat',
   'przygoda',
@@ -13,31 +11,32 @@ const tags: string[] = [
   'XX wiek',
 ];
 
-export const TagSeed: ITag[] = tags.map((tag, i) => {
-  return {
-    id: i + 1,
-    value: tag,
-  };
+export const TagSeed: Tag[] = samples.map((it, idx) => {
+  const tag = new Tag();
+  tag.id = idx + 1;
+  tag.value = it;
+
+  return tag;
 });
 
-export const getRandomTag = (): ITag => {
-  const idx = getRandomNumber(tags.length - 1);
+export const randomTag = (): Tag => {
+  const idx = randomNumber(samples.length - 1, 0);
 
-  return {
-    id: idx + 1,
-    value: tags[idx],
-  };
+  const tag = new Tag();
+  tag.id = idx + 1;
+  tag.value = samples[idx];
+
+  return tag;
 };
 
-export const getRandomTags = (): ITag[] => {
-  const count = getRandomNumber(5, 2);
+export const randomTags = (): Tag[] => {
+  const count = randomNumber(5, 2);
 
-  const tags: ITag[] = [];
-  for (let i = 0; i < count; i++) {
-    let tag = getRandomTag();
-
+  const tags: Tag[] = [];
+  for (let idx = 0; idx < count; idx++) {
+    let tag = randomTag();
     while (tags.find((it) => it.id === tag.id)) {
-      tag = getRandomTag();
+      tag = randomTag();
     }
 
     tags.push(tag);

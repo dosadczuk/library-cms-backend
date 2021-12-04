@@ -1,11 +1,11 @@
 import Config from '@/config/app.config';
-import { BooksModule } from '@/modules/books/books.module';
 import { FilesModule } from '@/modules/files/files.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { I18nJsonParser, I18nModule } from 'nestjs-i18n';
 import * as path from 'path';
+import { BooksModule } from './modules/books/books.module';
 
 @Module({
   imports: [

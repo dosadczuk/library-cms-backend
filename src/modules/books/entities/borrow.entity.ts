@@ -1,7 +1,7 @@
-import { CONSTRAINTS, METADATA } from '@/modules/books/entities/borrow.props';
 import { Copy } from '@/modules/books/entities/copy.entity';
 import { Exclude } from 'class-transformer';
 import {
+  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
@@ -15,26 +15,26 @@ import {
   name: 'borrows',
   orderBy: { id: 'ASC' },
 })
-export class Borrow {
+export class Borrow extends BaseEntity {
   @PrimaryGeneratedColumn({
-    comment: METADATA.id.title,
     name: 'id',
+    comment: 'Identyfikator rekordu',
   })
   id: number;
 
   @Column({
-    comment: METADATA.dateFrom.title,
     name: 'date_from',
+    comment: 'Data od',
     type: 'date',
-    nullable: CONSTRAINTS.dateFrom.nullable,
+    nullable: false,
   })
   dateFrom: Date;
 
   @Column({
-    comment: METADATA.dateTo.title,
     name: 'date_to',
+    comment: 'Data do',
     type: 'date',
-    nullable: CONSTRAINTS.dateTo.nullable,
+    nullable: true,
   })
   dateTo?: Date;
 
@@ -48,16 +48,16 @@ export class Borrow {
   copy: Copy;
 
   @CreateDateColumn({
-    comment: METADATA.createdAt.title,
     name: 'created_at',
+    comment: 'Moment utworzenia rekordu',
     nullable: false,
   })
   createdAt: Date;
 
   @Exclude()
   @UpdateDateColumn({
-    comment: METADATA.modifiedAt.title,
     name: 'modified_at',
+    comment: 'Moment modyfikacji rekordu',
     nullable: true,
   })
   modifiedAt?: Date;

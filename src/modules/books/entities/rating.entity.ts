@@ -1,6 +1,6 @@
 import { Book } from '@/modules/books/entities/book.entity';
-import { CONSTRAINTS, METADATA } from '@/modules/books/entities/rating.props';
 import {
+  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
@@ -14,26 +14,26 @@ import {
   name: 'ratings',
   orderBy: { id: 'ASC' },
 })
-export class Rating {
+export class Rating extends BaseEntity {
   @PrimaryGeneratedColumn({
-    comment: METADATA.id.title,
     name: 'id',
+    comment: 'Identyfikator rekordu',
   })
   id: number;
 
   @Column({
-    comment: METADATA.value.title,
     name: 'value',
+    comment: 'Wartość',
     type: 'int',
-    nullable: CONSTRAINTS.value.nullable,
+    nullable: false,
   })
   value: number;
 
   @Column({
-    comment: METADATA.comment.title,
     name: 'comment',
+    comment: 'Komentarz',
     type: 'text',
-    nullable: CONSTRAINTS.comment.nullable,
+    nullable: false,
   })
   comment: string;
 
@@ -47,15 +47,15 @@ export class Rating {
   book: Book;
 
   @CreateDateColumn({
-    comment: METADATA.createdAt.title,
     name: 'created_at',
+    comment: 'Moment utworzenia rekordu',
     nullable: false,
   })
   createdAt: Date;
 
   @UpdateDateColumn({
-    comment: METADATA.modifiedAt.title,
     name: 'modified_at',
+    comment: 'Moment modyfikacji rekordu',
     nullable: false,
   })
   modifiedAt: Date;
