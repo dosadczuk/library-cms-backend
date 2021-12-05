@@ -1,6 +1,5 @@
-import { CreateUpdateBookResultDto } from '@/modules/books/dto/create-update-book.dto';
 import { BookType } from '@/modules/books/entities/enums/book-type.enum';
-import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsArray,
@@ -10,6 +9,7 @@ import {
   IsString,
   MaxLength,
 } from 'class-validator';
+import { BookViewModel } from '@/modules/books/vms/book.vm';
 
 export class FindBooksFilterDto {
   @IsString()
@@ -50,12 +50,14 @@ export class FindBooksFilterDto {
   languageIds?: number[];
 }
 
-class BookResultDto extends PartialType(CreateUpdateBookResultDto) {}
-
 export class FindBooksResultDto {
   @ApiProperty({
     title: 'Znalezione książki',
-    type: [BookResultDto],
+    type: [BookViewModel],
   })
-  books: BookResultDto[];
+  readonly books: BookViewModel[];
+
+  constructor(books: BookViewModel[]) {
+    this.books = books;
+  }
 }

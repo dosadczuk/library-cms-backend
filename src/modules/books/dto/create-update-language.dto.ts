@@ -1,4 +1,3 @@
-import { Language } from '@/modules/books/entities/language.entity';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsInt,
@@ -27,23 +26,4 @@ export class CreateUpdateLanguageDto {
     nullable: false,
   })
   value: string;
-}
-
-export class CreateUpdateLanguageResultDto {
-  @ApiProperty({
-    title: 'Identyfikator',
-    example: 1,
-  })
-  readonly id: number;
-
-  @ApiProperty({
-    title: 'Wartość',
-    example: 'polski',
-  })
-  readonly value: string;
-
-  constructor(language: Language) {
-    this.id = language.id;
-    this.value = language.value;
-  }
 }

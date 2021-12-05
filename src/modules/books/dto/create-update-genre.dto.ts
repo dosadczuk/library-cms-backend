@@ -1,4 +1,3 @@
-import { Genre } from '@/modules/books/entities/genre.entity';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsInt,
@@ -28,23 +27,4 @@ export class CreateUpdateGenreDto {
     nullable: false,
   })
   value: string;
-}
-
-export class CreateUpdateGenreResultDto {
-  @ApiProperty({
-    title: 'Identyfikator',
-    example: 1,
-  })
-  readonly id: number;
-
-  @ApiProperty({
-    title: 'Wartość',
-    example: 'komedia',
-  })
-  readonly value: string;
-
-  constructor(genre: Genre) {
-    this.id = genre.id;
-    this.value = genre.value;
-  }
 }

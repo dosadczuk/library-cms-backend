@@ -2,7 +2,7 @@ import { ManageBookCommand } from '@/modules/books/commands/manage-book/manage-b
 import { CreateUpdateBookDto } from '@/modules/books/dto/create-update-book.dto';
 
 export class UpdateBookCommand extends ManageBookCommand {
-  constructor(readonly bookId: string, book: CreateUpdateBookDto) {
+  constructor(readonly bookId: number, book: CreateUpdateBookDto) {
     super(book);
   }
 }

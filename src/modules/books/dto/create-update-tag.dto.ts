@@ -1,4 +1,3 @@
-import { Tag } from '@/modules/books/entities/tag.entity';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsInt,
@@ -27,23 +26,4 @@ export class CreateUpdateTagDto {
     nullable: false,
   })
   value: string;
-}
-
-export class CreateUpdateTagResultDto {
-  @ApiProperty({
-    title: 'Identyfikator',
-    example: 1,
-  })
-  readonly id: number;
-
-  @ApiProperty({
-    title: 'Wartość',
-    example: 'XX wiek',
-  })
-  readonly value: string;
-
-  constructor(tag: Tag) {
-    this.id = tag.id;
-    this.value = tag.value;
-  }
 }

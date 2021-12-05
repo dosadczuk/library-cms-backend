@@ -1,11 +1,3 @@
-import { CreateBookCopyCommand } from '@/modules/books/commands/create-book-copy/create-book-copy.command';
-import { CreateBookCopyResult } from '@/modules/books/commands/create-book-copy/create-book-copy.result';
-import { CreateBookCommand } from '@/modules/books/commands/create-book/create-book.command';
-import { CreateBookResult } from '@/modules/books/commands/create-book/create-book.result';
-import { RemoveBookCopyCommand } from '@/modules/books/commands/remove-book-copy/remove-book-copy.command';
-import { RemoveBookCommand } from '@/modules/books/commands/remove-book/remove-book.command';
-import { UpdateBookCommand } from '@/modules/books/commands/update-book/update-book.command';
-import { UpdateBookResult } from '@/modules/books/commands/update-book/update-book.result';
 import {
   CreateBookCopyDto,
   CreateBookCopyResultDto,
@@ -26,22 +18,6 @@ import {
   FindTagsFilterDto,
   FindTagsResultDto,
 } from '@/modules/books/dto';
-import { FindAuthorsQuery } from '@/modules/books/queries/find-authors/find-authors.query';
-import { FindAuthorsResult } from '@/modules/books/queries/find-authors/find-authors.result';
-import { FindBookCopiesQuery } from '@/modules/books/queries/find-book-copies/find-book-copies.query';
-import { FindBookCopiesResult } from '@/modules/books/queries/find-book-copies/find-book-copies.result';
-import { FindBookQuery } from '@/modules/books/queries/find-book/find-book.query';
-import { FindBookResult } from '@/modules/books/queries/find-book/find-book.result';
-import { FindBooksQuery } from '@/modules/books/queries/find-books/find-books.query';
-import { FindBooksResult } from '@/modules/books/queries/find-books/find-books.result';
-import { FindGenresQuery } from '@/modules/books/queries/find-genres/find-genres.query';
-import { FindGenresResult } from '@/modules/books/queries/find-genres/find-genres.result';
-import { FindLanguagesQuery } from '@/modules/books/queries/find-languages/find-languages.query';
-import { FindLanguagesResult } from '@/modules/books/queries/find-languages/find-languages.result';
-import { FindPublishersQuery } from '@/modules/books/queries/find-publishers/find-publishers.query';
-import { FindPublishersResult } from '@/modules/books/queries/find-publishers/find-publishers.result';
-import { FindTagsQuery } from '@/modules/books/queries/find-tags/find-tags.query';
-import { FindTagsResult } from '@/modules/books/queries/find-tags/find-tags.result';
 import {
   Body,
   Controller,
@@ -53,7 +29,40 @@ import {
   Query,
 } from '@nestjs/common';
 import { CommandBus, ICommand, IQuery, QueryBus } from '@nestjs/cqrs';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
+import {
+  FindAuthorsQuery,
+  FindAuthorsResult,
+  FindBookCopiesQuery,
+  FindBookCopiesResult,
+  FindBookQuery,
+  FindBookResult,
+  FindBooksQuery,
+  FindBooksResult,
+  FindGenresQuery,
+  FindGenresResult,
+  FindLanguagesQuery,
+  FindLanguagesResult,
+  FindPublishersQuery,
+  FindPublishersResult,
+  FindTagsQuery,
+  FindTagsResult,
+} from '@/modules/books/queries';
+import {
+  CreateBookCommand,
+  CreateBookCopyCommand,
+  CreateBookCopyResult,
+  CreateBookResult,
+  RemoveBookCommand,
+  RemoveBookCopyCommand,
+} from '@/modules/books/commands';
+import { UpdateBookCommand } from '@/modules/books/commands/update-book/update-book.command';
+import { UpdateBookResult } from '@/modules/books/commands/update-book/update-book.result';
 
 @ApiTags('books')
 @Controller('books')
@@ -137,9 +146,12 @@ export class BooksController {
 
   @ApiOperation({ summary: 'Pobieranie książki' })
   @ApiOkResponse({ type: FindBookResultDto })
+  @ApiBadRequestResponse({
+    description: 'Książka nie istnieje',
+  })
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<FindBookResultDto> {
-    const query = new FindBookQuery(id);
+    const query = new FindBookQuery(+id);
     const result = await this.executeQuery<FindBookResult>(query);
 
     return result.book;
@@ -149,6 +161,9 @@ export class BooksController {
   @ApiOkResponse({
     type: CreateUpdateBookResultDto,
     description: 'Książka została pomyślnie utworzona',
+  })
+  @ApiBadRequestResponse({
+    description: 'Książka z podanym ISBN już istnieje',
   })
   @Post()
   async create(
@@ -164,6 +179,9 @@ export class BooksController {
   @ApiOkResponse({
     type: CreateUpdateBookResultDto,
     description: 'Książka została pomyślnie zmodyfikowana',
+  })
+  @ApiBadRequestResponse({
+    description: 'Książka nie istnieje',
   })
   @Put(':id')
   async update(
@@ -189,11 +207,14 @@ export class BooksController {
 
   @ApiOperation({ summary: 'Pobieranie egzemplarzy książki' })
   @ApiOkResponse({ type: FindBookCopiesResultDto })
+  @ApiBadRequestResponse({
+    description: 'Książka nie istnieje',
+  })
   @Get(':id/copies')
   async findBookCopies(
     @Param('id') bookId: string,
   ): Promise<FindBookCopiesResultDto> {
-    const query = new FindBookCopiesQuery(bookId);
+    const query = new FindBookCopiesQuery(+bookId);
     const result = await this.executeQuery<FindBookCopiesResult>(query);
 
     return result.bookCopies;
@@ -204,27 +225,33 @@ export class BooksController {
     type: CreateBookCopyResultDto,
     description: 'Egzemplarz książki został pomyślnie utworzony',
   })
+  @ApiBadRequestResponse({
+    description: 'Książka nie istnieje',
+  })
   @Post(':id/copies')
   async createBookCopy(
     @Param('id') bookId: string,
-    @Body() bookCopy: CreateBookCopyDto,
+    @Body() copy: CreateBookCopyDto,
   ): Promise<CreateBookCopyResultDto> {
-    const command = new CreateBookCopyCommand(bookId, bookCopy);
+    const command = new CreateBookCopyCommand(+bookId, copy);
     const result = await this.executeCommand<CreateBookCopyResult>(command);
 
-    return result.bookCopy;
+    return result.copy;
   }
 
   @ApiOperation({ summary: 'Usuwanie egzemplarza książki' })
   @ApiOkResponse({
     description: 'Egzemplarz książki został pomyślnie usunięty',
   })
+  @ApiBadRequestResponse({
+    description: 'Książka nie istnieje',
+  })
   @Delete(':id/copies/:copy_id')
   async removeBookCopy(
     @Param('id') bookId: string,
-    @Param('copy_id') bookCopyId: string,
+    @Param('copy_id') copyId: string,
   ): Promise<void> {
-    const command = new RemoveBookCopyCommand(bookId, bookCopyId);
+    const command = new RemoveBookCopyCommand(+bookId, +copyId);
 
     await this.executeCommand<void>(command);
   }

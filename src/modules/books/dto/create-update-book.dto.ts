@@ -1,24 +1,8 @@
-import {
-  CreateUpdateAuthorDto as AuthorQueryDto,
-  CreateUpdateAuthorResultDto as AuthorResultDto,
-} from '@/modules/books/dto/create-update-author.dto';
-import {
-  CreateUpdateGenreDto as GenreQueryDto,
-  CreateUpdateGenreResultDto as GenreResultDto,
-} from '@/modules/books/dto/create-update-genre.dto';
-import {
-  CreateUpdateLanguageDto as LanguageQueryDto,
-  CreateUpdateLanguageResultDto as LanguageResultDto,
-} from '@/modules/books/dto/create-update-language.dto';
-import {
-  CreateUpdatePublisherDto as PublisherQueryDto,
-  CreateUpdatePublisherResultDto as PublisherResultDto,
-} from '@/modules/books/dto/create-update-publisher.dto';
-import {
-  CreateUpdateTagDto as TagQueryDto,
-  CreateUpdateTagResultDto as TagResultDto,
-} from '@/modules/books/dto/create-update-tag.dto';
-import { Book } from '@/modules/books/entities/book.entity';
+import { CreateUpdateAuthorDto as AuthorQueryDto } from '@/modules/books/dto/create-update-author.dto';
+import { CreateUpdateGenreDto as GenreQueryDto } from '@/modules/books/dto/create-update-genre.dto';
+import { CreateUpdateLanguageDto as LanguageQueryDto } from '@/modules/books/dto/create-update-language.dto';
+import { CreateUpdatePublisherDto as PublisherQueryDto } from '@/modules/books/dto/create-update-publisher.dto';
+import { CreateUpdateTagDto as TagQueryDto } from '@/modules/books/dto/create-update-tag.dto';
 import { BookType } from '@/modules/books/entities/enums/book-type.enum';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
@@ -35,6 +19,7 @@ import {
   MinLength,
   ValidateNested,
 } from 'class-validator';
+import { BookViewModel } from '@/modules/books/vms/book.vm';
 
 export class CreateUpdateBookDto {
   @IsString()
@@ -171,103 +156,11 @@ export class CreateUpdateBookDto {
 
 export class CreateUpdateBookResultDto {
   @ApiProperty({
-    title: 'Identyfikator',
-    example: 1,
+    title: 'Utworzona/zmodyfikowana książka',
   })
-  readonly id: number;
+  readonly book: BookViewModel;
 
-  @ApiProperty({
-    title: 'ISBN',
-    example: '3940023815418',
-  })
-  readonly isbn: string;
-
-  @ApiProperty({
-    title: 'Rodzaj książki',
-    example: BookType.BOOK,
-    enum: BookType,
-  })
-  readonly type: BookType;
-
-  @ApiProperty({
-    title: 'Tytuł książki',
-    example: 'Kod Gutenberga',
-  })
-  readonly title: string;
-
-  @ApiPropertyOptional({
-    title: 'Opis książki',
-  })
-  readonly description?: string;
-
-  @ApiProperty({
-    title: 'Data wydania',
-    example: '1998-07-14',
-    format: 'YYYY-MM-DD',
-  })
-  readonly issueDate: Date;
-
-  @ApiProperty({
-    title: 'Wydawca',
-    type: PublisherResultDto,
-  })
-  readonly publisher: PublisherResultDto;
-
-  @ApiProperty({
-    title: 'Autorzy',
-    type: [AuthorResultDto],
-  })
-  readonly authors: AuthorResultDto[];
-
-  @ApiProperty({
-    title: 'Gatunek',
-    type: GenreResultDto,
-  })
-  readonly genre: GenreResultDto;
-
-  @ApiProperty({
-    title: 'Język',
-    type: LanguageResultDto,
-  })
-  readonly language: LanguageResultDto;
-
-  @ApiProperty({
-    title: 'Liczba stron',
-    example: 110,
-  })
-  readonly pages: number;
-
-  @ApiPropertyOptional({
-    title: 'Identyfikator obrazka',
-    example: 'a619817c-9bc5-4fe9-850d-958360a549e3',
-  })
-  readonly imageId?: string;
-
-  @ApiProperty({
-    title: 'Szczegóły książki',
-  })
-  readonly details: Record<string, unknown> = {};
-
-  @ApiProperty({
-    title: 'Tagi',
-    type: [TagResultDto],
-  })
-  readonly tags: TagResultDto[] = [];
-
-  constructor(book: Book) {
-    this.id = book.id;
-    this.isbn = book.isbn;
-    this.type = book.type;
-    this.title = book.title;
-    this.description = book.description;
-    this.issueDate = book.issueDate;
-    this.publisher = new PublisherResultDto(book.publisher);
-    this.authors = book.authors.map((it) => new AuthorResultDto(it));
-    this.genre = new GenreResultDto(book.genre);
-    this.language = new LanguageResultDto(book.language);
-    this.pages = book.pages;
-    this.imageId = book.image?.id;
-    this.details = book.details;
-    this.tags = book.tags.map((it) => new TagResultDto(it));
+  constructor(book: BookViewModel) {
+    this.book = book;
   }
 }

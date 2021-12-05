@@ -1,7 +1,8 @@
-import { FindBooksFilterDto } from '@/modules/books/dto/find-books-filter.dto';
+import { FindBooksFilterDto } from '@/modules/books/dto/find-books.dto';
 import { Book } from '@/modules/books/entities/book.entity';
 import { Injectable } from '@nestjs/common';
 import { Equal, ILike, In } from 'typeorm';
+import { Copy } from '@/modules/books/entities/copy.entity';
 
 @Injectable()
 export class BookRepository {
@@ -9,23 +10,28 @@ export class BookRepository {
    * Pobiera wszystkie książki na podstawie podanego filtra.
    */
   async findAll(filter?: FindBooksFilterDto): Promise<Book[]> {
-    const query = Book.createQueryBuilder();
+    const query = Book.createQueryBuilder('book');
+    query.leftJoinAndSelect('book.publisher', 'publisher');
+    query.leftJoinAndSelect('book.authors', 'authors');
+    query.leftJoinAndSelect('book.genre', 'genre');
+    query.leftJoinAndSelect('book.language', 'language');
+    query.leftJoinAndSelect('book.tags', 'tags');
 
     if (filter != null) {
       if (filter.title != null) {
-        query.andWhere({ title: ILike(`%${filter.title}%`) });
+        query.andWhere({ 'book.title': ILike(`%${filter.title}%`) });
       }
 
       if (filter.type != null) {
-        query.andWhere({ type: Equal(filter.type) });
+        query.andWhere({ 'book.type': Equal(filter.type) });
       }
 
       if (filter.genreIds != null) {
-        query.andWhere({ genre: In(filter.genreIds) });
+        query.andWhere({ 'book.genre': In(filter.genreIds) });
       }
 
       if (filter.languageIds != null) {
-        query.andWhere({ language: In(filter.languageIds) });
+        query.andWhere({ 'book.language': In(filter.languageIds) });
       }
     }
 
@@ -35,8 +41,15 @@ export class BookRepository {
   /**
    * Pobiera książkę na podstawie id.
    */
-  async findOne(id: string): Promise<Book> {
+  async findOne(id: number): Promise<Book | null> {
     return Book.findOne(id);
+  }
+
+  /**
+   * Pobiera egzemplarze książki.
+   */
+  async findCopies(bookId: number): Promise<Copy[]> {
+    return Copy.find({ where: { book: { id: Equal(bookId) } } });
   }
 
   /**

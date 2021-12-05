@@ -1,9 +1,9 @@
-import { FindTagsResultDto } from '@/modules/books/dto/find-tags-filter.dto';
-import { Tag } from '@/modules/books/entities/tag.entity';
+import { FindTagsResultDto } from '@/modules/books/dto/find-tags.dto';
 import { FindTagsQuery } from '@/modules/books/queries/find-tags/find-tags.query';
 import { FindTagsResult } from '@/modules/books/queries/find-tags/find-tags.result';
 import { TagRepository } from '@/modules/books/repositories/tag.repository';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+import { TagViewModel } from '@/modules/books/vms/tag.vm';
 
 @QueryHandler(FindTagsQuery)
 export class FindTagsHandler
@@ -14,13 +14,14 @@ export class FindTagsHandler
   async execute(query: FindTagsQuery): Promise<FindTagsResult> {
     const tags = await this.findTags(query);
 
-    const result = new FindTagsResultDto();
-    result.tags = tags;
+    const result = new FindTagsResultDto(tags);
 
     return new FindTagsResult(result);
   }
 
-  private findTags(query: FindTagsQuery): Promise<Tag[]> {
-    return this.tagRepository.findAll(query.filter);
+  private async findTags(query: FindTagsQuery): Promise<TagViewModel[]> {
+    const tags = await this.tagRepository.findAll(query.filter);
+
+    return tags.map((it) => new TagViewModel(it));
   }
 }

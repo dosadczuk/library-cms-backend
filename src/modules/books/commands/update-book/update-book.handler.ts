@@ -5,6 +5,7 @@ import { CreateUpdateBookResultDto } from '@/modules/books/dto/create-update-boo
 import { Book } from '@/modules/books/entities/book.entity';
 import { BookNotFoundError } from '@/modules/books/errors/book-not-found.error';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { BookViewModel } from '@/modules/books/vms/book.vm';
 
 @CommandHandler(UpdateBookCommand)
 export class UpdateBookHandler
@@ -25,7 +26,9 @@ export class UpdateBookHandler
 
     this.updateBook(book, command);
 
-    return new UpdateBookResult(new CreateUpdateBookResultDto(book));
+    const result = new CreateUpdateBookResultDto(new BookViewModel(book));
+
+    return new UpdateBookResult(result);
   }
 
   private findBook(command: UpdateBookCommand): Promise<Book> {
@@ -33,6 +36,6 @@ export class UpdateBookHandler
   }
 
   private updateBook(book: Book, command: UpdateBookCommand): void {
-    // TODO: Do zrobienia
+    // @TODO
   }
 }

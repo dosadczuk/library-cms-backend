@@ -1,11 +1,20 @@
-import { FindAuthorsHandler } from '@/modules/books/queries/find-authors/find-authors.handler';
-import { FindBookCopiesHandler } from '@/modules/books/queries/find-book-copies/find-book-copies.handler';
-import { FindBookHandler } from '@/modules/books/queries/find-book/find-book.handler';
-import { FindBooksHandler } from '@/modules/books/queries/find-books/find-books.handler';
-import { FindGenresHandler } from '@/modules/books/queries/find-genres/find-genres.handler';
-import { FindLanguagesHandler } from '@/modules/books/queries/find-languages/find-languages.handler';
-import { FindPublishersHandler } from '@/modules/books/queries/find-publishers/find-publishers.handler';
-import { FindTagsHandler } from '@/modules/books/queries/find-tags/find-tags.handler';
+import { FindAuthorsHandler } from '@/modules/books/queries/find-authors';
+import { FindBookHandler } from '@/modules/books/queries/find-book';
+import { FindBookCopiesHandler } from '@/modules/books/queries/find-book-copies';
+import { FindBooksHandler } from '@/modules/books/queries/find-books';
+import { FindGenresHandler } from '@/modules/books/queries/find-genres';
+import { FindLanguagesHandler } from '@/modules/books/queries/find-languages';
+import { FindPublishersHandler } from '@/modules/books/queries/find-publishers';
+import { FindTagsHandler } from '@/modules/books/queries/find-tags';
+
+export * from '@/modules/books/queries/find-authors';
+export * from '@/modules/books/queries/find-book';
+export * from '@/modules/books/queries/find-book-copies';
+export * from '@/modules/books/queries/find-books';
+export * from '@/modules/books/queries/find-genres';
+export * from '@/modules/books/queries/find-languages';
+export * from '@/modules/books/queries/find-publishers';
+export * from '@/modules/books/queries/find-tags';
 
 export const QueryHandlers = [
   FindAuthorsHandler,

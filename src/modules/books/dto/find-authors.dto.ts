@@ -1,6 +1,6 @@
-import { CreateUpdateAuthorResultDto } from '@/modules/books/dto/create-update-author.dto';
-import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { AuthorViewModel } from '@/modules/books/vms/author.vm';
 
 export class FindAuthorsFilterDto {
   @IsString()
@@ -22,12 +22,14 @@ export class FindAuthorsFilterDto {
   lastName?: string;
 }
 
-class AuthorResultDto extends PartialType(CreateUpdateAuthorResultDto) {}
-
 export class FindAuthorsResultDto {
   @ApiProperty({
     title: 'Znalezieni autorzy',
-    type: [AuthorResultDto],
+    type: [AuthorViewModel],
   })
-  authors: AuthorResultDto[];
+  readonly authors: AuthorViewModel[];
+
+  constructor(authors: AuthorViewModel[]) {
+    this.authors = authors;
+  }
 }

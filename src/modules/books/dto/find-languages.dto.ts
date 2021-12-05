@@ -1,6 +1,6 @@
-import { CreateUpdateLanguageResultDto } from '@/modules/books/dto/create-update-language.dto';
-import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
+import { LanguageViewModel } from '@/modules/books/vms/language.vm';
 
 export class FindLanguagesFilterDto {
   @IsString()
@@ -15,12 +15,14 @@ export class FindLanguagesFilterDto {
   value?: string;
 }
 
-class LanguageResultDto extends PartialType(CreateUpdateLanguageResultDto) {}
-
 export class FindLanguagesResultDto {
   @ApiProperty({
     title: 'Znalezione języki',
-    type: [LanguageResultDto],
+    type: [LanguageViewModel],
   })
-  languages: LanguageResultDto[];
+  readonly languages: LanguageViewModel[];
+
+  constructor(languages: LanguageViewModel[]) {
+    this.languages = languages;
+  }
 }

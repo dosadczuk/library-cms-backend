@@ -1,6 +1,6 @@
-import { CreateUpdateGenreResultDto } from '@/modules/books/dto/create-update-genre.dto';
-import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
+import { GenreViewModel } from '@/modules/books/vms/genre.vm';
 
 export class FindGenresFilterDto {
   @IsString()
@@ -15,12 +15,14 @@ export class FindGenresFilterDto {
   value?: string;
 }
 
-class GenreResultDto extends PartialType(CreateUpdateGenreResultDto) {}
-
 export class FindGenresResultDto {
   @ApiProperty({
     title: 'Znalezione gatunki',
-    type: [GenreResultDto],
+    type: [GenreViewModel],
   })
-  genres: GenreResultDto[];
+  readonly genres: GenreViewModel[];
+
+  constructor(genres: GenreViewModel[]) {
+    this.genres = genres;
+  }
 }

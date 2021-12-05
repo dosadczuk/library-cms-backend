@@ -1,12 +1,34 @@
 import { FindBookQuery } from '@/modules/books/queries/find-book/find-book.query';
 import { FindBookResult } from '@/modules/books/queries/find-book/find-book.result';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+import { BookRepository } from '@/modules/books/repositories/book.repository';
+import { BookNotFoundError } from '@/modules/books/errors/book-not-found.error';
+import { FindBookResultDto } from '@/modules/books/dto';
+import { BookViewModel } from '@/modules/books/vms/book.vm';
 
 @QueryHandler(FindBookQuery)
 export class FindBookHandler
   implements IQueryHandler<FindBookQuery, FindBookResult>
 {
+  constructor(private readonly repository: BookRepository) {}
+
   async execute(query: FindBookQuery): Promise<FindBookResult> {
-    return Promise.resolve(undefined);
+    const book = await this.findBook(query);
+    if (book == null) {
+      throw new BookNotFoundError(query.bookId);
+    }
+
+    const result = new FindBookResultDto(book);
+
+    return new FindBookResult(result);
+  }
+
+  private async findBook(query: FindBookQuery): Promise<BookViewModel | null> {
+    const book = await this.repository.findOne(query.bookId);
+    if (book == null) {
+      return null;
+    }
+
+    return new BookViewModel(book);
   }
 }

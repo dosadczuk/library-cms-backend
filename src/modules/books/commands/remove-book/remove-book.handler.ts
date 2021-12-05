@@ -6,7 +6,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 @CommandHandler(RemoveBookCommand)
 export class RemoveBookHandler implements ICommandHandler<RemoveBookCommand> {
-  constructor(private readonly bookRepository: BookRepository) {}
+  constructor(private readonly repository: BookRepository) {}
 
   async execute(command: RemoveBookCommand): Promise<void> {
     const book = await this.findBook(command);
@@ -14,10 +14,10 @@ export class RemoveBookHandler implements ICommandHandler<RemoveBookCommand> {
       throw new BookNotFoundError(command.bookId);
     }
 
-    await this.bookRepository.remove(book);
+    await this.repository.remove(book);
   }
 
   private findBook(command: RemoveBookCommand): Promise<Book> {
-    return this.bookRepository.findOne(command.bookId);
+    return this.repository.findOne(command.bookId);
   }
 }

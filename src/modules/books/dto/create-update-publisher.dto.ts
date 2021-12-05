@@ -1,4 +1,3 @@
-import { Publisher } from '@/modules/books/entities/publisher.entity';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsInt,
@@ -26,22 +25,4 @@ export class CreateUpdatePublisherDto {
     nullable: false,
   })
   name: string;
-}
-
-export class CreateUpdatePublisherResultDto {
-  @ApiProperty({
-    title: 'Identyfikator',
-    example: 1,
-  })
-  readonly id: number;
-
-  @ApiProperty({
-    title: 'Nazwa',
-  })
-  readonly name: string;
-
-  constructor(publisher: Publisher) {
-    this.id = publisher.id;
-    this.name = publisher.name;
-  }
 }

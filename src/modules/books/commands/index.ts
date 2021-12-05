@@ -4,6 +4,12 @@ import { RemoveBookCopyHandler } from '@/modules/books/commands/remove-book-copy
 import { RemoveBookHandler } from '@/modules/books/commands/remove-book/remove-book.handler';
 import { UpdateBookHandler } from '@/modules/books/commands/update-book/update-book.handler';
 
+export * from '@/modules/books/commands/create-book';
+export * from '@/modules/books/commands/create-book-copy';
+export * from '@/modules/books/commands/remove-book';
+export * from '@/modules/books/commands/remove-book-copy';
+export * from '@/modules/books/commands/update-book';
+
 export const CommandHandlers = [
   CreateBookHandler,
   CreateBookCopyHandler,

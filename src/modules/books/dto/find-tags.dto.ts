@@ -1,6 +1,6 @@
-import { CreateUpdateTagResultDto } from '@/modules/books/dto/create-update-tag.dto';
-import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
+import { TagViewModel } from '@/modules/books/vms/tag.vm';
 
 export class FindTagsFilterDto {
   @IsString()
@@ -14,12 +14,14 @@ export class FindTagsFilterDto {
   value?: string;
 }
 
-class TagResultDto extends PartialType(CreateUpdateTagResultDto) {}
-
 export class FindTagsResultDto {
   @ApiProperty({
     title: 'Znalezione tagi',
-    type: [TagResultDto],
+    type: [TagViewModel],
   })
-  tags: TagResultDto[];
+  readonly tags: TagViewModel[];
+
+  constructor(tags: TagViewModel[]) {
+    this.tags = tags;
+  }
 }

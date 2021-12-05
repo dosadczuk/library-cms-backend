@@ -1,3 +1,3 @@
 export class RemoveBookCopyCommand {
-  constructor(readonly bookId: string, readonly copyId: string) {}
+  constructor(readonly bookId: number, readonly copyId: number) {}
 }

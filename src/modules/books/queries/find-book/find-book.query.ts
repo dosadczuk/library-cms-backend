@@ -1,3 +1,3 @@
 export class FindBookQuery {
-  constructor(readonly bookId: string) {}
+  constructor(readonly bookId: number) {}
 }

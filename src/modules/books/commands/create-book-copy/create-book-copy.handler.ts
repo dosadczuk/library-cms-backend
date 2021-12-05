@@ -11,7 +11,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 export class CreateBookCopyHandler
   implements ICommandHandler<CreateBookCopyCommand, CreateBookCopyResult>
 {
-  constructor(private readonly bookRepository: BookRepository) {}
+  constructor(private readonly repository: BookRepository) {}
 
   async execute(command: CreateBookCopyCommand): Promise<CreateBookCopyResult> {
     const book = await this.findBook(command);
@@ -19,15 +19,15 @@ export class CreateBookCopyHandler
       throw new BookNotFoundError(command.bookId);
     }
 
-    await this.createBookCopy(book, command);
+    const copy = await this.createBookCopy(book, command);
 
-    await this.bookRepository.persist(book);
+    await this.repository.persist(book);
 
-    return new CreateBookCopyResult(new CreateBookCopyResultDto());
+    return new CreateBookCopyResult(new CreateBookCopyResultDto(copy));
   }
 
   private async findBook(command: CreateBookCopyCommand): Promise<Book | null> {
-    return this.bookRepository.findOne(command.bookId);
+    return this.repository.findOne(command.bookId);
   }
 
   private async createBookCopy(
@@ -35,7 +35,7 @@ export class CreateBookCopyHandler
     command: CreateBookCopyCommand,
   ): Promise<Copy> {
     const copy = new Copy();
-    copy.number = command.bookCopy.number;
+    copy.number = command.copy.number;
 
     book.copies.push(copy);
 

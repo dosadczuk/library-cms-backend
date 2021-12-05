@@ -1,9 +1,9 @@
-import { FindGenresResultDto } from '@/modules/books/dto/find-genres-filter.dto';
-import { Genre } from '@/modules/books/entities/genre.entity';
+import { FindGenresResultDto } from '@/modules/books/dto/find-genres.dto';
 import { FindGenresQuery } from '@/modules/books/queries/find-genres/find-genres.query';
 import { FindGenresResult } from '@/modules/books/queries/find-genres/find-genres.result';
 import { GenreRepository } from '@/modules/books/repositories/genre.repository';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+import { GenreViewModel } from '@/modules/books/vms/genre.vm';
 
 @QueryHandler(FindGenresQuery)
 export class FindGenresHandler
@@ -14,13 +14,14 @@ export class FindGenresHandler
   async execute(query: FindGenresQuery): Promise<FindGenresResult> {
     const genres = await this.findGenres(query);
 
-    const result = new FindGenresResultDto();
-    result.genres = genres;
+    const result = new FindGenresResultDto(genres);
 
     return new FindGenresResult(result);
   }
 
-  private async findGenres(query: FindGenresQuery): Promise<Genre[]> {
-    return this.genreRepository.findAll(query.filter);
+  private async findGenres(query: FindGenresQuery): Promise<GenreViewModel[]> {
+    const genres = await this.genreRepository.findAll(query.filter);
+
+    return genres.map((it) => new GenreViewModel(it));
   }
 }

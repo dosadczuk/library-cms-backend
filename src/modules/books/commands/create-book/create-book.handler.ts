@@ -11,6 +11,7 @@ import { Tag } from '@/modules/books/entities/tag.entity';
 import { BookAlreadyExistsError } from '@/modules/books/errors/book-already-exists.error';
 import { File } from '@/modules/files/entities/file.entity';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { BookViewModel } from '@/modules/books/vms/book.vm';
 
 @CommandHandler(CreateBookCommand)
 export class CreateBookHandler
@@ -32,7 +33,9 @@ export class CreateBookHandler
 
     await this.bookRepository.persist(book);
 
-    return new CreateBookResult(new CreateUpdateBookResultDto(book));
+    const result = new CreateUpdateBookResultDto(new BookViewModel(book));
+
+    return new CreateBookResult(result);
   }
 
   private async isBookExists(command: CreateBookCommand): Promise<boolean> {

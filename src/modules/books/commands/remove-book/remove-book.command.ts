@@ -1,3 +1,3 @@
 export class RemoveBookCommand {
-  constructor(readonly bookId: string) {}
+  constructor(readonly bookId: number) {}
 }
