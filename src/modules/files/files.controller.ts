@@ -1,57 +1,60 @@
-import { UploadFile } from '@/modules/files/dto/upload-file.dto';
 import {
-  BadRequestException,
-  Body,
   Controller,
   Delete,
   Get,
   Param,
   Post,
-  Req,
   Res,
   StreamableFile,
+  UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
+import { BaseController } from '@/shared/base.controller';
+import { ApiConsumes, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { UploadFileResultDto } from '@/modules/files/dto';
+import {
+  RemoveFileCommand,
+  UploadFileCommand,
+  UploadFileResult,
+} from '@/modules/files/commands';
+import { FindFileQuery, FindFileResult } from '@/modules/files/queries';
 import { createReadStream } from 'fs';
-import { FilesService } from './files.service';
 
+@ApiOkResponse({
+  type: UploadFileResultDto,
+  description: 'Plik został pomyślnie wgrany',
+})
 @ApiTags('files')
 @Controller('files')
-export class FilesController {
-  constructor(private readonly filesService: FilesService) {}
-
-  @Post('upload')
-  @ApiConsumes('multipart/form-data')
-  @UseInterceptors(FileInterceptor('file'))
-  async upload(@Body() data: UploadFile, @Req() req) {
-    if (req.file == null) {
-      throw new BadRequestException('No file to upload');
-    }
-
-    // trzeba przypisać ręcznie
-    data.file = req.file;
-
-    const file = await this.filesService.save(data);
-
-    return file.id;
-  }
-
+export class FilesController extends BaseController {
   @Get(':id')
   async findOne(@Param('id') id: string, @Res({ passthrough: true }) res) {
-    const file = await this.filesService.find(id);
+    const query = new FindFileQuery(id);
+    const result = await this.executeQuery<FindFileResult>(query);
 
     res.set({
-      'Content-Type': file.mime,
-      'Content-Length': file.size,
+      'Content-Type': result.fileMime,
+      'Content-Length': result.fileSize,
     });
 
-    return new StreamableFile(createReadStream(file.path));
+    return new StreamableFile(createReadStream(result.filePath));
+  }
+
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('file'))
+  @Post('upload')
+  async uploadFile(@UploadedFile() file: Express.Multer.File) {
+    const command = new UploadFileCommand(file);
+    const result = await this.executeCommand<UploadFileResult>(command);
+
+    return result.file;
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
-    await this.filesService.remove(id);
+  async removeFile(@Param('id') id: string) {
+    const command = new RemoveFileCommand(id);
+
+    await this.executeCommand<void>(command);
   }
 }

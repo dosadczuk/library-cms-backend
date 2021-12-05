@@ -28,7 +28,6 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { CommandBus, ICommand, IQuery, QueryBus } from '@nestjs/cqrs';
 import {
   ApiBadRequestResponse,
   ApiOkResponse,
@@ -63,15 +62,11 @@ import {
 } from '@/modules/books/commands';
 import { UpdateBookCommand } from '@/modules/books/commands/update-book/update-book.command';
 import { UpdateBookResult } from '@/modules/books/commands/update-book/update-book.result';
+import { BaseController } from '@/shared/base.controller';
 
 @ApiTags('books')
 @Controller('books')
-export class BooksController {
-  constructor(
-    private readonly commandBus: CommandBus,
-    private readonly queryBus: QueryBus,
-  ) {}
-
+export class BooksController extends BaseController {
   @ApiOperation({ summary: 'Pobieranie autorów książek' })
   @ApiOkResponse({ type: FindAuthorsResultDto })
   @Get('authors')
@@ -254,13 +249,5 @@ export class BooksController {
     const command = new RemoveBookCopyCommand(+bookId, +copyId);
 
     await this.executeCommand<void>(command);
-  }
-
-  private async executeCommand<R = any>(c: ICommand): Promise<R> {
-    return this.commandBus.execute<ICommand, R>(c);
-  }
-
-  private async executeQuery<R = any>(q: IQuery): Promise<R> {
-    return this.queryBus.execute<IQuery, R>(q);
   }
 }

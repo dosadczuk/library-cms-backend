@@ -1,21 +1,13 @@
-import { File as Entity } from '@/modules/files/entities/file.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { FileViewModel } from '@/modules/files/vms/file.vm';
 
-export class UploadFile {
+export class UploadFileResultDto {
   @ApiProperty({
-    type: 'string',
-    format: 'binary',
-    required: true,
+    title: 'Wgrany plik',
   })
-  file: Express.Multer.File;
+  readonly file: FileViewModel;
 
-  toEntity(): Entity {
-    const file = new Entity();
-    file.name = this.file.originalname;
-    file.path = this.file.path;
-    file.size = this.file.size;
-    file.mime = this.file.mimetype;
-
-    return file;
+  constructor(file: FileViewModel) {
+    this.file = file;
   }
 }

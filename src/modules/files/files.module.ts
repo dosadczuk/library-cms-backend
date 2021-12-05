@@ -1,19 +1,20 @@
-import { File } from '@/modules/files/entities/file.entity';
 import { Module } from '@nestjs/common';
+import { FilesController } from '@/modules/files/files.controller';
+import { CqrsModule } from '@nestjs/cqrs';
+import { CommandHandlers } from '@/modules/files/commands';
+import { QueryHandlers } from '@/modules/files/queries';
+import { Repositories } from '@/modules/files/repositories';
 import { MulterModule } from '@nestjs/platform-express';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import * as path from 'path';
-import { FilesController } from './files.controller';
-import { FilesService } from './files.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([File]),
+    CqrsModule,
     MulterModule.register({
       dest: path.join(process.cwd(), 'uploads'),
     }),
   ],
   controllers: [FilesController],
-  providers: [FilesService],
+  providers: [...CommandHandlers, ...QueryHandlers, ...Repositories],
 })
 export class FilesModule {}

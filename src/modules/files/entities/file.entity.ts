@@ -1,62 +1,61 @@
-import { CONSTRAINTS, METADATA } from '@/modules/files/entities/file.props';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Exclude } from 'class-transformer';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({
   name: 'files',
   orderBy: { id: 'ASC' },
 })
-export class File {
+export class File extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
-    comment: METADATA.id.title,
+    comment: 'Identyfikator rekordu',
     name: 'id',
   })
   id: string;
 
   @Column({
-    comment: METADATA.name.title,
+    comment: 'Nazwa pliku',
     name: 'name',
     type: 'varchar',
-    length: CONSTRAINTS.name.maxLength,
-    nullable: CONSTRAINTS.name.nullable,
+    length: 150,
+    nullable: false,
   })
   name: string;
 
   @Exclude()
   @Column({
-    comment: METADATA.path.title,
+    comment: 'Ścieżka do pliku na dysku',
     name: 'path',
     type: 'varchar',
-    length: CONSTRAINTS.path.maxLength,
-    nullable: CONSTRAINTS.path.nullable,
+    length: 250,
+    nullable: false,
   })
   path: string;
 
   @Exclude()
   @Column({
-    comment: METADATA.size.title,
+    comment: 'Rozmiar w bajtach',
     name: 'size',
     type: 'int',
-    nullable: CONSTRAINTS.size.nullable,
+    nullable: false,
   })
   size: number;
 
   @Exclude()
   @Column({
-    comment: METADATA.mime.title,
+    comment: 'Typ MIME',
     name: 'mime',
     type: 'varchar',
-    length: CONSTRAINTS.mime.maxLength,
-    nullable: CONSTRAINTS.mime.nullable,
+    length: 50,
+    nullable: false,
   })
   mime: string;
 
   @Column({
-    comment: METADATA.checksum.title,
+    comment: 'Suma kontrolna',
     name: 'checksum',
     type: 'varchar',
-    length: CONSTRAINTS.checksum.maxLength,
-    nullable: CONSTRAINTS.checksum.nullable,
+    length: 50,
+    nullable: false,
   })
   checksum: string;
 }
