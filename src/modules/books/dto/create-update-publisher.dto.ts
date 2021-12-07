@@ -1,3 +1,4 @@
+import { TypeNumber } from '@/utils/decorators/class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsInt,
@@ -7,9 +8,10 @@ import {
   MaxLength,
 } from 'class-validator';
 
-export class CreateUpdatePublisherDto {
+export class CreateUpdatePublisherBodyDto {
   @IsInt()
   @IsOptional()
+  @TypeNumber()
   @ApiPropertyOptional({
     title: 'Identyfikator',
     example: 1,
@@ -24,5 +26,5 @@ export class CreateUpdatePublisherDto {
     maxLength: 250,
     nullable: false,
   })
-  name: string;
+  readonly name: string;
 }

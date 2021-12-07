@@ -1,9 +1,8 @@
-import { CopyViewModel } from '@/modules/books/vms/copy.vm';
 import { TypeNumber } from '@/utils/decorators/class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsNotEmpty } from 'class-validator';
 
-export class FindBookCopiesParamsDto {
+export class RemoveBookCopyParamsDto {
   @IsInt()
   @IsNotEmpty()
   @TypeNumber()
@@ -12,15 +11,14 @@ export class FindBookCopiesParamsDto {
     example: 1,
   })
   readonly id: number;
-}
 
-export class FindBookCopiesResultDto {
+  @IsInt()
+  @IsNotEmpty()
+  @TypeNumber()
   @ApiProperty({
-    title: 'Znalezione egzemplarze książki',
+    name: 'copy_id',
+    title: 'Identyfikator egzemplarza',
+    example: 1,
   })
-  readonly copies: CopyViewModel[];
-
-  constructor(copies: CopyViewModel[]) {
-    this.copies = copies;
-  }
+  readonly copyId: number;
 }

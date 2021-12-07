@@ -4,8 +4,8 @@ import { UpdateBookResult } from '@/modules/books/commands/update-book/update-bo
 import { CreateUpdateBookResultDto } from '@/modules/books/dto/create-update-book.dto';
 import { Book } from '@/modules/books/entities/book.entity';
 import { BookNotFoundError } from '@/modules/books/errors/book-not-found.error';
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { BookViewModel } from '@/modules/books/vms/book.vm';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 @CommandHandler(UpdateBookCommand)
 export class UpdateBookHandler

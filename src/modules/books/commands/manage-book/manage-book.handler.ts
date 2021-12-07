@@ -1,8 +1,8 @@
-import { CreateUpdateAuthorDto } from '@/modules/books/dto/create-update-author.dto';
-import { CreateUpdateGenreDto } from '@/modules/books/dto/create-update-genre.dto';
-import { CreateUpdateLanguageDto } from '@/modules/books/dto/create-update-language.dto';
-import { CreateUpdatePublisherDto } from '@/modules/books/dto/create-update-publisher.dto';
-import { CreateUpdateTagDto } from '@/modules/books/dto/create-update-tag.dto';
+import { CreateUpdateAuthorBodyDto } from '@/modules/books/dto/create-update-author.dto';
+import { CreateUpdateGenreBodyDto } from '@/modules/books/dto/create-update-genre.dto';
+import { CreateUpdateLanguageBodyDto } from '@/modules/books/dto/create-update-language.dto';
+import { CreateUpdatePublisherBodyDto } from '@/modules/books/dto/create-update-publisher.dto';
+import { CreateUpdateTagBodyDto } from '@/modules/books/dto/create-update-tag.dto';
 import { AuthorRepository } from '@/modules/books/repositories/author.repository';
 import { BookRepository } from '@/modules/books/repositories/book.repository';
 import { GenreRepository } from '@/modules/books/repositories/genre.repository';
@@ -21,7 +21,7 @@ export abstract class ManageBookHandler {
   ) {}
 
   protected async tryAssigningPublisher(
-    publisher: CreateUpdatePublisherDto,
+    publisher: CreateUpdatePublisherBodyDto,
   ): Promise<void> {
     if (publisher.id != null) {
       return; // już dopasowany
@@ -36,7 +36,7 @@ export abstract class ManageBookHandler {
   }
 
   protected async tryAssigningAuthors(
-    authors: CreateUpdateAuthorDto[],
+    authors: CreateUpdateAuthorBodyDto[],
   ): Promise<void> {
     for (const author of authors) {
       if (author.id != null) {
@@ -57,7 +57,7 @@ export abstract class ManageBookHandler {
   }
 
   protected async tryAssigningGenre(
-    genre: CreateUpdateGenreDto,
+    genre: CreateUpdateGenreBodyDto,
   ): Promise<void> {
     if (genre.id != null) {
       return; // już dopasowany
@@ -72,7 +72,7 @@ export abstract class ManageBookHandler {
   }
 
   protected async tryAssigningLanguage(
-    language: CreateUpdateLanguageDto,
+    language: CreateUpdateLanguageBodyDto,
   ): Promise<void> {
     if (language.id != null) {
       return; // już dopasowany
@@ -86,7 +86,9 @@ export abstract class ManageBookHandler {
     language.id = entity.id;
   }
 
-  protected async tryAssigningTags(tags: CreateUpdateTagDto[]): Promise<void> {
+  protected async tryAssigningTags(
+    tags: CreateUpdateTagBodyDto[],
+  ): Promise<void> {
     for (const tag of tags) {
       if (tag.id != null) {
         continue; // już dopasowany

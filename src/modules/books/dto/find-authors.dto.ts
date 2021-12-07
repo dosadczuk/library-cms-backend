@@ -1,6 +1,6 @@
+import { AuthorViewModel } from '@/modules/books/vms/author.vm';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { AuthorViewModel } from '@/modules/books/vms/author.vm';
 
 export class FindAuthorsFilterDto {
   @IsString()
@@ -10,7 +10,7 @@ export class FindAuthorsFilterDto {
     title: 'Imię',
     example: 'Jan',
   })
-  firstName?: string;
+  readonly firstName?: string;
 
   @IsString()
   @IsNotEmpty()
@@ -19,7 +19,7 @@ export class FindAuthorsFilterDto {
     title: 'Nazwisko',
     example: 'Kowalski',
   })
-  lastName?: string;
+  readonly lastName?: string;
 }
 
 export class FindAuthorsResultDto {

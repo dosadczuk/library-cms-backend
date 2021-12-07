@@ -1,9 +1,11 @@
-import { CreateUpdateAuthorDto as AuthorQueryDto } from '@/modules/books/dto/create-update-author.dto';
-import { CreateUpdateGenreDto as GenreQueryDto } from '@/modules/books/dto/create-update-genre.dto';
-import { CreateUpdateLanguageDto as LanguageQueryDto } from '@/modules/books/dto/create-update-language.dto';
-import { CreateUpdatePublisherDto as PublisherQueryDto } from '@/modules/books/dto/create-update-publisher.dto';
-import { CreateUpdateTagDto as TagQueryDto } from '@/modules/books/dto/create-update-tag.dto';
+import { CreateUpdateAuthorBodyDto as AuthorQueryDto } from '@/modules/books/dto/create-update-author.dto';
+import { CreateUpdateGenreBodyDto as GenreQueryDto } from '@/modules/books/dto/create-update-genre.dto';
+import { CreateUpdateLanguageBodyDto as LanguageQueryDto } from '@/modules/books/dto/create-update-language.dto';
+import { CreateUpdatePublisherBodyDto as PublisherQueryDto } from '@/modules/books/dto/create-update-publisher.dto';
+import { CreateUpdateTagBodyDto as TagQueryDto } from '@/modules/books/dto/create-update-tag.dto';
 import { BookType } from '@/modules/books/entities/enums/book-type.enum';
+import { BookViewModel } from '@/modules/books/vms/book.vm';
+import { TypeNumber } from '@/utils/decorators/class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
@@ -19,9 +21,19 @@ import {
   MinLength,
   ValidateNested,
 } from 'class-validator';
-import { BookViewModel } from '@/modules/books/vms/book.vm';
 
-export class CreateUpdateBookDto {
+export class UpdateBookParamsDto {
+  @IsInt()
+  @IsNotEmpty()
+  @TypeNumber()
+  @ApiProperty({
+    title: 'Identyfikator książki',
+    example: 1,
+  })
+  readonly id: number;
+}
+
+export class CreateUpdateBookBodyDto {
   @IsString()
   @IsNotEmpty()
   @MinLength(10)
@@ -33,7 +45,7 @@ export class CreateUpdateBookDto {
     maxLength: 13,
     nullable: false,
   })
-  isbn: string;
+  readonly isbn: string;
 
   @IsEnum(BookType)
   @IsNotEmpty()
@@ -43,7 +55,7 @@ export class CreateUpdateBookDto {
     enum: BookType,
     nullable: false,
   })
-  type: BookType;
+  readonly type: BookType;
 
   @IsString()
   @IsNotEmpty()
@@ -54,7 +66,7 @@ export class CreateUpdateBookDto {
     maxLength: 255,
     nullable: false,
   })
-  title: string;
+  readonly title: string;
 
   @IsString()
   @IsOptional()
@@ -62,7 +74,7 @@ export class CreateUpdateBookDto {
     title: 'Opis książki',
     nullable: true,
   })
-  description?: string;
+  readonly description?: string;
 
   @IsDateString()
   @IsNotEmpty()
@@ -72,7 +84,7 @@ export class CreateUpdateBookDto {
     format: 'YYYY-MM-DD',
     nullable: false,
   })
-  issueDate: Date;
+  readonly issueDate: Date;
 
   @IsObject()
   @IsNotEmpty()
@@ -83,7 +95,7 @@ export class CreateUpdateBookDto {
     type: PublisherQueryDto,
     nullable: false,
   })
-  publisher: PublisherQueryDto;
+  readonly publisher: PublisherQueryDto;
 
   @IsArray()
   @IsNotEmpty()
@@ -94,7 +106,7 @@ export class CreateUpdateBookDto {
     type: [AuthorQueryDto],
     nullable: false,
   })
-  authors: AuthorQueryDto[];
+  readonly authors: AuthorQueryDto[];
 
   @IsObject()
   @IsNotEmpty()
@@ -105,7 +117,7 @@ export class CreateUpdateBookDto {
     type: GenreQueryDto,
     nullable: false,
   })
-  genre: GenreQueryDto;
+  readonly genre: GenreQueryDto;
 
   @IsArray()
   @IsNotEmpty()
@@ -116,16 +128,17 @@ export class CreateUpdateBookDto {
     type: LanguageQueryDto,
     nullable: false,
   })
-  language: LanguageQueryDto;
+  readonly language: LanguageQueryDto;
 
   @IsInt()
   @IsNotEmpty()
+  @TypeNumber()
   @ApiProperty({
     title: 'Liczba stron',
     example: 110,
     nullable: false,
   })
-  pages: number;
+  readonly pages: number;
 
   @IsString()
   @IsOptional()
@@ -134,7 +147,7 @@ export class CreateUpdateBookDto {
     example: 'a619817c-9bc5-4fe9-850d-958360a549e3',
     nullable: true,
   })
-  imageId?: string;
+  readonly imageId?: string;
 
   @IsObject()
   @IsOptional()
@@ -142,7 +155,7 @@ export class CreateUpdateBookDto {
     title: 'Szczegóły książki',
     nullable: true,
   })
-  details: Record<string, unknown> = {};
+  readonly details: Record<string, unknown> = {};
 
   @IsArray()
   @IsOptional()
@@ -151,7 +164,7 @@ export class CreateUpdateBookDto {
     type: [TagQueryDto],
     nullable: true,
   })
-  tags: TagQueryDto[] = [];
+  readonly tags: TagQueryDto[] = [];
 }
 
 export class CreateUpdateBookResultDto {

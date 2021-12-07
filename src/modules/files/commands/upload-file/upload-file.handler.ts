@@ -1,12 +1,12 @@
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { UploadFileCommand } from '@/modules/files/commands/upload-file/upload-file.command';
-import { FileRepository } from '@/modules/files/repositories/file.repository';
-import { UploadFileResultDto } from '@/modules/files/dto';
-import { FileViewModel } from '@/modules/files/vms/file.vm';
 import { UploadFileResult } from '@/modules/files/commands';
+import { UploadFileCommand } from '@/modules/files/commands/upload-file/upload-file.command';
+import { UploadFileResultDto } from '@/modules/files/dto';
 import { File } from '@/modules/files/entities/file.entity';
-import * as fs from 'fs';
+import { FileRepository } from '@/modules/files/repositories/file.repository';
+import { FileViewModel } from '@/modules/files/vms/file.vm';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { createHash } from 'crypto';
+import * as fs from 'fs';
 
 @CommandHandler(UploadFileCommand)
 export class UploadFileHandler
@@ -32,12 +32,12 @@ export class UploadFileHandler
     file.path = uploadedFile.path;
     file.size = uploadedFile.size;
     file.mime = uploadedFile.mimetype;
-    file.checksum = this.calculateSha256(uploadedFile.path);
+    file.sha256 = this.sha256(uploadedFile.path);
 
     return file;
   }
 
-  private calculateSha256(filePath: string): string {
+  private sha256(filePath: string): string {
     const contents = fs.readFileSync(filePath);
 
     const sha256 = createHash('sha256');

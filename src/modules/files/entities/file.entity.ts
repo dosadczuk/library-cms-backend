@@ -1,5 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Exclude } from 'class-transformer';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({
   name: 'files',
@@ -51,11 +51,11 @@ export class File extends BaseEntity {
   mime: string;
 
   @Column({
-    comment: 'Suma kontrolna',
-    name: 'checksum',
+    comment: 'Suma kontrolna (sha256)',
+    name: 'sha256',
     type: 'varchar',
-    length: 50,
+    length: 64,
     nullable: false,
   })
-  checksum: string;
+  sha256: string;
 }

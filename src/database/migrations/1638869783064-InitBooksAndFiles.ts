@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class InitBooksAndFiles1638724621561 implements MigrationInterface {
-  name = 'InitBooksAndFiles1638724621561';
+export class InitBooksAndFiles1638869783064 implements MigrationInterface {
+  name = 'InitBooksAndFiles1638869783064';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -29,7 +29,7 @@ export class InitBooksAndFiles1638724621561 implements MigrationInterface {
       `CREATE TABLE "tags" ("id" SERIAL NOT NULL, "value" character varying(100) NOT NULL, CONSTRAINT "UQ_d090e09fe86ebe2ec0aec27b451" UNIQUE ("value"), CONSTRAINT "PK_e7dc17249a1148a1970748eda99" PRIMARY KEY ("id")); COMMENT ON COLUMN "tags"."id" IS 'Identyfikator rekordu'; COMMENT ON COLUMN "tags"."value" IS 'Wartość'`,
     );
     await queryRunner.query(
-      `CREATE TABLE "files" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying(150) NOT NULL, "path" character varying(250) NOT NULL, "size" integer NOT NULL, "mime" character varying(50) NOT NULL, "checksum" character varying(50) NOT NULL, CONSTRAINT "PK_6c16b9093a142e0e7613b04a3d9" PRIMARY KEY ("id")); COMMENT ON COLUMN "files"."id" IS 'Identyfikator rekordu'; COMMENT ON COLUMN "files"."name" IS 'Nazwa pliku'; COMMENT ON COLUMN "files"."path" IS 'Ścieżka do pliku na dysku'; COMMENT ON COLUMN "files"."size" IS 'Rozmiar w bajtach'; COMMENT ON COLUMN "files"."mime" IS 'Typ MIME'; COMMENT ON COLUMN "files"."checksum" IS 'Suma kontrolna'`,
+      `CREATE TABLE "files" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying(150) NOT NULL, "path" character varying(250) NOT NULL, "size" integer NOT NULL, "mime" character varying(50) NOT NULL, "sha256" character varying(64) NOT NULL, CONSTRAINT "PK_6c16b9093a142e0e7613b04a3d9" PRIMARY KEY ("id")); COMMENT ON COLUMN "files"."id" IS 'Identyfikator rekordu'; COMMENT ON COLUMN "files"."name" IS 'Nazwa pliku'; COMMENT ON COLUMN "files"."path" IS 'Ścieżka do pliku na dysku'; COMMENT ON COLUMN "files"."size" IS 'Rozmiar w bajtach'; COMMENT ON COLUMN "files"."mime" IS 'Typ MIME'; COMMENT ON COLUMN "files"."sha256" IS 'Suma kontrolna (sha256)'`,
     );
     await queryRunner.query(
       `CREATE TYPE "public"."books_type_enum" AS ENUM('book', 'magazine', 'article', 'thesis')`,

@@ -9,9 +9,9 @@ import { Language } from '@/modules/books/entities/language.entity';
 import { Publisher } from '@/modules/books/entities/publisher.entity';
 import { Tag } from '@/modules/books/entities/tag.entity';
 import { BookAlreadyExistsError } from '@/modules/books/errors/book-already-exists.error';
+import { BookViewModel } from '@/modules/books/vms/book.vm';
 import { File } from '@/modules/files/entities/file.entity';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BookViewModel } from '@/modules/books/vms/book.vm';
 
 @CommandHandler(CreateBookCommand)
 export class CreateBookHandler

@@ -1,11 +1,24 @@
 import {
-  CreateBookCopyDto,
+  CreateBookCommand,
+  CreateBookCopyCommand,
+  CreateBookCopyResult,
+  CreateBookResult,
+  RemoveBookCommand,
+  RemoveBookCopyCommand,
+} from '@/modules/books/commands';
+import { UpdateBookCommand } from '@/modules/books/commands/update-book/update-book.command';
+import { UpdateBookResult } from '@/modules/books/commands/update-book/update-book.result';
+import {
+  CreateBookCopyBodyDto,
+  CreateBookCopyParamsDto,
   CreateBookCopyResultDto,
-  CreateUpdateBookDto,
+  CreateUpdateBookBodyDto,
   CreateUpdateBookResultDto,
   FindAuthorsFilterDto,
   FindAuthorsResultDto,
+  FindBookCopiesParamsDto,
   FindBookCopiesResultDto,
+  FindBookParamsDto,
   FindBookResultDto,
   FindBooksFilterDto,
   FindBooksResultDto,
@@ -17,23 +30,10 @@ import {
   FindPublishersResultDto,
   FindTagsFilterDto,
   FindTagsResultDto,
+  RemoveBookCopyParamsDto,
+  RemoveBookParamsDto,
+  UpdateBookParamsDto,
 } from '@/modules/books/dto';
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  Query,
-} from '@nestjs/common';
-import {
-  ApiBadRequestResponse,
-  ApiOkResponse,
-  ApiOperation,
-  ApiTags,
-} from '@nestjs/swagger';
 import {
   FindAuthorsQuery,
   FindAuthorsResult,
@@ -52,17 +52,23 @@ import {
   FindTagsQuery,
   FindTagsResult,
 } from '@/modules/books/queries';
-import {
-  CreateBookCommand,
-  CreateBookCopyCommand,
-  CreateBookCopyResult,
-  CreateBookResult,
-  RemoveBookCommand,
-  RemoveBookCopyCommand,
-} from '@/modules/books/commands';
-import { UpdateBookCommand } from '@/modules/books/commands/update-book/update-book.command';
-import { UpdateBookResult } from '@/modules/books/commands/update-book/update-book.result';
 import { BaseController } from '@/shared/base.controller';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
+import {
+  ApiBadRequestResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @ApiTags('books')
 @Controller('books')
@@ -145,8 +151,10 @@ export class BooksController extends BaseController {
     description: 'Książka nie istnieje',
   })
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<FindBookResultDto> {
-    const query = new FindBookQuery(+id);
+  async findOne(
+    @Param() params: FindBookParamsDto,
+  ): Promise<FindBookResultDto> {
+    const query = new FindBookQuery(params.id);
     const result = await this.executeQuery<FindBookResult>(query);
 
     return result.book;
@@ -162,7 +170,7 @@ export class BooksController extends BaseController {
   })
   @Post()
   async create(
-    @Body() book: CreateUpdateBookDto,
+    @Body() book: CreateUpdateBookBodyDto,
   ): Promise<CreateUpdateBookResultDto> {
     const command = new CreateBookCommand(book);
     const result = await this.executeCommand<CreateBookResult>(command);
@@ -180,10 +188,10 @@ export class BooksController extends BaseController {
   })
   @Put(':id')
   async update(
-    @Param('id') bookId,
-    @Body() book: CreateUpdateBookDto,
+    @Param() params: UpdateBookParamsDto,
+    @Body() book: CreateUpdateBookBodyDto,
   ): Promise<CreateUpdateBookResultDto> {
-    const command = new UpdateBookCommand(bookId, book);
+    const command = new UpdateBookCommand(params.id, book);
     const result = await this.executeCommand<UpdateBookResult>(command);
 
     return result.book;
@@ -193,9 +201,12 @@ export class BooksController extends BaseController {
   @ApiOkResponse({
     description: 'Książka została pomyślnie usunięta',
   })
+  @ApiBadRequestResponse({
+    description: 'Książka nie istnieje',
+  })
   @Delete(':id')
-  async remove(@Param('id') bookId): Promise<void> {
-    const command = new RemoveBookCommand(bookId);
+  async remove(@Param() params: RemoveBookParamsDto): Promise<void> {
+    const command = new RemoveBookCommand(params.id);
 
     await this.executeCommand<void>(command);
   }
@@ -207,9 +218,9 @@ export class BooksController extends BaseController {
   })
   @Get(':id/copies')
   async findBookCopies(
-    @Param('id') bookId: string,
+    @Param() params: FindBookCopiesParamsDto,
   ): Promise<FindBookCopiesResultDto> {
-    const query = new FindBookCopiesQuery(+bookId);
+    const query = new FindBookCopiesQuery(params.id);
     const result = await this.executeQuery<FindBookCopiesResult>(query);
 
     return result.bookCopies;
@@ -225,10 +236,10 @@ export class BooksController extends BaseController {
   })
   @Post(':id/copies')
   async createBookCopy(
-    @Param('id') bookId: string,
-    @Body() copy: CreateBookCopyDto,
+    @Param() params: CreateBookCopyParamsDto,
+    @Body() copy: CreateBookCopyBodyDto,
   ): Promise<CreateBookCopyResultDto> {
-    const command = new CreateBookCopyCommand(+bookId, copy);
+    const command = new CreateBookCopyCommand(params.id, copy);
     const result = await this.executeCommand<CreateBookCopyResult>(command);
 
     return result.copy;
@@ -243,10 +254,9 @@ export class BooksController extends BaseController {
   })
   @Delete(':id/copies/:copy_id')
   async removeBookCopy(
-    @Param('id') bookId: string,
-    @Param('copy_id') copyId: string,
+    @Param() params: RemoveBookCopyParamsDto,
   ): Promise<void> {
-    const command = new RemoveBookCopyCommand(+bookId, +copyId);
+    const command = new RemoveBookCopyCommand(params.id, params.copyId);
 
     await this.executeCommand<void>(command);
   }

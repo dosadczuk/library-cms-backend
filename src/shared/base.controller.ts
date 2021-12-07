@@ -1,5 +1,5 @@
-import { CommandBus, ICommand, IQuery, QueryBus } from '@nestjs/cqrs';
 import { Controller } from '@nestjs/common';
+import { CommandBus, ICommand, IQuery, QueryBus } from '@nestjs/cqrs';
 
 @Controller()
 export abstract class BaseController {

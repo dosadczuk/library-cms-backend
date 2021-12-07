@@ -1,6 +1,7 @@
 import { BookType } from '@/modules/books/entities/enums/book-type.enum';
+import { BookViewModel } from '@/modules/books/vms/book.vm';
+import { TypeNumber } from '@/utils/decorators/class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
 import {
   IsArray,
   IsEnum,
@@ -9,7 +10,6 @@ import {
   IsString,
   MaxLength,
 } from 'class-validator';
-import { BookViewModel } from '@/modules/books/vms/book.vm';
 
 export class FindBooksFilterDto {
   @IsString()
@@ -20,7 +20,7 @@ export class FindBooksFilterDto {
     title: 'Tytuł',
     maxLength: 255,
   })
-  title?: string;
+  readonly title?: string;
 
   @IsEnum(BookType)
   @IsOptional()
@@ -29,25 +29,25 @@ export class FindBooksFilterDto {
     enum: BookType,
     nullable: false,
   })
-  type?: string;
+  readonly type?: string;
 
   @IsArray()
   @IsNotEmpty()
   @IsOptional()
-  @Type(() => Number)
+  @TypeNumber()
   @ApiPropertyOptional({
     title: 'Gatunki',
   })
-  genreIds?: number[];
+  readonly genreIds?: number[];
 
   @IsArray()
   @IsNotEmpty()
   @IsOptional()
-  @Type(() => Number)
+  @TypeNumber()
   @ApiPropertyOptional({
     title: 'Języki',
   })
-  languageIds?: number[];
+  readonly languageIds?: number[];
 }
 
 export class FindBooksResultDto {

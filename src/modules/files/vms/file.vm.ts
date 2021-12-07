@@ -37,6 +37,6 @@ export class FileViewModel {
     this.name = file.name;
     this.size = file.size;
     this.mime = file.mime;
-    this.sha256 = file.checksum;
+    this.sha256 = file.sha256;
   }
 }

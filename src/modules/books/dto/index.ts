@@ -13,3 +13,5 @@ export * from '@/modules/books/dto/find-genres.dto';
 export * from '@/modules/books/dto/find-languages.dto';
 export * from '@/modules/books/dto/find-publishers.dto';
 export * from '@/modules/books/dto/find-tags.dto';
+export * from '@/modules/books/dto/remove-book.dto';
+export * from '@/modules/books/dto/remove-book-copy.dto';

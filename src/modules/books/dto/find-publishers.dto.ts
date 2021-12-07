@@ -1,6 +1,6 @@
+import { PublisherViewModel } from '@/modules/books/vms/publisher.vm';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
-import { PublisherViewModel } from '@/modules/books/vms/publisher.vm';
 
 export class FindPublishersFilterDto {
   @IsString()
@@ -11,7 +11,7 @@ export class FindPublishersFilterDto {
     title: 'Nazwa',
     maxLength: 250,
   })
-  name?: string;
+  readonly name?: string;
 }
 
 export class FindPublishersResultDto {

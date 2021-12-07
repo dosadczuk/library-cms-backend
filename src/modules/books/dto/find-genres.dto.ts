@@ -1,6 +1,6 @@
+import { GenreViewModel } from '@/modules/books/vms/genre.vm';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
-import { GenreViewModel } from '@/modules/books/vms/genre.vm';
 
 export class FindGenresFilterDto {
   @IsString()
@@ -12,7 +12,7 @@ export class FindGenresFilterDto {
     example: 'XX wiek',
     maxLength: 50,
   })
-  value?: string;
+  readonly value?: string;
 }
 
 export class FindGenresResultDto {

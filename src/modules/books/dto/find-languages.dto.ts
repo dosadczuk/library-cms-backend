@@ -1,6 +1,6 @@
+import { LanguageViewModel } from '@/modules/books/vms/language.vm';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
-import { LanguageViewModel } from '@/modules/books/vms/language.vm';
 
 export class FindLanguagesFilterDto {
   @IsString()
@@ -12,7 +12,7 @@ export class FindLanguagesFilterDto {
     example: 'polski',
     maxLength: 50,
   })
-  value?: string;
+  readonly value?: string;
 }
 
 export class FindLanguagesResultDto {
