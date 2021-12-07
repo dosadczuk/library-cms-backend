@@ -1,26 +1,23 @@
-import { Book } from '@/modules/books/entities/book.entity';
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({
   name: 'tags',
-  orderBy: {
-    id: 'ASC',
-  },
+  orderBy: { id: 'ASC' },
 })
-export class Tag {
-  @PrimaryGeneratedColumn()
+export class Tag extends BaseEntity {
+  @PrimaryGeneratedColumn({
+    name: 'id',
+    comment: 'Identyfikator rekordu',
+  })
   id: number;
 
   @Column({
     comment: 'Wartość',
+    name: 'value',
     type: 'varchar',
+    unique: true,
     length: 100,
     nullable: false,
   })
   value: string;
-
-  @ManyToMany(() => Book, (book) => book.tags, {
-    nullable: true,
-  })
-  books?: Book[];
 }

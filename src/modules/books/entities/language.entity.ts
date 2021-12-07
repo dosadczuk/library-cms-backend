@@ -1,26 +1,23 @@
-import { Book } from '@/modules/books/entities/book.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({
   name: 'languages',
-  orderBy: {
-    id: 'ASC',
-  },
+  orderBy: { id: 'ASC' },
 })
-export class Language {
-  @PrimaryGeneratedColumn()
+export class Language extends BaseEntity {
+  @PrimaryGeneratedColumn({
+    name: 'id',
+    comment: 'Identyfikator rekordu',
+  })
   id: number;
 
   @Column({
+    name: 'value',
     comment: 'Wartość',
     type: 'varchar',
+    unique: true,
     length: 100,
     nullable: false,
   })
   value: string;
-
-  @OneToMany(() => Book, (book) => book.language, {
-    nullable: true,
-  })
-  books?: Book[];
 }

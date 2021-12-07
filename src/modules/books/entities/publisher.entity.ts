@@ -1,43 +1,44 @@
-import { Book } from '@/modules/books/entities/book.entity';
+import { Exclude } from 'class-transformer';
 import {
+  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity({
   name: 'publishers',
-  orderBy: {
-    id: 'ASC',
-  },
+  orderBy: { id: 'ASC' },
 })
-export class Publisher {
-  @PrimaryGeneratedColumn()
+export class Publisher extends BaseEntity {
+  @PrimaryGeneratedColumn({
+    name: 'id',
+    comment: 'Identyfikator rekordu',
+  })
   id: number;
 
   @Column({
+    name: 'name',
     comment: 'Nazwa',
     type: 'varchar',
+    unique: true,
     length: 250,
     nullable: false,
   })
   name: string;
 
-  @OneToMany(() => Book, (book) => book.publisher, {
-    nullable: true,
-  })
-  books?: Book[];
-
   @CreateDateColumn({
+    name: 'created_at',
     comment: 'Moment utworzenia rekordu',
     nullable: false,
   })
   createdAt: Date;
 
+  @Exclude()
   @UpdateDateColumn({
+    name: 'modified_at',
     comment: 'Moment modyfikacji rekordu',
     nullable: true,
   })

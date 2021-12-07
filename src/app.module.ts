@@ -1,8 +1,9 @@
 import Config from '@/config/app.config';
-import { BooksModule } from '@/modules/books/books.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { BooksModule } from '@/modules/books/books.module';
+import { FilesModule } from '@/modules/files/files.module';
 
 @Module({
   imports: [
@@ -12,12 +13,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
+      inject: [ConfigService],
       useFactory(service: ConfigService) {
         return service.get('database');
       },
-      inject: [ConfigService],
     }),
     BooksModule,
+    FilesModule,
   ],
   providers: [],
 })

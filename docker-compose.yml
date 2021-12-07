@@ -9,6 +9,7 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
+      - uploads:/usr/src/app/uploads
     ports:
       - ${APP_PORT}:${APP_PORT}
       - "9229:9229"
@@ -35,5 +36,21 @@ services:
       - pgdata:/var/lib/postgresql/data
     restart: unless-stopped
 
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${DB_PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${DB_PGADMIN_PASSWORD}
+      PGADMIN_LISTEN_PORT: 5050
+    ports:
+      - "5050:5050/tcp"
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
 volumes:
   pgdata:
+  uploads:
