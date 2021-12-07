@@ -1,6 +1,6 @@
-import { TypeNumber } from '@/utils/decorators/class-transformer';
+import { TypeNumber } from '@/shared/decorators/class-transformer';
+import { IsInt, IsNotEmpty } from '@/shared/decorators/class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsNotEmpty } from 'class-validator';
 
 export class RemoveBookCopyParamsDto {
   @IsInt()

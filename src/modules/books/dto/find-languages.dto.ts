@@ -1,6 +1,11 @@
 import { LanguageViewModel } from '@/modules/books/vms/language.vm';
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MaxLength,
+} from '@/shared/decorators/class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
 
 export class FindLanguagesFilterDto {
   @IsString()

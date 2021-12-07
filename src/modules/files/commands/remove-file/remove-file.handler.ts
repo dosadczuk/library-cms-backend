@@ -1,8 +1,8 @@
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { RemoveFileCommand } from '@/modules/files/commands/remove-file/remove-file.command';
-import { FileRepository } from '@/modules/files/repositories/file.repository';
 import { File } from '@/modules/files/entities/file.entity';
 import { FileNotFoundError } from '@/modules/files/error/file-not-found.error';
+import { FileRepository } from '@/modules/files/repositories/file.repository';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import * as fs from 'fs';
 
 @CommandHandler(RemoveFileCommand)

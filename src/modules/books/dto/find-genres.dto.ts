@@ -1,6 +1,11 @@
 import { GenreViewModel } from '@/modules/books/vms/genre.vm';
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MaxLength,
+} from '@/shared/decorators/class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
 
 export class FindGenresFilterDto {
   @IsString()

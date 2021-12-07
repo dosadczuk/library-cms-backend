@@ -1,11 +1,11 @@
+import { Book } from '@/modules/books/entities/book.entity';
 import { BookType } from '@/modules/books/entities/enums/book-type.enum';
-import { PublisherViewModel } from '@/modules/books/vms/publisher.vm';
 import { AuthorViewModel } from '@/modules/books/vms/author.vm';
 import { GenreViewModel } from '@/modules/books/vms/genre.vm';
 import { LanguageViewModel } from '@/modules/books/vms/language.vm';
+import { PublisherViewModel } from '@/modules/books/vms/publisher.vm';
 import { TagViewModel } from '@/modules/books/vms/tag.vm';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Book } from '@/modules/books/entities/book.entity';
 
 export class BookViewModel {
   @ApiProperty({

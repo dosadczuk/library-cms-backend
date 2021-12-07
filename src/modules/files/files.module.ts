@@ -1,9 +1,9 @@
-import { Module } from '@nestjs/common';
-import { FilesController } from '@/modules/files/files.controller';
-import { CqrsModule } from '@nestjs/cqrs';
 import { CommandHandlers } from '@/modules/files/commands';
+import { FilesController } from '@/modules/files/files.controller';
 import { QueryHandlers } from '@/modules/files/queries';
 import { Repositories } from '@/modules/files/repositories';
+import { Module } from '@nestjs/common';
+import { CqrsModule } from '@nestjs/cqrs';
 import { MulterModule } from '@nestjs/platform-express';
 import * as path from 'path';
 

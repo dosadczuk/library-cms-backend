@@ -1,6 +1,11 @@
 import { TagViewModel } from '@/modules/books/vms/tag.vm';
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MaxLength,
+} from '@/shared/decorators/class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
 
 export class FindTagsFilterDto {
   @IsString()

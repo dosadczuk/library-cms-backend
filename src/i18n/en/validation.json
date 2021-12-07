@@ -1,0 +1,17 @@
+{
+  "IsEmpty": "{property} must be empty",
+  "IsNotEmpty": "{property} must not be empty",
+  "IsDateString": "{property} must be a valid ISO 8601 date string",
+  "IsEmail": "{property} must be an email",
+  "IsUUID": "{property} must be a UUID",
+  "MaxLength": "{property} must be shorter than or equal to {constraint0} characters",
+  "MinLength": "{property} must be longer than or equal to {constraint0} characters",
+  "IsArray": "{property} must be an array",
+  "IsBoolean": "{property} must be a boolean value",
+  "IsDate": "{property} must be a Date instance",
+  "IsEnum": "{property} must be a valid enum value",
+  "IsInt": "{property} must be an integer value",
+  "IsNumber": "{property} must be a number conforming to the specified constraints",
+  "IsObject": "{property} must be an object",
+  "IsString": "{property} must be a string"
+}

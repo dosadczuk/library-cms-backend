@@ -1,5 +1,7 @@
+import { HttpException } from '@nestjs/common/exceptions/http.exception';
+
 export interface HttpAwareError {
-  getHttpError(): Error;
+  getHttpError(): HttpException;
 }
 
 export const isHttpAwareError = (error: any): error is HttpAwareError => {

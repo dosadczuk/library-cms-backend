@@ -1,8 +1,8 @@
 import { RemoveBookCopyCommand } from '@/modules/books/commands/remove-book-copy/remove-book-copy.command';
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { BookRepository } from '@/modules/books/repositories/book.repository';
-import { BookNotFoundError } from '@/modules/books/errors/book-not-found.error';
 import { Book } from '@/modules/books/entities/book.entity';
+import { BookNotFoundError } from '@/modules/books/errors/book-not-found.error';
+import { BookRepository } from '@/modules/books/repositories/book.repository';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 @CommandHandler(RemoveBookCopyCommand)
 export class RemoveBookCopyHandler

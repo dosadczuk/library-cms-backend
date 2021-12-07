@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { Language } from '@/modules/books/entities/language.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class LanguageViewModel {
   @ApiProperty({

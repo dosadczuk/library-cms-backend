@@ -1,8 +1,8 @@
 import { FindBooksFilterDto } from '@/modules/books/dto/find-books.dto';
 import { Book } from '@/modules/books/entities/book.entity';
+import { Copy } from '@/modules/books/entities/copy.entity';
 import { Injectable } from '@nestjs/common';
 import { Equal, ILike, In } from 'typeorm';
-import { Copy } from '@/modules/books/entities/copy.entity';
 
 @Injectable()
 export class BookRepository {

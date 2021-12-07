@@ -1,9 +1,13 @@
+import {
+  IsNotEmpty,
+  IsString,
+  IsUUID,
+} from '@/shared/decorators/class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
 export class FindFileParamsDto {
   @IsString()
-  @IsUUID()
+  @IsUUID('4')
   @IsNotEmpty()
   @ApiProperty({
     title: 'Identyfikator pliku',

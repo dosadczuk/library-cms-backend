@@ -1,6 +1,6 @@
 import { Book } from '@/modules/books/entities/book.entity';
 import { HttpAwareError } from '@/shared/errors/http-aware.error';
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, HttpException } from '@nestjs/common';
 import { EntityNotFoundError as NotFoundError } from 'typeorm';
 
 export class BookNotFoundError extends NotFoundError implements HttpAwareError {
@@ -8,7 +8,7 @@ export class BookNotFoundError extends NotFoundError implements HttpAwareError {
     super(Book, criteria);
   }
 
-  getHttpError(): Error {
-    return new BadRequestException(this, this.message);
+  getHttpError(): HttpException {
+    return new BadRequestException(this.message);
   }
 }

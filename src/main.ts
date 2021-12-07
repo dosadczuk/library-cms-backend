@@ -1,5 +1,5 @@
 import { AppModule } from '@/app.module';
-import { HttpErrorInterceptor } from '@/shared/http/http-error.interceptor';
+import { HttpErrorInterceptor } from '@/http/http-error.interceptor';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
