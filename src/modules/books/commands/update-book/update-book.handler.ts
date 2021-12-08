@@ -5,6 +5,7 @@ import { CreateUpdateBookResultDto } from '@/modules/books/dto/create-update-boo
 import { Book } from '@/modules/books/entities/book.entity';
 import { BookNotFoundError } from '@/modules/books/errors/book-not-found.error';
 import { BookViewModel } from '@/modules/books/vms/book.vm';
+import { BadRequestException } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 @CommandHandler(UpdateBookCommand)
@@ -13,6 +14,8 @@ export class UpdateBookHandler
   implements ICommandHandler<UpdateBookCommand, UpdateBookResult>
 {
   async execute(command: UpdateBookCommand): Promise<UpdateBookResult> {
+    throw new BadRequestException('Not ready yet');
+
     const book = await this.findBook(command);
     if (book == null) {
       throw new BookNotFoundError(command.bookId);

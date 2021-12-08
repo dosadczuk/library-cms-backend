@@ -5,9 +5,9 @@ import {
   CreateBookResult,
   RemoveBookCommand,
   RemoveBookCopyCommand,
+  UpdateBookCommand,
+  UpdateBookResult,
 } from '@/modules/books/commands';
-import { UpdateBookCommand } from '@/modules/books/commands/update-book/update-book.command';
-import { UpdateBookResult } from '@/modules/books/commands/update-book/update-book.result';
 import {
   CreateBookCopyBodyDto,
   CreateBookCopyParamsDto,
