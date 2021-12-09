@@ -67,6 +67,10 @@ const i18n = (fn: string, options?: Options): Options => ({
 });
 
 const mapConstraints = (constraints: any[]): Record<string, unknown> => {
+  if (constraints == null) {
+    return {};
+  }
+
   const result = {};
   for (const [constraint, idx] of constraints.entries()) {
     result[`constraint${idx}`] = constraint;
