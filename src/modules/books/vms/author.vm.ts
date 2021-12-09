@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { Author } from '@/modules/books/entities/author.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class AuthorViewModel {
   @ApiProperty({

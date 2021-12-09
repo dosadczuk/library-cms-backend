@@ -1,12 +1,12 @@
-import { TypeNumber } from '@/utils/decorators/class-transformer';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { TypeNumber } from '@/shared/decorators/class-transformer';
 import {
   IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
   MaxLength,
-} from 'class-validator';
+} from '@/shared/decorators/class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateUpdateAuthorBodyDto {
   @IsInt()

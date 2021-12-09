@@ -1,0 +1,4 @@
+{
+  "BookAlreadyExists": "Książka z ISBN {isbn} już istnieje",
+  "BookNotFound": "Nie znaleziono książki z id {id}"
+}

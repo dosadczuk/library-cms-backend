@@ -2,8 +2,8 @@ import { FindGenresResultDto } from '@/modules/books/dto/find-genres.dto';
 import { FindGenresQuery } from '@/modules/books/queries/find-genres/find-genres.query';
 import { FindGenresResult } from '@/modules/books/queries/find-genres/find-genres.result';
 import { GenreRepository } from '@/modules/books/repositories/genre.repository';
-import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GenreViewModel } from '@/modules/books/vms/genre.vm';
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
 @QueryHandler(FindGenresQuery)
 export class FindGenresHandler

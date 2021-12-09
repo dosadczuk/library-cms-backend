@@ -1,0 +1,17 @@
+{
+  "IsEmpty": "{property} musi być pusty",
+  "IsNotEmpty": "{property} nie może być pusty",
+  "IsDateString": "{property} musi być poprawną datą ISO 8601",
+  "IsEmail": "{property} musi być poprawnym adresem e-mail",
+  "IsUUID": "{property} musi być UUID",
+  "MaxLength": "{property} musi być krótszy lub równy {constraint0} znaków",
+  "MinLength": "{property} musi być dłuższy lub równy {constraint0} znaków",
+  "IsArray": "{property} musi być tablicą",
+  "IsBoolean": "{property} musi być wartością prawda/fałsz",
+  "IsDate": "{property} musi być instancją Date",
+  "IsEnum": "{property} musi być prawidłową wartością wyliczeniową",
+  "IsInt": "{property} musi być liczbą całkowitą",
+  "IsNumber": "{property} musi być liczbą spełniającą określone ograniczenia",
+  "IsObject": "{property} musi być obiektem",
+  "IsString": "{property} musi być ciągiem znaków"
+}

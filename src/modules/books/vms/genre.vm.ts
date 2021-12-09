@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { Genre } from '@/modules/books/entities/genre.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class GenreViewModel {
   @ApiProperty({

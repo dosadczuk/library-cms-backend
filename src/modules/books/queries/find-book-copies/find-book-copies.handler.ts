@@ -1,11 +1,11 @@
+import { FindBookCopiesResultDto } from '@/modules/books/dto';
+import { Book } from '@/modules/books/entities/book.entity';
+import { BookNotFoundError } from '@/modules/books/errors/book-not-found.error';
 import { FindBookCopiesQuery } from '@/modules/books/queries/find-book-copies/find-book-copies.query';
 import { FindBookCopiesResult } from '@/modules/books/queries/find-book-copies/find-book-copies.result';
-import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { BookRepository } from '@/modules/books/repositories/book.repository';
-import { BookNotFoundError } from '@/modules/books/errors/book-not-found.error';
-import { Book } from '@/modules/books/entities/book.entity';
 import { CopyViewModel } from '@/modules/books/vms/copy.vm';
-import { FindBookCopiesResultDto } from '@/modules/books/dto';
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
 @QueryHandler(FindBookCopiesQuery)
 export class FindBookCopiesHandler

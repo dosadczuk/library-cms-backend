@@ -1,14 +1,12 @@
-import { File } from '@/modules/files/entities/file.entity';
-import { HttpAwareError } from '@/shared/errors/http-aware.error';
-import { BadRequestException } from '@nestjs/common';
-import { EntityNotFoundError as NotFoundError } from 'typeorm';
+import { HttpAwareError, i18n } from '@/shared/errors/http-aware.error';
+import { BadRequestException, HttpException } from '@nestjs/common';
 
-export class FileNotFoundError extends NotFoundError implements HttpAwareError {
-  constructor(criteria: any) {
-    super(File, criteria);
+export class FileNotFoundError extends Error implements HttpAwareError {
+  constructor(id: string) {
+    super(i18n('files.FileNotFound', { id }));
   }
 
-  getHttpError(): Error {
-    return new BadRequestException(this, this.message);
+  getHttpError(): HttpException {
+    return new BadRequestException(this.message);
   }
 }

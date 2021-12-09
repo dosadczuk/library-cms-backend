@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { FileViewModel } from '@/modules/files/vms/file.vm';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class UploadFileResultDto {
   @ApiProperty({

@@ -5,9 +5,7 @@ import { CreateUpdatePublisherBodyDto as PublisherQueryDto } from '@/modules/boo
 import { CreateUpdateTagBodyDto as TagQueryDto } from '@/modules/books/dto/create-update-tag.dto';
 import { BookType } from '@/modules/books/entities/enums/book-type.enum';
 import { BookViewModel } from '@/modules/books/vms/book.vm';
-import { TypeNumber } from '@/utils/decorators/class-transformer';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
+import { TypeNumber } from '@/shared/decorators/class-transformer';
 import {
   IsArray,
   IsDateString,
@@ -20,7 +18,9 @@ import {
   MaxLength,
   MinLength,
   ValidateNested,
-} from 'class-validator';
+} from '@/shared/decorators/class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 
 export class UpdateBookParamsDto {
   @IsInt()

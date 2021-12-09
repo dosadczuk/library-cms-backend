@@ -2,8 +2,8 @@ import { FindAuthorsResultDto } from '@/modules/books/dto/find-authors.dto';
 import { FindAuthorsQuery } from '@/modules/books/queries/find-authors/find-authors.query';
 import { FindAuthorsResult } from '@/modules/books/queries/find-authors/find-authors.result';
 import { AuthorRepository } from '@/modules/books/repositories/author.repository';
-import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { AuthorViewModel } from '@/modules/books/vms/author.vm';
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
 @QueryHandler(FindAuthorsQuery)
 export class FindAuthorsHandler

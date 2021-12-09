@@ -1,5 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { Publisher } from '@/modules/books/entities/publisher.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class PublisherViewModel {
   @ApiProperty({
