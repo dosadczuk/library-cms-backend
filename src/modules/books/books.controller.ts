@@ -53,22 +53,8 @@ import {
   FindTagsResult,
 } from '@/modules/books/queries';
 import { BaseController } from '@/shared/base.controller';
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  Query,
-} from '@nestjs/common';
-import {
-  ApiBadRequestResponse,
-  ApiOkResponse,
-  ApiOperation,
-  ApiTags,
-} from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import { ApiBadRequestResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('books')
 @Controller('books')
@@ -76,9 +62,7 @@ export class BooksController extends BaseController {
   @ApiOperation({ summary: 'Pobieranie autorów książek' })
   @ApiOkResponse({ type: FindAuthorsResultDto })
   @Get('authors')
-  async findAuthors(
-    @Query() filter?: FindAuthorsFilterDto,
-  ): Promise<FindAuthorsResultDto> {
+  async findAuthors(@Query() filter?: FindAuthorsFilterDto): Promise<FindAuthorsResultDto> {
     const query = new FindAuthorsQuery(filter);
     const result = await this.executeQuery<FindAuthorsResult>(query);
 
@@ -88,9 +72,7 @@ export class BooksController extends BaseController {
   @ApiOperation({ summary: 'Pobieranie gatunków książek' })
   @ApiOkResponse({ type: FindGenresResultDto })
   @Get('genres')
-  async findGenres(
-    @Query() filter?: FindGenresFilterDto,
-  ): Promise<FindGenresResultDto> {
+  async findGenres(@Query() filter?: FindGenresFilterDto): Promise<FindGenresResultDto> {
     const query = new FindGenresQuery(filter);
     const result = await this.executeQuery<FindGenresResult>(query);
 
@@ -100,9 +82,7 @@ export class BooksController extends BaseController {
   @ApiOperation({ summary: 'Pobieranie języków książek' })
   @ApiOkResponse({ type: FindLanguagesResultDto })
   @Get('languages')
-  async findLanguages(
-    @Query() filter?: FindLanguagesFilterDto,
-  ): Promise<FindLanguagesResultDto> {
+  async findLanguages(@Query() filter?: FindLanguagesFilterDto): Promise<FindLanguagesResultDto> {
     const query = new FindLanguagesQuery(filter);
     const result = await this.executeQuery<FindLanguagesResult>(query);
 
@@ -124,9 +104,7 @@ export class BooksController extends BaseController {
   @ApiOperation({ summary: 'Pobieranie tagów książek' })
   @ApiOkResponse({ type: FindTagsResultDto })
   @Get('tags')
-  async findTags(
-    @Query() filter?: FindTagsFilterDto,
-  ): Promise<FindTagsResultDto> {
+  async findTags(@Query() filter?: FindTagsFilterDto): Promise<FindTagsResultDto> {
     const query = new FindTagsQuery(filter);
     const result = await this.executeQuery<FindTagsResult>(query);
 
@@ -136,9 +114,7 @@ export class BooksController extends BaseController {
   @ApiOperation({ summary: 'Pobieranie książek' })
   @ApiOkResponse({ type: FindBooksResultDto })
   @Get()
-  async findAll(
-    @Query() filter?: FindBooksFilterDto,
-  ): Promise<FindBooksResultDto> {
+  async findAll(@Query() filter?: FindBooksFilterDto): Promise<FindBooksResultDto> {
     const query = new FindBooksQuery(filter);
     const result = await this.executeQuery<FindBooksResult>(query);
 
@@ -151,9 +127,7 @@ export class BooksController extends BaseController {
     description: 'Książka nie istnieje',
   })
   @Get(':id')
-  async findOne(
-    @Param() params: FindBookParamsDto,
-  ): Promise<FindBookResultDto> {
+  async findOne(@Param() params: FindBookParamsDto): Promise<FindBookResultDto> {
     const query = new FindBookQuery(params.id);
     const result = await this.executeQuery<FindBookResult>(query);
 
@@ -169,9 +143,7 @@ export class BooksController extends BaseController {
     description: 'Książka z podanym ISBN już istnieje',
   })
   @Post()
-  async create(
-    @Body() book: CreateUpdateBookBodyDto,
-  ): Promise<CreateUpdateBookResultDto> {
+  async create(@Body() book: CreateUpdateBookBodyDto): Promise<CreateUpdateBookResultDto> {
     const command = new CreateBookCommand(book);
     const result = await this.executeCommand<CreateBookResult>(command);
 
@@ -217,9 +189,7 @@ export class BooksController extends BaseController {
     description: 'Książka nie istnieje',
   })
   @Get(':id/copies')
-  async findBookCopies(
-    @Param() params: FindBookCopiesParamsDto,
-  ): Promise<FindBookCopiesResultDto> {
+  async findBookCopies(@Param() params: FindBookCopiesParamsDto): Promise<FindBookCopiesResultDto> {
     const query = new FindBookCopiesQuery(params.id);
     const result = await this.executeQuery<FindBookCopiesResult>(query);
 
@@ -253,9 +223,7 @@ export class BooksController extends BaseController {
     description: 'Książka nie istnieje',
   })
   @Delete(':id/copies/:copy_id')
-  async removeBookCopy(
-    @Param() params: RemoveBookCopyParamsDto,
-  ): Promise<void> {
+  async removeBookCopy(@Param() params: RemoveBookCopyParamsDto): Promise<void> {
     const command = new RemoveBookCopyCommand(params.id, params.copyId);
 
     await this.executeCommand<void>(command);

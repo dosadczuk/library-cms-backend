@@ -20,13 +20,7 @@ export abstract class ManageBookHandler {
     protected readonly tagRepository: TagRepository,
   ) {}
 
-  protected async tryAssigningPublisher(
-    publisher: CreateUpdatePublisherBodyDto,
-  ): Promise<void> {
-    if (publisher.id != null) {
-      return; // już dopasowany
-    }
-
+  protected async tryAssigningPublisher(publisher: CreateUpdatePublisherBodyDto): Promise<void> {
     const entity = await this.publisherRepository.findByName(publisher.name);
     if (entity == null) {
       return; // nie istnieje
@@ -35,34 +29,16 @@ export abstract class ManageBookHandler {
     publisher.id = entity.id;
   }
 
-  protected async tryAssigningAuthors(
-    authors: CreateUpdateAuthorBodyDto[],
-  ): Promise<void> {
-    for (const author of authors) {
-      if (author.id != null) {
-        continue; // już dopasowany
-      }
-
-      const entity = await this.authorRepository.findByNames(
-        author.firstName,
-        author.lastName,
-      );
-
-      if (entity == null) {
-        continue; // nie istnieje
-      }
-
-      author.id = entity.id;
+  protected async tryAssigningAuthor(author: CreateUpdateAuthorBodyDto): Promise<void> {
+    const entity = await this.authorRepository.findByNames(author.firstName, author.lastName);
+    if (entity == null) {
+      return; // nie istnieje
     }
+
+    author.id = entity.id;
   }
 
-  protected async tryAssigningGenre(
-    genre: CreateUpdateGenreBodyDto,
-  ): Promise<void> {
-    if (genre.id != null) {
-      return; // już dopasowany
-    }
-
+  protected async tryAssigningGenre(genre: CreateUpdateGenreBodyDto): Promise<void> {
     const entity = await this.genreRepository.findByValue(genre.value);
     if (entity == null) {
       return; // nie istnieje
@@ -71,13 +47,7 @@ export abstract class ManageBookHandler {
     genre.id = entity.id;
   }
 
-  protected async tryAssigningLanguage(
-    language: CreateUpdateLanguageBodyDto,
-  ): Promise<void> {
-    if (language.id != null) {
-      return; // już dopasowany
-    }
-
+  protected async tryAssigningLanguage(language: CreateUpdateLanguageBodyDto): Promise<void> {
     const entity = await this.languageRepository.findByValue(language.value);
     if (entity == null) {
       return; // nie istnieje
@@ -86,20 +56,12 @@ export abstract class ManageBookHandler {
     language.id = entity.id;
   }
 
-  protected async tryAssigningTags(
-    tags: CreateUpdateTagBodyDto[],
-  ): Promise<void> {
-    for (const tag of tags) {
-      if (tag.id != null) {
-        continue; // już dopasowany
-      }
-
-      const entity = await this.tagRepository.findByNames(tag.value);
-      if (entity == null) {
-        continue; // nie istnieje
-      }
-
-      tag.id = entity.id;
+  protected async tryAssigningTag(tag: CreateUpdateTagBodyDto): Promise<void> {
+    const entity = await this.tagRepository.findByNames(tag.value);
+    if (entity == null) {
+      return; // nie istnieje
     }
+
+    tag.id = entity.id;
   }
 }

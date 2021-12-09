@@ -15,20 +15,14 @@ export const IsDateString = (options?: Options): PropertyDecorator =>
 export const IsEmail = (options?: Options): PropertyDecorator =>
   validator.IsEmail({}, i18n('IsEmail', options));
 
-export const IsUUID = (
-  version?: UUIDVersion,
-  options?: Options,
-): PropertyDecorator => validator.IsUUID(version, i18n('IsUUID', options));
+export const IsUUID = (version?: UUIDVersion, options?: Options): PropertyDecorator =>
+  validator.IsUUID(version, i18n('IsUUID', options));
 
-export const MaxLength = (
-  value: number,
-  options?: Options,
-): PropertyDecorator => validator.MaxLength(value, i18n('MaxLength', options));
+export const MaxLength = (value: number, options?: Options): PropertyDecorator =>
+  validator.MaxLength(value, i18n('MaxLength', options));
 
-export const MinLength = (
-  value: number,
-  options?: Options,
-): PropertyDecorator => validator.MinLength(value, i18n('MinLength', options));
+export const MinLength = (value: number, options?: Options): PropertyDecorator =>
+  validator.MinLength(value, i18n('MinLength', options));
 
 export const IsArray = (options?: Options): PropertyDecorator =>
   validator.IsArray(i18n('IsArray', options));
@@ -39,10 +33,8 @@ export const IsBoolean = (options?: Options): PropertyDecorator =>
 export const IsDate = (options?: Options): PropertyDecorator =>
   validator.IsDate(i18n('IsDate', options));
 
-export const IsEnum = (
-  entity: Record<string, unknown>,
-  options?: Options,
-): PropertyDecorator => validator.IsEnum(entity, i18n('IsEnum', options));
+export const IsEnum = (entity: Record<string, unknown>, options?: Options): PropertyDecorator =>
+  validator.IsEnum(entity, i18n('IsEnum', options));
 
 export const IsInt = (options?: Options): PropertyDecorator =>
   validator.IsInt(i18n('IsInt', options));

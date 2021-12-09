@@ -1,5 +1,6 @@
 import { CreateBookCommand } from '@/modules/books/commands/create-book/create-book.command';
 import { CreateBookResult } from '@/modules/books/commands/create-book/create-book.result';
+import { ManageBookCommand } from '@/modules/books/commands/manage-book/manage-book.command';
 import { ManageBookHandler } from '@/modules/books/commands/manage-book/manage-book.handler';
 import { CreateUpdateBookResultDto } from '@/modules/books/dto/create-update-book.dto';
 import { Author } from '@/modules/books/entities/author.entity';
@@ -23,13 +24,7 @@ export class CreateBookHandler
       throw new BookAlreadyExistsError(command.book.isbn);
     }
 
-    await this.tryAssigningPublisher(command.publisher);
-    await this.tryAssigningAuthors(command.authors);
-    await this.tryAssigningGenre(command.genre);
-    await this.tryAssigningLanguage(command.language);
-    await this.tryAssigningTags(command.tags);
-
-    const book = this.createBook(command);
+    const book = await this.createBook(command);
 
     await this.bookRepository.persist(book);
 
@@ -42,48 +37,97 @@ export class CreateBookHandler
     return this.bookRepository.isBookExists(command.book.isbn);
   }
 
-  private createBook(command: CreateBookCommand): Book {
+  private async createBook(command: CreateBookCommand): Promise<Book> {
     const book = new Book();
     book.isbn = command.book.isbn;
     book.type = command.book.type;
     book.title = command.book.title;
     book.description = command.book.description;
     book.issueDate = command.book.issueDate;
+    book.publisher = await this.createPublisher(command);
+    book.authors = await this.createAuthors(command);
+    book.genre = await this.createGenre(command);
+    book.language = await this.createLanguage(command);
     book.pages = command.book.pages;
     book.details = command.book.details;
+    book.tags = await this.createTags(command);
 
-    book.publisher = new Publisher();
-    book.publisher.id = command.publisher.id;
-    book.publisher.name = command.publisher.name;
+    if (command.book.imageId != null) {
+      book.image = new File();
+      book.image.id = command.book.imageId;
+    }
 
-    book.authors = command.authors.map((it) => {
+    return book;
+  }
+
+  private async createPublisher(command: ManageBookCommand): Promise<Publisher> {
+    if (command.publisher.id == null) {
+      await this.tryAssigningPublisher(command.publisher);
+    }
+
+    const publisher = new Publisher();
+    publisher.id = command.publisher.id;
+    publisher.name = command.publisher.name;
+
+    return publisher;
+  }
+
+  private async createAuthors(command: ManageBookCommand): Promise<Author[]> {
+    const authors: Author[] = [];
+    for (const it of command.authors) {
+      if (it.id == null) {
+        await this.tryAssigningAuthor(it);
+      }
+
       const author = new Author();
       author.id = it.id;
       author.firstName = it.firstName;
       author.lastName = it.lastName;
 
-      return author;
-    });
+      authors.push(author);
+    }
 
-    book.genre = new Genre();
-    book.genre.id = command.genre.id;
-    book.genre.value = command.genre.value;
+    return authors;
+  }
 
-    book.language = new Language();
-    book.language.id = command.language.id;
-    book.language.value = command.language.value;
+  private async createGenre(command: ManageBookCommand): Promise<Genre> {
+    if (command.genre.id == null) {
+      await this.tryAssigningGenre(command.genre);
+    }
 
-    book.image = new File();
-    book.image.id = command.book.imageId;
+    const genre = new Genre();
+    genre.id = command.genre.id;
+    genre.value = command.genre.value;
 
-    book.tags = command.tags.map((it) => {
+    return genre;
+  }
+
+  private async createLanguage(command: ManageBookCommand): Promise<Language> {
+    if (command.language.id == null) {
+      await this.tryAssigningLanguage(command.language);
+    }
+
+    const language = new Language();
+    language.id = command.language.id;
+    language.value = command.language.value;
+
+    return language;
+  }
+
+  private async createTags(command: ManageBookCommand): Promise<Tag[]> {
+    const tags: Tag[] = [];
+    for (const it of command.tags) {
+      if (it.id == null) {
+        await this.tryAssigningTag(it);
+      }
+
       const tag = new Tag();
       tag.id = it.id;
       tag.value = it.value;
 
-      return tag;
-    });
+      tags.push(tag);
+    }
 
-    return book;
+    return tags;
   }
 }

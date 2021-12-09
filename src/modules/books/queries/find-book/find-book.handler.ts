@@ -7,9 +7,7 @@ import { BookViewModel } from '@/modules/books/vms/book.vm';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
 @QueryHandler(FindBookQuery)
-export class FindBookHandler
-  implements IQueryHandler<FindBookQuery, FindBookResult>
-{
+export class FindBookHandler implements IQueryHandler<FindBookQuery, FindBookResult> {
   constructor(private readonly repository: BookRepository) {}
 
   async execute(query: FindBookQuery): Promise<FindBookResult> {

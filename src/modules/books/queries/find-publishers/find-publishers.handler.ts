@@ -19,9 +19,7 @@ export class FindPublishersHandler
     return new FindPublishersResult(result);
   }
 
-  private async findPublishers(
-    query: FindPublishersQuery,
-  ): Promise<PublisherViewModel[]> {
+  private async findPublishers(query: FindPublishersQuery): Promise<PublisherViewModel[]> {
     const publishers = await this.publisherRepository.findAll(query.filter);
 
     return publishers.map((it) => new PublisherViewModel(it));

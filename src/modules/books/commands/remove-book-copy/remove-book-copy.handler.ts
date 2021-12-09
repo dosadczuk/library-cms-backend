@@ -5,9 +5,7 @@ import { BookRepository } from '@/modules/books/repositories/book.repository';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 @CommandHandler(RemoveBookCopyCommand)
-export class RemoveBookCopyHandler
-  implements ICommandHandler<RemoveBookCopyCommand>
-{
+export class RemoveBookCopyHandler implements ICommandHandler<RemoveBookCopyCommand> {
   constructor(private readonly repository: BookRepository) {}
 
   async execute(command: RemoveBookCopyCommand): Promise<void> {

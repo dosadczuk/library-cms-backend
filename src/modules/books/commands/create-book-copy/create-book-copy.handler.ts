@@ -30,10 +30,7 @@ export class CreateBookCopyHandler
     return this.repository.findOne(command.bookId);
   }
 
-  private async createBookCopy(
-    book: Book,
-    command: CreateBookCopyCommand,
-  ): Promise<Copy> {
+  private async createBookCopy(book: Book, command: CreateBookCopyCommand): Promise<Copy> {
     const copy = new Copy();
     copy.number = command.copy.number;
 

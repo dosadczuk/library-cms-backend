@@ -6,9 +6,7 @@ import { TagViewModel } from '@/modules/books/vms/tag.vm';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
 @QueryHandler(FindTagsQuery)
-export class FindTagsHandler
-  implements IQueryHandler<FindTagsQuery, FindTagsResult>
-{
+export class FindTagsHandler implements IQueryHandler<FindTagsQuery, FindTagsResult> {
   constructor(private readonly tagRepository: TagRepository) {}
 
   async execute(query: FindTagsQuery): Promise<FindTagsResult> {

@@ -6,9 +6,7 @@ import { GenreViewModel } from '@/modules/books/vms/genre.vm';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
 @QueryHandler(FindGenresQuery)
-export class FindGenresHandler
-  implements IQueryHandler<FindGenresQuery, FindGenresResult>
-{
+export class FindGenresHandler implements IQueryHandler<FindGenresQuery, FindGenresResult> {
   constructor(private readonly genreRepository: GenreRepository) {}
 
   async execute(query: FindGenresQuery): Promise<FindGenresResult> {

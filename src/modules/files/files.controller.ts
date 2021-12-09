@@ -1,13 +1,5 @@
-import {
-  RemoveFileCommand,
-  UploadFileCommand,
-  UploadFileResult,
-} from '@/modules/files/commands';
-import {
-  FindFileParamsDto,
-  RemoveFileParamsDto,
-  UploadFileResultDto,
-} from '@/modules/files/dto';
+import { RemoveFileCommand, UploadFileCommand, UploadFileResult } from '@/modules/files/commands';
+import { FindFileParamsDto, RemoveFileParamsDto, UploadFileResultDto } from '@/modules/files/dto';
 import { FindFileQuery, FindFileResult } from '@/modules/files/queries';
 import { BaseController } from '@/shared/base.controller';
 import {
@@ -48,10 +40,7 @@ export class FilesController extends BaseController {
     description: 'Plik nie istnieje',
   })
   @Get(':id')
-  async findOne(
-    @Param() params: FindFileParamsDto,
-    @Res({ passthrough: true }) res,
-  ) {
+  async findOne(@Param() params: FindFileParamsDto, @Res({ passthrough: true }) res) {
     const query = new FindFileQuery(params.id);
     const result = await this.executeQuery<FindFileResult>(query);
 

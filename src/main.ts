@@ -27,10 +27,7 @@ function setUpSwagger(app: INestApplication) {
   const name = process.env.APP_NAME || 'Library CMS';
   const desc = process.env.APP_DESC || '';
 
-  const builder = new DocumentBuilder()
-    .setTitle(name)
-    .setDescription(desc)
-    .build();
+  const builder = new DocumentBuilder().setTitle(name).setDescription(desc).build();
 
   const document = SwaggerModule.createDocument(app, builder);
 

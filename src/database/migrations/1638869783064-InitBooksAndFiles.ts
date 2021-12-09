@@ -103,18 +103,10 @@ export class InitBooksAndFiles1638869783064 implements MigrationInterface {
     await queryRunner.query(
       `ALTER TABLE "books_authors" DROP CONSTRAINT "FK_bf3c609a7c91bc032b805bbe14d"`,
     );
-    await queryRunner.query(
-      `ALTER TABLE "books" DROP CONSTRAINT "FK_ce3191ad6f325cb5b184d656dd8"`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "books" DROP CONSTRAINT "FK_3164a2958d73d8cdebe5204c838"`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "books" DROP CONSTRAINT "FK_3b94b035d80d7564abd012014c8"`,
-    );
-    await queryRunner.query(
-      `ALTER TABLE "books" DROP CONSTRAINT "FK_370ec5bbafd46f74b23a20a5298"`,
-    );
+    await queryRunner.query(`ALTER TABLE "books" DROP CONSTRAINT "FK_ce3191ad6f325cb5b184d656dd8"`);
+    await queryRunner.query(`ALTER TABLE "books" DROP CONSTRAINT "FK_3164a2958d73d8cdebe5204c838"`);
+    await queryRunner.query(`ALTER TABLE "books" DROP CONSTRAINT "FK_3b94b035d80d7564abd012014c8"`);
+    await queryRunner.query(`ALTER TABLE "books" DROP CONSTRAINT "FK_370ec5bbafd46f74b23a20a5298"`);
     await queryRunner.query(
       `ALTER TABLE "ratings" DROP CONSTRAINT "FK_5eeacfb75e4972bec496e76cc55"`,
     );
@@ -124,19 +116,11 @@ export class InitBooksAndFiles1638869783064 implements MigrationInterface {
     await queryRunner.query(
       `ALTER TABLE "borrows" DROP CONSTRAINT "FK_4be0d26f71f4ebc4319fa134883"`,
     );
-    await queryRunner.query(
-      `DROP INDEX "public"."IDX_6c62da474cb4f4487a3c04518b"`,
-    );
-    await queryRunner.query(
-      `DROP INDEX "public"."IDX_77ba62723b88dfee0f1787f054"`,
-    );
+    await queryRunner.query(`DROP INDEX "public"."IDX_6c62da474cb4f4487a3c04518b"`);
+    await queryRunner.query(`DROP INDEX "public"."IDX_77ba62723b88dfee0f1787f054"`);
     await queryRunner.query(`DROP TABLE "books_tags"`);
-    await queryRunner.query(
-      `DROP INDEX "public"."IDX_738bc3574491eddb6cdd06896c"`,
-    );
-    await queryRunner.query(
-      `DROP INDEX "public"."IDX_bf3c609a7c91bc032b805bbe14"`,
-    );
+    await queryRunner.query(`DROP INDEX "public"."IDX_738bc3574491eddb6cdd06896c"`);
+    await queryRunner.query(`DROP INDEX "public"."IDX_bf3c609a7c91bc032b805bbe14"`);
     await queryRunner.query(`DROP TABLE "books_authors"`);
     await queryRunner.query(`DROP TABLE "books"`);
     await queryRunner.query(`DROP TYPE "public"."books_type_enum"`);

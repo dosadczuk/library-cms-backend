@@ -6,9 +6,7 @@ import { AuthorViewModel } from '@/modules/books/vms/author.vm';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
 @QueryHandler(FindAuthorsQuery)
-export class FindAuthorsHandler
-  implements IQueryHandler<FindAuthorsQuery, FindAuthorsResult>
-{
+export class FindAuthorsHandler implements IQueryHandler<FindAuthorsQuery, FindAuthorsResult> {
   constructor(private readonly repository: AuthorRepository) {}
 
   async execute(query: FindAuthorsQuery): Promise<FindAuthorsResult> {
@@ -19,9 +17,7 @@ export class FindAuthorsHandler
     return new FindAuthorsResult(result);
   }
 
-  private async findAuthors(
-    query: FindAuthorsQuery,
-  ): Promise<AuthorViewModel[]> {
+  private async findAuthors(query: FindAuthorsQuery): Promise<AuthorViewModel[]> {
     const authors = await this.repository.findAll(query.filter);
 
     return authors.map((it) => new AuthorViewModel(it));

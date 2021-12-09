@@ -19,9 +19,7 @@ export class FindLanguagesHandler
     return new FindLanguagesResult(result);
   }
 
-  private async findLanguages(
-    query: FindLanguagesQuery,
-  ): Promise<LanguageViewModel[]> {
+  private async findLanguages(query: FindLanguagesQuery): Promise<LanguageViewModel[]> {
     const languages = await this.languageRepository.findAll(query.filter);
 
     return languages.map((it) => new LanguageViewModel(it));

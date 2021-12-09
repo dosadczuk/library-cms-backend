@@ -1,8 +1,8 @@
-import { CreateUpdateAuthorBodyDto as AuthorQueryDto } from '@/modules/books/dto/create-update-author.dto';
-import { CreateUpdateGenreBodyDto as GenreQueryDto } from '@/modules/books/dto/create-update-genre.dto';
-import { CreateUpdateLanguageBodyDto as LanguageQueryDto } from '@/modules/books/dto/create-update-language.dto';
-import { CreateUpdatePublisherBodyDto as PublisherQueryDto } from '@/modules/books/dto/create-update-publisher.dto';
-import { CreateUpdateTagBodyDto as TagQueryDto } from '@/modules/books/dto/create-update-tag.dto';
+import { CreateUpdateAuthorBodyDto } from '@/modules/books/dto/create-update-author.dto';
+import { CreateUpdateGenreBodyDto } from '@/modules/books/dto/create-update-genre.dto';
+import { CreateUpdateLanguageBodyDto } from '@/modules/books/dto/create-update-language.dto';
+import { CreateUpdatePublisherBodyDto } from '@/modules/books/dto/create-update-publisher.dto';
+import { CreateUpdateTagBodyDto } from '@/modules/books/dto/create-update-tag.dto';
 import { BookType } from '@/modules/books/entities/enums/book-type.enum';
 import { BookViewModel } from '@/modules/books/vms/book.vm';
 import { TypeNumber } from '@/shared/decorators/class-transformer';
@@ -89,46 +89,46 @@ export class CreateUpdateBookBodyDto {
   @IsObject()
   @IsNotEmpty()
   @ValidateNested()
-  @Type(() => PublisherQueryDto)
+  @Type(() => CreateUpdatePublisherBodyDto)
   @ApiProperty({
     title: 'Wydawca',
-    type: PublisherQueryDto,
+    type: CreateUpdatePublisherBodyDto,
     nullable: false,
   })
-  readonly publisher: PublisherQueryDto;
+  readonly publisher: CreateUpdatePublisherBodyDto;
 
   @IsArray()
   @IsNotEmpty()
   @ValidateNested()
-  @Type(() => AuthorQueryDto)
+  @Type(() => CreateUpdateAuthorBodyDto)
   @ApiProperty({
     title: 'Autorzy',
-    type: [AuthorQueryDto],
+    type: [CreateUpdateAuthorBodyDto],
     nullable: false,
   })
-  readonly authors: AuthorQueryDto[];
+  readonly authors: CreateUpdateAuthorBodyDto[];
 
   @IsObject()
   @IsNotEmpty()
   @ValidateNested()
-  @Type(() => GenreQueryDto)
+  @Type(() => CreateUpdateGenreBodyDto)
   @ApiProperty({
     title: 'Gatunek',
-    type: GenreQueryDto,
+    type: CreateUpdateGenreBodyDto,
     nullable: false,
   })
-  readonly genre: GenreQueryDto;
+  readonly genre: CreateUpdateGenreBodyDto;
 
   @IsArray()
   @IsNotEmpty()
   @ValidateNested()
-  @Type(() => LanguageQueryDto)
+  @Type(() => CreateUpdateLanguageBodyDto)
   @ApiProperty({
     title: 'Język',
-    type: LanguageQueryDto,
+    type: CreateUpdateLanguageBodyDto,
     nullable: false,
   })
-  readonly language: LanguageQueryDto;
+  readonly language: CreateUpdateLanguageBodyDto;
 
   @IsInt()
   @IsNotEmpty()
@@ -161,10 +161,10 @@ export class CreateUpdateBookBodyDto {
   @IsOptional()
   @ApiPropertyOptional({
     title: 'Tagi',
-    type: [TagQueryDto],
+    type: [CreateUpdateTagBodyDto],
     nullable: true,
   })
-  readonly tags: TagQueryDto[] = [];
+  readonly tags: CreateUpdateTagBodyDto[] = [];
 }
 
 export class CreateUpdateBookResultDto {

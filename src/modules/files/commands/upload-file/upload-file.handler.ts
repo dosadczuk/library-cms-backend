@@ -9,9 +9,7 @@ import { createHash } from 'crypto';
 import * as fs from 'fs';
 
 @CommandHandler(UploadFileCommand)
-export class UploadFileHandler
-  implements ICommandHandler<UploadFileCommand, UploadFileResult>
-{
+export class UploadFileHandler implements ICommandHandler<UploadFileCommand, UploadFileResult> {
   constructor(private readonly repository: FileRepository) {}
 
   async execute(command: UploadFileCommand): Promise<UploadFileResult> {

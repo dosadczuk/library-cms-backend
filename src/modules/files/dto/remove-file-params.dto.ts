@@ -1,8 +1,4 @@
-import {
-  IsNotEmpty,
-  IsString,
-  IsUUID,
-} from '@/shared/decorators/class-validator';
+import { IsNotEmpty, IsString, IsUUID } from '@/shared/decorators/class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class RemoveFileParamsDto {
