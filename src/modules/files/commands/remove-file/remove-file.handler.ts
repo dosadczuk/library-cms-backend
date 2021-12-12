@@ -15,7 +15,7 @@ export class RemoveFileHandler implements ICommandHandler<RemoveFileCommand> {
       throw new FileNotFoundError(command.fileId);
     }
 
-    this.removeFileFromDisk(file);
+    this.tryRemovingFileFromDisk(file);
 
     await this.repository.remove(file);
   }
@@ -24,7 +24,13 @@ export class RemoveFileHandler implements ICommandHandler<RemoveFileCommand> {
     return this.repository.findOne(command.fileId);
   }
 
-  private removeFileFromDisk(file: File) {
-    fs.unlinkSync(file.path);
+  private tryRemovingFileFromDisk(file: File) {
+    try {
+      if (fs.existsSync(file.path)) {
+        fs.unlinkSync(file.path);
+      }
+    } catch {
+      // ignorujemy, trudno
+    }
   }
 }
