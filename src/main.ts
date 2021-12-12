@@ -3,6 +3,7 @@ import { HttpErrorInterceptor } from '@/http/http-error.interceptor';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as helmet from 'helmet';
 
 async function bootstrap() {
   const host = process.env.APP_HOST || 'localhost';
@@ -10,6 +11,7 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule);
   app.enableCors();
+  app.use(helmet());
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

@@ -13,6 +13,9 @@ declare global {
 
       DB_PGADMIN_EMAIL: string;
       DB_PGADMIN_PASSWORD: string;
+
+      API_THROTTLE_TTL: number;
+      API_THROTTLE_LIMIT: number;
     }
   }
 }
