@@ -16,13 +16,13 @@ export class AuthService {
     const user = await this.usersService.findOneByEmail(email);
 
     if (user == null) {
-      throw new BadRequestException("Wrong username or password!");
+      throw new BadRequestException('Wrong username or password!');
     }
-    const {password, ...result} = user;
+    const { password, ...result } = user;
     // let isValid: Boolean = await bcrypt.compare(pass, password)
-    let isValid: Boolean = (pass == password)
-    if(isValid == false){
-      throw new BadRequestException("Wrong username or password!");
+    const isValid: boolean = pass == password;
+    if (isValid == false) {
+      throw new BadRequestException('Wrong username or password!');
     }
     return result;
   }

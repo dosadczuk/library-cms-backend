@@ -1,14 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Role } from '@/modules/users/entities/enums/role.enum';
 import {
-    IsEnum,
-    IsNotEmpty,
-    IsString,
-    MaxLength,
-    MinLength,
-    IsEmail,
-  } from 'class-validator';
-  import { User as Entity } from '@/modules/users/entities/user.entity';
+  IsEnum,
+  IsNotEmpty,
+  IsString,
+  MaxLength,
+  MinLength,
+  IsEmail,
+} from 'class-validator';
+import { User as Entity } from '@/modules/users/entities/user.entity';
 // import { use } from 'passport';
 
 export class CheckCredentialsDto {
@@ -37,5 +37,4 @@ export class CheckCredentialsDto {
     nullable: false,
   })
   password: string;
-
 }
