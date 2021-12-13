@@ -9,16 +9,23 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
+// import * as bcrypt from 'bcrypt';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { LocalAuthGuard } from './local-auth.guard';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
+  @Post('register')
+  async register(@Body() createUser: CreateUserDto){
+    return this.authService.register(createUser);
+  }
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
