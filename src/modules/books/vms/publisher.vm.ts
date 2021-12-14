@@ -1,4 +1,4 @@
-import { Publisher } from '@/modules/books/entities/publisher.entity';
+import { Publisher } from '@/modules/books/entities';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class PublisherViewModel {

@@ -1,0 +1,4 @@
+{
+  "UserAlreadyExists": "Book with email of {email} already exists",
+  "UserNotFound": "User with id of {id} not found"
+}

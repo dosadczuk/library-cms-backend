@@ -1,6 +1,5 @@
-import { FindBooksFilterDto } from '@/modules/books/dto/find-books.dto';
-import { Book } from '@/modules/books/entities/book.entity';
-import { Copy } from '@/modules/books/entities/copy.entity';
+import { FindBooksFilterDto } from '@/modules/books/dto';
+import { Book, Copy } from '@/modules/books/entities';
 import { Injectable } from '@nestjs/common';
 import { Equal, ILike, In } from 'typeorm';
 

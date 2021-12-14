@@ -1,8 +1,8 @@
-import { FindLanguagesResultDto } from '@/modules/books/dto/find-languages.dto';
+import { FindLanguagesResultDto } from '@/modules/books/dto';
 import { FindLanguagesQuery } from '@/modules/books/queries/find-languages/find-languages.query';
 import { FindLanguagesResult } from '@/modules/books/queries/find-languages/find-languages.result';
-import { LanguageRepository } from '@/modules/books/repositories/language.repository';
-import { LanguageViewModel } from '@/modules/books/vms/language.vm';
+import { LanguageRepository } from '@/modules/books/repositories';
+import { LanguageViewModel } from '@/modules/books/vms';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
 @QueryHandler(FindLanguagesQuery)

@@ -1,8 +1,8 @@
-import { FindBooksResultDto } from '@/modules/books/dto/find-books.dto';
+import { FindBooksResultDto } from '@/modules/books/dto';
 import { FindBooksQuery } from '@/modules/books/queries/find-books/find-books.query';
 import { FindBooksResult } from '@/modules/books/queries/find-books/find-books.result';
-import { BookRepository } from '@/modules/books/repositories/book.repository';
-import { BookViewModel } from '@/modules/books/vms/book.vm';
+import { BookRepository } from '@/modules/books/repositories';
+import { BookViewModel } from '@/modules/books/vms';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
 @QueryHandler(FindBooksQuery)

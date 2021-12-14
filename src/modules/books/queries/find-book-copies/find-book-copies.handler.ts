@@ -1,10 +1,10 @@
 import { FindBookCopiesResultDto } from '@/modules/books/dto';
-import { Book } from '@/modules/books/entities/book.entity';
-import { BookNotFoundError } from '@/modules/books/errors/book-not-found.error';
+import { Book } from '@/modules/books/entities';
+import { BookNotFoundError } from '@/modules/books/errors';
 import { FindBookCopiesQuery } from '@/modules/books/queries/find-book-copies/find-book-copies.query';
 import { FindBookCopiesResult } from '@/modules/books/queries/find-book-copies/find-book-copies.result';
-import { BookRepository } from '@/modules/books/repositories/book.repository';
-import { CopyViewModel } from '@/modules/books/vms/copy.vm';
+import { BookRepository } from '@/modules/books/repositories';
+import { CopyViewModel } from '@/modules/books/vms';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
 @QueryHandler(FindBookCopiesQuery)

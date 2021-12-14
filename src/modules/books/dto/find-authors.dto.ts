@@ -1,5 +1,5 @@
-import { AuthorViewModel } from '@/modules/books/vms/author.vm';
-import { IsNotEmpty, IsOptional, IsString } from '@/shared/decorators/class-validator';
+import { AuthorViewModel } from '@/modules/books/vms';
+import { IsNotEmpty, IsOptional, IsString } from '@/shared/utils/class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class FindAuthorsFilterDto {

@@ -1,4 +1,4 @@
-import { isHttpAwareError } from '@/shared/errors/http-aware.error';
+import { isHttpAwareError } from '@/http/http-aware.error';
 import { CallHandler, Injectable, NestInterceptor } from '@nestjs/common';
 import { catchError, Observable } from 'rxjs';
 

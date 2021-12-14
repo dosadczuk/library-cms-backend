@@ -1,5 +1,5 @@
-import { Book } from '@/modules/books/entities/book.entity';
-import { BookType } from '@/modules/books/entities/enums/book-type.enum';
+import { Book } from '@/modules/books/entities';
+import { BookType } from '@/modules/books/entities/enums';
 import { AuthorViewModel } from '@/modules/books/vms/author.vm';
 import { GenreViewModel } from '@/modules/books/vms/genre.vm';
 import { LanguageViewModel } from '@/modules/books/vms/language.vm';

@@ -1,4 +1,4 @@
-import { Genre } from '@/modules/books/entities/genre.entity';
+import { Genre } from '@/modules/books/entities';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class GenreViewModel {

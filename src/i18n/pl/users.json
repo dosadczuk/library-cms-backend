@@ -1,0 +1,4 @@
+{
+  "UserAlreadyExists": "Użytkownik z adresem e-mail {email} już istnieje",
+  "UserNotFound": "Nie znaleziono użytkownika z id {id}"
+}

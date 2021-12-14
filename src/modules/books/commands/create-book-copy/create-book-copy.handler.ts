@@ -1,10 +1,9 @@
 import { CreateBookCopyCommand } from '@/modules/books/commands/create-book-copy/create-book-copy.command';
 import { CreateBookCopyResult } from '@/modules/books/commands/create-book-copy/create-book-copy.result';
 import { CreateBookCopyResultDto } from '@/modules/books/dto';
-import { Book } from '@/modules/books/entities/book.entity';
-import { Copy } from '@/modules/books/entities/copy.entity';
-import { BookNotFoundError } from '@/modules/books/errors/book-not-found.error';
-import { BookRepository } from '@/modules/books/repositories/book.repository';
+import { Book, Copy } from '@/modules/books/entities';
+import { BookNotFoundError } from '@/modules/books/errors';
+import { BookRepository } from '@/modules/books/repositories';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 @CommandHandler(CreateBookCopyCommand)

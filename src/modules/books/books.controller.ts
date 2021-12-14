@@ -1,3 +1,4 @@
+import { JwtAuthGuard } from '@/modules/auth/guards';
 import {
   CreateBookCommand,
   CreateBookCopyCommand,
@@ -53,14 +54,38 @@ import {
   FindTagsResult,
 } from '@/modules/books/queries';
 import { BaseController } from '@/shared/base.controller';
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @ApiTags('books')
+@UseInterceptors(ClassSerializerInterceptor)
 @Controller('books')
 export class BooksController extends BaseController {
   @ApiOperation({ summary: 'Pobieranie autorów książek' })
-  @ApiOkResponse({ type: FindAuthorsResultDto })
+  @ApiOkResponse({
+    type: FindAuthorsResultDto,
+    description: 'Znalezieni autorzy',
+  })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Get('authors')
   async findAuthors(@Query() filter?: FindAuthorsFilterDto): Promise<FindAuthorsResultDto> {
     const query = new FindAuthorsQuery(filter);
@@ -70,7 +95,12 @@ export class BooksController extends BaseController {
   }
 
   @ApiOperation({ summary: 'Pobieranie gatunków książek' })
-  @ApiOkResponse({ type: FindGenresResultDto })
+  @ApiOkResponse({
+    type: FindGenresResultDto,
+    description: 'Znalezione gatunki',
+  })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Get('genres')
   async findGenres(@Query() filter?: FindGenresFilterDto): Promise<FindGenresResultDto> {
     const query = new FindGenresQuery(filter);
@@ -80,7 +110,12 @@ export class BooksController extends BaseController {
   }
 
   @ApiOperation({ summary: 'Pobieranie języków książek' })
-  @ApiOkResponse({ type: FindLanguagesResultDto })
+  @ApiOkResponse({
+    type: FindLanguagesResultDto,
+    description: 'Znalezione języki',
+  })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Get('languages')
   async findLanguages(@Query() filter?: FindLanguagesFilterDto): Promise<FindLanguagesResultDto> {
     const query = new FindLanguagesQuery(filter);
@@ -90,7 +125,12 @@ export class BooksController extends BaseController {
   }
 
   @ApiOperation({ summary: 'Pobieranie wydawców książek' })
-  @ApiOkResponse({ type: FindPublishersResultDto })
+  @ApiOkResponse({
+    type: FindPublishersResultDto,
+    description: 'Znalezieni wydawcy',
+  })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Get('publishers')
   async findPublishers(
     @Query() filter?: FindPublishersFilterDto,
@@ -102,7 +142,12 @@ export class BooksController extends BaseController {
   }
 
   @ApiOperation({ summary: 'Pobieranie tagów książek' })
-  @ApiOkResponse({ type: FindTagsResultDto })
+  @ApiOkResponse({
+    type: FindTagsResultDto,
+    description: 'Znalezione tagi',
+  })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Get('tags')
   async findTags(@Query() filter?: FindTagsFilterDto): Promise<FindTagsResultDto> {
     const query = new FindTagsQuery(filter);
@@ -112,7 +157,12 @@ export class BooksController extends BaseController {
   }
 
   @ApiOperation({ summary: 'Pobieranie książek' })
-  @ApiOkResponse({ type: FindBooksResultDto })
+  @ApiOkResponse({
+    type: FindBooksResultDto,
+    description: 'Znalezione książki',
+  })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(@Query() filter?: FindBooksFilterDto): Promise<FindBooksResultDto> {
     const query = new FindBooksQuery(filter);
@@ -122,10 +172,13 @@ export class BooksController extends BaseController {
   }
 
   @ApiOperation({ summary: 'Pobieranie książki' })
-  @ApiOkResponse({ type: FindBookResultDto })
-  @ApiBadRequestResponse({
-    description: 'Książka nie istnieje',
+  @ApiOkResponse({
+    type: FindBookResultDto,
+    description: 'Znaleziona książka',
   })
+  @ApiBadRequestResponse({ description: 'Książka nie istnieje' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   async findOne(@Param() params: FindBookParamsDto): Promise<FindBookResultDto> {
     const query = new FindBookQuery(params.id);
@@ -139,9 +192,9 @@ export class BooksController extends BaseController {
     type: CreateUpdateBookResultDto,
     description: 'Książka została pomyślnie utworzona',
   })
-  @ApiBadRequestResponse({
-    description: 'Książka z podanym ISBN już istnieje',
-  })
+  @ApiBadRequestResponse({ description: 'Książka z podanym ISBN już istnieje' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() book: CreateUpdateBookBodyDto): Promise<CreateUpdateBookResultDto> {
     const command = new CreateBookCommand(book);
@@ -155,9 +208,9 @@ export class BooksController extends BaseController {
     type: CreateUpdateBookResultDto,
     description: 'Książka została pomyślnie zmodyfikowana',
   })
-  @ApiBadRequestResponse({
-    description: 'Książka nie istnieje',
-  })
+  @ApiBadRequestResponse({ description: 'Książka nie istnieje' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Put(':id')
   async update(
     @Param() params: UpdateBookParamsDto,
@@ -170,12 +223,10 @@ export class BooksController extends BaseController {
   }
 
   @ApiOperation({ summary: 'Usuwanie książki' })
-  @ApiOkResponse({
-    description: 'Książka została pomyślnie usunięta',
-  })
-  @ApiBadRequestResponse({
-    description: 'Książka nie istnieje',
-  })
+  @ApiOkResponse({ description: 'Książka została pomyślnie usunięta' })
+  @ApiBadRequestResponse({ description: 'Książka nie istnieje' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async remove(@Param() params: RemoveBookParamsDto): Promise<void> {
     const command = new RemoveBookCommand(params.id);
@@ -184,10 +235,13 @@ export class BooksController extends BaseController {
   }
 
   @ApiOperation({ summary: 'Pobieranie egzemplarzy książki' })
-  @ApiOkResponse({ type: FindBookCopiesResultDto })
-  @ApiBadRequestResponse({
-    description: 'Książka nie istnieje',
+  @ApiOkResponse({
+    type: FindBookCopiesResultDto,
+    description: 'Znalezione egzemplarze książki',
   })
+  @ApiBadRequestResponse({ description: 'Książka nie istnieje' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Get(':id/copies')
   async findBookCopies(@Param() params: FindBookCopiesParamsDto): Promise<FindBookCopiesResultDto> {
     const query = new FindBookCopiesQuery(params.id);
@@ -201,9 +255,9 @@ export class BooksController extends BaseController {
     type: CreateBookCopyResultDto,
     description: 'Egzemplarz książki został pomyślnie utworzony',
   })
-  @ApiBadRequestResponse({
-    description: 'Książka nie istnieje',
-  })
+  @ApiBadRequestResponse({ description: 'Książka nie istnieje' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Post(':id/copies')
   async createBookCopy(
     @Param() params: CreateBookCopyParamsDto,
@@ -216,12 +270,10 @@ export class BooksController extends BaseController {
   }
 
   @ApiOperation({ summary: 'Usuwanie egzemplarza książki' })
-  @ApiOkResponse({
-    description: 'Egzemplarz książki został pomyślnie usunięty',
-  })
-  @ApiBadRequestResponse({
-    description: 'Książka nie istnieje',
-  })
+  @ApiOkResponse({ description: 'Egzemplarz książki został pomyślnie usunięty' })
+  @ApiBadRequestResponse({ description: 'Książka nie istnieje' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Delete(':id/copies/:copy_id')
   async removeBookCopy(@Param() params: RemoveBookCopyParamsDto): Promise<void> {
     const command = new RemoveBookCopyCommand(params.id, params.copyId);

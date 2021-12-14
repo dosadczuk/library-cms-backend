@@ -1,16 +1,15 @@
 import Config from '@/config/app.config';
 import { HttpErrorFilter } from '@/http/http-error.filter';
 import { HttpThrottlerGuard } from '@/http/http-throttler.guard';
+import { AuthModule } from '@/modules/auth/auth.module';
 import { BooksModule } from '@/modules/books/books.module';
 import { FilesModule } from '@/modules/files/files.module';
+import { UsersModule } from '@/modules/users/users.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModule } from '@/modules/auth/auth.module';
-import { UsersModule } from '@/modules/users/users.module';
-import { AuthModule } from './modules/auth/auth.module';
 import { HeaderResolver, I18nJsonParser, I18nModule } from 'nestjs-i18n';
 import * as path from 'path';
 
@@ -43,8 +42,8 @@ import * as path from 'path';
         return config.get('throttler');
       },
     }),
-    BooksModule,
     AuthModule,
+    BooksModule,
     UsersModule,
     FilesModule,
   ],

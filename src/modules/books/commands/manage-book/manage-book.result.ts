@@ -1,4 +1,4 @@
-import { CreateUpdateBookResultDto } from '@/modules/books/dto/create-update-book.dto';
+import { CreateUpdateBookResultDto } from '@/modules/books/dto';
 
 export abstract class ManageBookResult {
   constructor(readonly book: CreateUpdateBookResultDto) {}

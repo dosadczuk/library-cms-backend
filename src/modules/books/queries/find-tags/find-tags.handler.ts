@@ -1,8 +1,8 @@
-import { FindTagsResultDto } from '@/modules/books/dto/find-tags.dto';
+import { FindTagsResultDto } from '@/modules/books/dto';
 import { FindTagsQuery } from '@/modules/books/queries/find-tags/find-tags.query';
 import { FindTagsResult } from '@/modules/books/queries/find-tags/find-tags.result';
-import { TagRepository } from '@/modules/books/repositories/tag.repository';
-import { TagViewModel } from '@/modules/books/vms/tag.vm';
+import { TagRepository } from '@/modules/books/repositories';
+import { TagViewModel } from '@/modules/books/vms';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
 @QueryHandler(FindTagsQuery)

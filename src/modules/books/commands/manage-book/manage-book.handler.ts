@@ -1,14 +1,18 @@
-import { CreateUpdateAuthorBodyDto } from '@/modules/books/dto/create-update-author.dto';
-import { CreateUpdateGenreBodyDto } from '@/modules/books/dto/create-update-genre.dto';
-import { CreateUpdateLanguageBodyDto } from '@/modules/books/dto/create-update-language.dto';
-import { CreateUpdatePublisherBodyDto } from '@/modules/books/dto/create-update-publisher.dto';
-import { CreateUpdateTagBodyDto } from '@/modules/books/dto/create-update-tag.dto';
-import { AuthorRepository } from '@/modules/books/repositories/author.repository';
-import { BookRepository } from '@/modules/books/repositories/book.repository';
-import { GenreRepository } from '@/modules/books/repositories/genre.repository';
-import { LanguageRepository } from '@/modules/books/repositories/language.repository';
-import { PublisherRepository } from '@/modules/books/repositories/publisher.repository';
-import { TagRepository } from '@/modules/books/repositories/tag.repository';
+import {
+  CreateUpdateAuthorBodyDto,
+  CreateUpdateGenreBodyDto,
+  CreateUpdateLanguageBodyDto,
+  CreateUpdatePublisherBodyDto,
+  CreateUpdateTagBodyDto,
+} from '@/modules/books/dto';
+import {
+  AuthorRepository,
+  BookRepository,
+  GenreRepository,
+  LanguageRepository,
+  PublisherRepository,
+  TagRepository,
+} from '@/modules/books/repositories';
 
 export abstract class ManageBookHandler {
   constructor(

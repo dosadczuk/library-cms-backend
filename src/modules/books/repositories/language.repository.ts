@@ -1,5 +1,5 @@
-import { FindLanguagesFilterDto } from '@/modules/books/dto/find-languages.dto';
-import { Language } from '@/modules/books/entities/language.entity';
+import { FindLanguagesFilterDto } from '@/modules/books/dto';
+import { Language } from '@/modules/books/entities';
 import { Injectable } from '@nestjs/common';
 import { ILike } from 'typeorm';
 

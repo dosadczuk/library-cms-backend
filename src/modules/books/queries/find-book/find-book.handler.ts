@@ -1,9 +1,9 @@
 import { FindBookResultDto } from '@/modules/books/dto';
-import { BookNotFoundError } from '@/modules/books/errors/book-not-found.error';
+import { BookNotFoundError } from '@/modules/books/errors';
 import { FindBookQuery } from '@/modules/books/queries/find-book/find-book.query';
 import { FindBookResult } from '@/modules/books/queries/find-book/find-book.result';
-import { BookRepository } from '@/modules/books/repositories/book.repository';
-import { BookViewModel } from '@/modules/books/vms/book.vm';
+import { BookRepository } from '@/modules/books/repositories';
+import { BookViewModel } from '@/modules/books/vms';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
 @QueryHandler(FindBookQuery)

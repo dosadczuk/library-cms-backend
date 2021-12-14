@@ -1,4 +1,3 @@
-import { Exclude } from 'class-transformer';
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({
@@ -21,7 +20,6 @@ export class File extends BaseEntity {
   })
   name: string;
 
-  @Exclude()
   @Column({
     comment: 'Ścieżka do pliku na dysku',
     name: 'path',
@@ -31,7 +29,6 @@ export class File extends BaseEntity {
   })
   path: string;
 
-  @Exclude()
   @Column({
     comment: 'Rozmiar w bajtach',
     name: 'size',
@@ -40,7 +37,6 @@ export class File extends BaseEntity {
   })
   size: number;
 
-  @Exclude()
   @Column({
     comment: 'Typ MIME',
     name: 'mime',

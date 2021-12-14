@@ -1,9 +1,9 @@
-import { UploadFileResult } from '@/modules/files/commands';
 import { UploadFileCommand } from '@/modules/files/commands/upload-file/upload-file.command';
+import { UploadFileResult } from '@/modules/files/commands/upload-file/upload-file.result';
 import { UploadFileResultDto } from '@/modules/files/dto';
-import { File } from '@/modules/files/entities/file.entity';
-import { FileRepository } from '@/modules/files/repositories/file.repository';
-import { FileViewModel } from '@/modules/files/vms/file.vm';
+import { File } from '@/modules/files/entities';
+import { FileRepository } from '@/modules/files/repositories';
+import { FileViewModel } from '@/modules/files/vms';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { createHash } from 'crypto';
 import * as fs from 'fs';

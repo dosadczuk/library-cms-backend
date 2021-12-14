@@ -1,4 +1,4 @@
-import { FindGenresResultDto } from '@/modules/books/dto/find-genres.dto';
+import { FindGenresResultDto } from '@/modules/books/dto';
 
 export class FindGenresResult {
   constructor(readonly genres: FindGenresResultDto) {}

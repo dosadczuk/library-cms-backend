@@ -1,11 +1,5 @@
-import { TypeNumber } from '@/shared/decorators/class-transformer';
-import {
-  IsInt,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  MaxLength,
-} from '@/shared/decorators/class-validator';
+import { TypeNumber } from '@/shared/utils/class-transformer';
+import { IsInt, IsNotEmpty, IsOptional, IsString, MaxLength } from '@/shared/utils/class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateUpdateLanguageBodyDto {

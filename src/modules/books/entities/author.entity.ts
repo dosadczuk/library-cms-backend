@@ -1,4 +1,4 @@
-import { Exclude, Expose } from 'class-transformer';
+import { Expose } from 'class-transformer';
 import {
   BaseEntity,
   Column,
@@ -49,7 +49,6 @@ export class Author extends BaseEntity {
   })
   createdAt: Date;
 
-  @Exclude()
   @UpdateDateColumn({
     name: 'modified_at',
     comment: 'Moment modyfikacji rekordu',

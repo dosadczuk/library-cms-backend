@@ -1,4 +1,4 @@
-import { FileViewModel } from '@/modules/files/vms/file.vm';
+import { FileViewModel } from '@/modules/files/vms';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UploadFileResultDto {

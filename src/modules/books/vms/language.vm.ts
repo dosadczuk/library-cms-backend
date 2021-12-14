@@ -1,4 +1,4 @@
-import { Language } from '@/modules/books/entities/language.entity';
+import { Language } from '@/modules/books/entities';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class LanguageViewModel {

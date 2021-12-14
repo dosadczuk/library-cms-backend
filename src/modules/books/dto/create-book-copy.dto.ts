@@ -1,6 +1,6 @@
-import { CopyViewModel } from '@/modules/books/vms/copy.vm';
-import { TypeNumber } from '@/shared/decorators/class-transformer';
-import { IsInt, IsNotEmpty, IsString, MaxLength } from '@/shared/decorators/class-validator';
+import { CopyViewModel } from '@/modules/books/vms';
+import { TypeNumber } from '@/shared/utils/class-transformer';
+import { IsInt, IsNotEmpty, IsString, MaxLength } from '@/shared/utils/class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateBookCopyParamsDto {

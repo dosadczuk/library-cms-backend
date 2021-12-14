@@ -1,66 +1,54 @@
 import {
-  Controller,
-  Get,
-  Post,
-  Request,
+  LoginCommand,
+  LoginResult,
+  RegisterCommand,
+  RegisterResult,
+} from '@/modules/auth/commands';
+import {
+  LoginBodyDto,
+  LoginResultDto,
+  RegisterBodyDto,
+  RegisterResultDto,
+} from '@/modules/auth/dto';
+import { BaseController } from '@/shared/base.controller';
+import {
   Body,
-  Patch,
-  Param,
-  Delete,
-  UseGuards,
+  ClassSerializerInterceptor,
+  Controller,
+  Post,
+  UseInterceptors,
 } from '@nestjs/common';
-// import * as bcrypt from 'bcrypt';
-import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
-import { AuthGuard } from '@nestjs/passport';
-import { LocalAuthGuard } from './local-auth.guard';
-import { JwtAuthGuard } from './jwt-auth.guard';
-import { CreateUserDto } from './dto/create-user.dto';
+import { ApiBadRequestResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('auth')
+@UseInterceptors(ClassSerializerInterceptor)
 @Controller('auth')
-export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+export class AuthController extends BaseController {
+  @ApiOperation({ summary: 'Rejestrowanie użytkownika' })
+  @ApiOkResponse({
+    type: RegisterResultDto,
+    description: 'Użytkownik został pomyślnie zarejestrowany',
+  })
+  @ApiBadRequestResponse({ description: 'Użytkownik o podanym adresie e-mail już istnieje' })
+  @Post('/register')
+  async register(@Body() user: RegisterBodyDto): Promise<RegisterResultDto> {
+    const command = new RegisterCommand(user);
+    const result = await this.executeCommand<RegisterResult>(command);
 
-  @Post('register')
-  async register(@Body() createUser: CreateUserDto) {
-    return this.authService.register(createUser);
+    return result.user;
   }
 
-  @UseGuards(LocalAuthGuard)
-  @Post('login')
-  async login(@Request() req) {
-    return this.authService.login(req.user);
+  @ApiOperation({ summary: 'Logowanie użytkownika' })
+  @ApiOkResponse({
+    type: LoginResultDto,
+    description: 'Użytkownik został pomyślnie zalogowany',
+  })
+  @ApiBadRequestResponse({ description: 'Nieprawidłowe dane logowania' })
+  @Post('/login')
+  async login(@Body() credentials: LoginBodyDto): Promise<LoginResultDto> {
+    const command = new LoginCommand(credentials);
+    const result = await this.executeCommand<LoginResult>(command);
+
+    return result.result;
   }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('profile')
-  getProfile(@Request() req) {
-    return req.user;
-  }
-
-  // @Post()
-  // create(@Body() createAuthDto: CreateAuthDto) {
-  //   return this.authService.create(createAuthDto);
-  // }
-
-  // @Get()
-  // findAll() {
-  //   return this.authService.findAll();
-  // }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.authService.findOne(+id);
-  // }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-  //   return this.authService.update(+id, updateAuthDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.authService.remove(+id);
-  // }
 }

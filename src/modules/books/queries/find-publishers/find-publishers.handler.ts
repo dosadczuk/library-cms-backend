@@ -1,8 +1,8 @@
-import { FindPublishersResultDto } from '@/modules/books/dto/find-publishers.dto';
+import { FindPublishersResultDto } from '@/modules/books/dto';
 import { FindPublishersQuery } from '@/modules/books/queries/find-publishers/find-publishers.query';
 import { FindPublishersResult } from '@/modules/books/queries/find-publishers/find-publishers.result';
-import { PublisherRepository } from '@/modules/books/repositories/publisher.repository';
-import { PublisherViewModel } from '@/modules/books/vms/publisher.vm';
+import { PublisherRepository } from '@/modules/books/repositories';
+import { PublisherViewModel } from '@/modules/books/vms';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
 @QueryHandler(FindPublishersQuery)

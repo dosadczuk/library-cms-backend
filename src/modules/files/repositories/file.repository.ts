@@ -1,4 +1,4 @@
-import { File } from '@/modules/files/entities/file.entity';
+import { File } from '@/modules/files/entities';
 
 export class FileRepository {
   /**

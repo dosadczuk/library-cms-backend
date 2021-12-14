@@ -1,4 +1,4 @@
-import { Author } from '@/modules/books/entities/author.entity';
+import { Author } from '@/modules/books/entities';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class AuthorViewModel {

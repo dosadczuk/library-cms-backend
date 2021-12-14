@@ -1,7 +1,7 @@
 import { RemoveBookCommand } from '@/modules/books/commands/remove-book/remove-book.command';
-import { Book } from '@/modules/books/entities/book.entity';
-import { BookNotFoundError } from '@/modules/books/errors/book-not-found.error';
-import { BookRepository } from '@/modules/books/repositories/book.repository';
+import { Book } from '@/modules/books/entities';
+import { BookNotFoundError } from '@/modules/books/errors';
+import { BookRepository } from '@/modules/books/repositories';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 @CommandHandler(RemoveBookCommand)

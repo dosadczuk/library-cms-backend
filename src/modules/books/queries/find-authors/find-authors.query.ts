@@ -1,4 +1,4 @@
-import { FindAuthorsFilterDto } from '@/modules/books/dto/find-authors.dto';
+import { FindAuthorsFilterDto } from '@/modules/books/dto';
 
 export class FindAuthorsQuery {
   constructor(readonly filter?: FindAuthorsFilterDto) {}

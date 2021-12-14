@@ -1,5 +1,5 @@
-import { FindTagsFilterDto } from '@/modules/books/dto/find-tags.dto';
-import { Tag } from '@/modules/books/entities/tag.entity';
+import { FindTagsFilterDto } from '@/modules/books/dto';
+import { Tag } from '@/modules/books/entities';
 import { Injectable } from '@nestjs/common';
 import { ILike } from 'typeorm';
 

@@ -1,9 +1,11 @@
-import { CreateUpdateAuthorBodyDto } from '@/modules/books/dto/create-update-author.dto';
-import { CreateUpdateBookBodyDto } from '@/modules/books/dto/create-update-book.dto';
-import { CreateUpdateGenreBodyDto } from '@/modules/books/dto/create-update-genre.dto';
-import { CreateUpdateLanguageBodyDto } from '@/modules/books/dto/create-update-language.dto';
-import { CreateUpdatePublisherBodyDto } from '@/modules/books/dto/create-update-publisher.dto';
-import { CreateUpdateTagBodyDto } from '@/modules/books/dto/create-update-tag.dto';
+import {
+  CreateUpdateAuthorBodyDto,
+  CreateUpdateBookBodyDto,
+  CreateUpdateGenreBodyDto,
+  CreateUpdateLanguageBodyDto,
+  CreateUpdatePublisherBodyDto,
+  CreateUpdateTagBodyDto,
+} from '@/modules/books/dto';
 
 export abstract class ManageBookCommand {
   constructor(readonly book: CreateUpdateBookBodyDto) {}

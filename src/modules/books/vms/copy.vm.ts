@@ -1,4 +1,4 @@
-import { Copy } from '@/modules/books/entities/copy.entity';
+import { Copy } from '@/modules/books/entities';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CopyViewModel {

@@ -1,4 +1,4 @@
-import { Tag } from '@/modules/books/entities/tag.entity';
+import { Tag } from '@/modules/books/entities';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class TagViewModel {

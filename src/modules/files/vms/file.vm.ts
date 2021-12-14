@@ -1,4 +1,4 @@
-import { File } from '@/modules/files/entities/file.entity';
+import { File } from '@/modules/files/entities';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 

@@ -1,6 +1,6 @@
-import { BookType } from '@/modules/books/entities/enums/book-type.enum';
-import { BookViewModel } from '@/modules/books/vms/book.vm';
-import { TypeNumber } from '@/shared/decorators/class-transformer';
+import { BookType } from '@/modules/books/entities/enums';
+import { BookViewModel } from '@/modules/books/vms';
+import { TypeNumber } from '@/shared/utils/class-transformer';
 import {
   IsArray,
   IsEnum,
@@ -8,7 +8,7 @@ import {
   IsOptional,
   IsString,
   MaxLength,
-} from '@/shared/decorators/class-validator';
+} from '@/shared/utils/class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class FindBooksFilterDto {

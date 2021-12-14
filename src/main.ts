@@ -29,12 +29,21 @@ function setUpSwagger(app: INestApplication) {
   const name = process.env.APP_NAME || 'Library CMS';
   const desc = process.env.APP_DESC || '';
 
-  const builder = new DocumentBuilder().setTitle(name).setDescription(desc).build();
+  const builder = new DocumentBuilder()
+    .setTitle(name)
+    .setDescription(desc)
+    .setVersion('1.0.0')
+    .addBearerAuth()
+    .build();
 
   const document = SwaggerModule.createDocument(app, builder);
 
   // dostępne pod /api
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('api', app, document, {
+    swaggerOptions: {
+      defaultModelsExpandDepth: -1,
+    },
+  });
 }
 
 bootstrap();

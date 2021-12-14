@@ -1,4 +1,4 @@
-import { FindBookCopiesResultDto } from '@/modules/books/dto/find-book-copies.dto';
+import { FindBookCopiesResultDto } from '@/modules/books/dto';
 
 export class FindBookCopiesResult {
   constructor(readonly bookCopies: FindBookCopiesResultDto) {}

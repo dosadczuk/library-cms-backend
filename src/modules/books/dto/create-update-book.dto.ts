@@ -3,9 +3,9 @@ import { CreateUpdateGenreBodyDto } from '@/modules/books/dto/create-update-genr
 import { CreateUpdateLanguageBodyDto } from '@/modules/books/dto/create-update-language.dto';
 import { CreateUpdatePublisherBodyDto } from '@/modules/books/dto/create-update-publisher.dto';
 import { CreateUpdateTagBodyDto } from '@/modules/books/dto/create-update-tag.dto';
-import { BookType } from '@/modules/books/entities/enums/book-type.enum';
-import { BookViewModel } from '@/modules/books/vms/book.vm';
-import { TypeNumber } from '@/shared/decorators/class-transformer';
+import { BookType } from '@/modules/books/entities/enums';
+import { BookViewModel } from '@/modules/books/vms';
+import { TypeNumber } from '@/shared/utils/class-transformer';
 import {
   IsArray,
   IsDateString,
@@ -18,7 +18,7 @@ import {
   MaxLength,
   MinLength,
   ValidateNested,
-} from '@/shared/decorators/class-validator';
+} from '@/shared/utils/class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 

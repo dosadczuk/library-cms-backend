@@ -7,7 +7,6 @@ import { Publisher } from '@/modules/books/entities/publisher.entity';
 import { Rating } from '@/modules/books/entities/rating.entity';
 import { Tag } from '@/modules/books/entities/tag.entity';
 import { File } from '@/modules/files/entities/file.entity';
-import { Exclude } from 'class-transformer';
 import {
   BaseEntity,
   Column,
@@ -191,7 +190,6 @@ export class Book extends BaseEntity {
   })
   createdAt: Date;
 
-  @Exclude()
   @UpdateDateColumn({
     name: 'modified_at',
     comment: 'Moment modyfikacji rekordu',
@@ -199,7 +197,6 @@ export class Book extends BaseEntity {
   })
   modifiedAt?: Date;
 
-  @Exclude()
   @DeleteDateColumn({
     name: 'removed_at',
     comment: 'Moment usunięcia rekordu',

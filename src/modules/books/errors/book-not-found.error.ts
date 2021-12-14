@@ -1,4 +1,4 @@
-import { HttpAwareError, i18n } from '@/shared/errors/http-aware.error';
+import { HttpAwareError, i18n } from '@/http/http-aware.error';
 import { BadRequestException, HttpException } from '@nestjs/common';
 
 export class BookNotFoundError extends Error implements HttpAwareError {

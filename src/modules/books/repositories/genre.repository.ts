@@ -1,5 +1,5 @@
-import { FindGenresFilterDto } from '@/modules/books/dto/find-genres.dto';
-import { Genre } from '@/modules/books/entities/genre.entity';
+import { FindGenresFilterDto } from '@/modules/books/dto';
+import { Genre } from '@/modules/books/entities';
 import { Injectable } from '@nestjs/common';
 import { ILike } from 'typeorm';
 

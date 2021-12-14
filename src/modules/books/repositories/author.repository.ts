@@ -1,5 +1,5 @@
-import { FindAuthorsFilterDto } from '@/modules/books/dto/find-authors.dto';
-import { Author } from '@/modules/books/entities/author.entity';
+import { FindAuthorsFilterDto } from '@/modules/books/dto';
+import { Author } from '@/modules/books/entities';
 import { Injectable } from '@nestjs/common';
 import { ILike } from 'typeorm';
 

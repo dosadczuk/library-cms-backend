@@ -1,5 +1,4 @@
 import { Copy } from '@/modules/books/entities/copy.entity';
-import { Exclude } from 'class-transformer';
 import {
   BaseEntity,
   Column,
@@ -54,7 +53,6 @@ export class Borrow extends BaseEntity {
   })
   createdAt: Date;
 
-  @Exclude()
   @UpdateDateColumn({
     name: 'modified_at',
     comment: 'Moment modyfikacji rekordu',
