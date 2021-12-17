@@ -84,8 +84,6 @@ export class BooksController extends BaseController {
     type: FindAuthorsResultDto,
     description: 'Znalezieni autorzy',
   })
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   @Get('authors')
   async findAuthors(@Query() filter?: FindAuthorsFilterDto): Promise<FindAuthorsResultDto> {
     const query = new FindAuthorsQuery(filter);
@@ -99,8 +97,6 @@ export class BooksController extends BaseController {
     type: FindGenresResultDto,
     description: 'Znalezione gatunki',
   })
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   @Get('genres')
   async findGenres(@Query() filter?: FindGenresFilterDto): Promise<FindGenresResultDto> {
     const query = new FindGenresQuery(filter);
@@ -114,8 +110,6 @@ export class BooksController extends BaseController {
     type: FindLanguagesResultDto,
     description: 'Znalezione języki',
   })
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   @Get('languages')
   async findLanguages(@Query() filter?: FindLanguagesFilterDto): Promise<FindLanguagesResultDto> {
     const query = new FindLanguagesQuery(filter);
@@ -129,8 +123,6 @@ export class BooksController extends BaseController {
     type: FindPublishersResultDto,
     description: 'Znalezieni wydawcy',
   })
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   @Get('publishers')
   async findPublishers(
     @Query() filter?: FindPublishersFilterDto,
@@ -146,8 +138,6 @@ export class BooksController extends BaseController {
     type: FindTagsResultDto,
     description: 'Znalezione tagi',
   })
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   @Get('tags')
   async findTags(@Query() filter?: FindTagsFilterDto): Promise<FindTagsResultDto> {
     const query = new FindTagsQuery(filter);
@@ -161,8 +151,6 @@ export class BooksController extends BaseController {
     type: FindBooksResultDto,
     description: 'Znalezione książki',
   })
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(@Query() filter?: FindBooksFilterDto): Promise<FindBooksResultDto> {
     const query = new FindBooksQuery(filter);
@@ -177,8 +165,6 @@ export class BooksController extends BaseController {
     description: 'Znaleziona książka',
   })
   @ApiBadRequestResponse({ description: 'Książka nie istnieje' })
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   @Get(':id')
   async findOne(@Param() params: FindBookParamsDto): Promise<FindBookResultDto> {
     const query = new FindBookQuery(params.id);

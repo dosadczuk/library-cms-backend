@@ -4,16 +4,12 @@ import { CreateUserResultDto } from '@/modules/users/dto';
 import { User } from '@/modules/users/entities';
 import { UserAlreadyExistsError } from '@/modules/users/errors';
 import { UserRepository } from '@/modules/users/repositories';
-import { UsersService } from '@/modules/users/users.service';
 import { UserViewModel } from '@/modules/users/vms';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 @CommandHandler(CreateUserCommand)
 export class CreateUserHandler implements ICommandHandler<CreateUserCommand, CreateUserResult> {
-  constructor(
-    private readonly repository: UserRepository,
-    private readonly service: UsersService,
-  ) {}
+  constructor(private readonly repository: UserRepository) {}
 
   async execute(command: CreateUserCommand): Promise<CreateUserResult> {
     if (await this.isUserExists(command)) {
