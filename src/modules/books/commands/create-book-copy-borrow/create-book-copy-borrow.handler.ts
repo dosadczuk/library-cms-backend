@@ -2,9 +2,9 @@ import { CreateBookCopyBorrowCommand } from '@/modules/books/commands/create-boo
 import { CreateBookCopyBorrowResult } from '@/modules/books/commands/create-book-copy-borrow/create-book-copy-borrow.result';
 import { CreateBookCopyBorrowResultDto } from '@/modules/books/dto';
 import { Borrow, Copy } from '@/modules/books/entities';
-import { BookCopyNotFoundError } from '@/modules/books/errors/book-copy-not-found.error';
+import { BookCopyNotFoundError } from '@/modules/books/errors';
 import { BookRepository } from '@/modules/books/repositories';
-import { BorrowViewModel } from '@/modules/books/vms/borrow.vm';
+import { BorrowViewModel } from '@/modules/books/vms';
 import { User } from '@/modules/users/entities';
 import { UserNotFoundError } from '@/modules/users/errors';
 import { UserRepository } from '@/modules/users/repositories';

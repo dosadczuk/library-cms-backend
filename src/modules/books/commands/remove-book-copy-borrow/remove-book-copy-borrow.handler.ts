@@ -1,7 +1,6 @@
 import { RemoveBookCopyBorrowCommand } from '@/modules/books/commands/remove-book-copy-borrow/remove-book-copy-borrow.command';
 import { Borrow, Copy } from '@/modules/books/entities';
-import { BookCopyBorrowNotFoundError } from '@/modules/books/errors/book-copy-borrow-not-found.error';
-import { BookCopyNotFoundError } from '@/modules/books/errors/book-copy-not-found.error';
+import { BookCopyBorrowNotFoundError, BookCopyNotFoundError } from '@/modules/books/errors';
 import { BookRepository } from '@/modules/books/repositories';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 

@@ -64,6 +64,13 @@ export class BookRepository {
   }
 
   /**
+   * Pobiera wypożyczenia egzemplarza książki.
+   */
+  async findCopyBorrows(copyId: number): Promise<Borrow[]> {
+    return Borrow.find({ where: { copy: { id: Equal(copyId) } } });
+  }
+
+  /**
    * Pobiera wypożyczenie egzemplarza książki.
    */
   async findCopyBorrow(copyId: number, borrowId: number): Promise<Borrow | null> {

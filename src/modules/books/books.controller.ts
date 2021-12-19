@@ -25,6 +25,8 @@ import {
   FindAuthorsResultDto,
   FindBookCopiesParamsDto,
   FindBookCopiesResultDto,
+  FindBookCopyBorrowParamsDto,
+  FindBookCopyBorrowsParamsDto,
   FindBookParamsDto,
   FindBookResultDto,
   FindBooksFilterDto,
@@ -47,6 +49,10 @@ import {
   FindAuthorsResult,
   FindBookCopiesQuery,
   FindBookCopiesResult,
+  FindBookCopyBorrowQuery,
+  FindBookCopyBorrowResult,
+  FindBookCopyBorrowsQuery,
+  FindBookCopyBorrowsResult,
   FindBookQuery,
   FindBookResult,
   FindBooksQuery,
@@ -264,7 +270,7 @@ export class BooksController extends BaseController {
 
   @ApiOperation({ summary: 'Usuwanie egzemplarza książki' })
   @ApiOkResponse({ description: 'Egzemplarz książki został pomyślnie usunięty' })
-  @ApiBadRequestResponse({ description: 'Egzemplarz nie istnieje' })
+  @ApiBadRequestResponse({ description: 'Egzemplarz książki nie istnieje' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Delete(':id/copies/:copy_id')
@@ -274,13 +280,47 @@ export class BooksController extends BaseController {
     await this.executeCommand<void>(command);
   }
 
-  @ApiOperation({ summary: 'Tworzenia wypożyczanie egzemplarza książki' })
+  @ApiOperation({ summary: 'Wyszukiwanie wypożyczeń egzemplarza książki' })
+  @ApiOkResponse({
+    type: FindBookCopyBorrowsResult,
+    description: 'Znalezione wypożyczenia egzemplarza książki',
+  })
+  @ApiBadRequestResponse({ description: 'Egzemplarz książki nie istnieje' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Get(':id/copies/:copy_id/borrows')
+  async findBookCopyBorrows(@Param() params: FindBookCopyBorrowsParamsDto) {
+    const query = new FindBookCopyBorrowsQuery(params.bookId, params.copyId);
+    const result = await this.executeQuery<FindBookCopyBorrowsResult>(query);
+
+    return result.borrows;
+  }
+
+  @ApiOperation({ summary: 'Wyszukiwanie wypożyczenia egzemplarza książki' })
+  @ApiOkResponse({
+    type: FindBookCopyBorrowResult,
+    description: 'Znalezione wypożyczenie egzemplarza książki',
+  })
+  @ApiBadRequestResponse({
+    description: 'Egzemplarz książki nie istnieje / Wypożyczenie nie istnieje',
+  })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Get(':id/copies/:copy_id/borrows/:borrow_id')
+  async findBookCopyBorrow(@Param() params: FindBookCopyBorrowParamsDto) {
+    const query = new FindBookCopyBorrowQuery(params.bookId, params.copyId, params.borrowId);
+    const result = await this.executeQuery<FindBookCopyBorrowResult>(query);
+
+    return result.borrow;
+  }
+
+  @ApiOperation({ summary: 'Tworzenie wypożyczanie egzemplarza książki' })
   @ApiOkResponse({
     description: 'Egzemplarz został pomyślnie wypożyczony',
     type: CreateBookCopyBorrowResultDto,
   })
   @ApiBadRequestResponse({
-    description: 'Egzemplarz nie istnieje / Użytkownik nie istnieje',
+    description: 'Egzemplarz książki nie istnieje / Użytkownik nie istnieje',
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
@@ -298,7 +338,7 @@ export class BooksController extends BaseController {
   @ApiOperation({ summary: 'Usuwanie wypożyczenia egzemplarza książki' })
   @ApiOkResponse({ description: 'Wypożyczenie egzemplarza książki zostało pomyślnie usunięte' })
   @ApiBadRequestResponse({
-    description: 'Egzemplarz nie istnieje / Wypożyczenie nie istnieje',
+    description: 'Egzemplarz książki nie istnieje / Wypożyczenie nie istnieje',
   })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
