@@ -1,3 +1,4 @@
+import { Borrow } from '@/modules/books/entities';
 import { Role } from '@/modules/users/entities/enums';
 import { genSaltSync, hashSync } from 'bcryptjs';
 import {
@@ -7,6 +8,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -18,7 +20,7 @@ import {
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn({
     name: 'id',
-    comment: 'Identyfikator rekordu',
+    comment: 'Identyfikator użytkownika',
   })
   id: number;
 
@@ -84,6 +86,11 @@ export class User extends BaseEntity {
     nullable: true,
   })
   lastLoggedAt?: Date;
+
+  @OneToMany(() => Borrow, (borrow) => borrow.user, {
+    nullable: true,
+  })
+  borrows: Borrow[];
 
   @CreateDateColumn({
     name: 'created_at',

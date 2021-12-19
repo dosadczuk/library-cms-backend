@@ -31,7 +31,7 @@ export class FindBookCopiesHandler
   }
 
   private async findBookCopies(book: Book): Promise<CopyViewModel[]> {
-    const copies = await this.repository.findCopies(book.id);
+    const copies = await this.repository.findBookCopies(book.id);
 
     return copies.map((it) => new CopyViewModel(it));
   }

@@ -7,7 +7,7 @@ import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 export class Genre extends BaseEntity {
   @PrimaryGeneratedColumn({
     name: 'id',
-    comment: 'Identyfikator rekordu',
+    comment: 'Identyfikator gatunku',
   })
   id: number;
 

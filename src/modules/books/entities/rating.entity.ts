@@ -17,7 +17,7 @@ import {
 export class Rating extends BaseEntity {
   @PrimaryGeneratedColumn({
     name: 'id',
-    comment: 'Identyfikator rekordu',
+    comment: 'Identyfikator oceny',
   })
   id: number;
 

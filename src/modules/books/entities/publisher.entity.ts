@@ -14,7 +14,7 @@ import {
 export class Publisher extends BaseEntity {
   @PrimaryGeneratedColumn({
     name: 'id',
-    comment: 'Identyfikator rekordu',
+    comment: 'Identyfikator wydawcy',
   })
   id: number;
 

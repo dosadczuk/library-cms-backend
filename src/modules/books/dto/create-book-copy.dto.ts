@@ -2,16 +2,19 @@ import { CopyViewModel } from '@/modules/books/vms';
 import { TypeNumber } from '@/shared/utils/class-transformer';
 import { IsInt, IsNotEmpty, IsString, MaxLength } from '@/shared/utils/class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { Expose } from 'class-transformer';
 
 export class CreateBookCopyParamsDto {
+  @Expose({ name: 'id' })
   @IsInt()
   @IsNotEmpty()
   @TypeNumber()
   @ApiProperty({
+    name: 'id',
     title: 'Identyfikator książki',
     example: 1,
   })
-  readonly id: number;
+  readonly bookId: number;
 }
 
 export class CreateBookCopyBodyDto {

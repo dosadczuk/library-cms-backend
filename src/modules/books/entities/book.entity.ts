@@ -30,7 +30,7 @@ import {
 export class Book extends BaseEntity {
   @PrimaryGeneratedColumn({
     name: 'id',
-    comment: 'Identyfikator rekordu',
+    comment: 'Identyfikator książki',
   })
   id: number;
 

@@ -1,6 +1,6 @@
 import { RemoveBookCopyCommand } from '@/modules/books/commands/remove-book-copy/remove-book-copy.command';
-import { Book } from '@/modules/books/entities';
-import { BookNotFoundError } from '@/modules/books/errors';
+import { Copy } from '@/modules/books/entities';
+import { BookCopyNotFoundError } from '@/modules/books/errors/book-copy-not-found.error';
 import { BookRepository } from '@/modules/books/repositories';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
@@ -9,21 +9,15 @@ export class RemoveBookCopyHandler implements ICommandHandler<RemoveBookCopyComm
   constructor(private readonly repository: BookRepository) {}
 
   async execute(command: RemoveBookCopyCommand): Promise<void> {
-    const book = await this.findBook(command);
-    if (book == null) {
-      throw new BookNotFoundError(command.bookId);
+    const copy = await this.findBookCopy(command);
+    if (copy == null || copy.bookId != command.bookId) {
+      throw new BookCopyNotFoundError(command.bookId, command.copyId);
     }
 
-    await this.removeBookCopy(book, command);
-
-    await this.repository.persist(book);
+    await this.repository.removeCopy(copy);
   }
 
-  private async findBook(command: RemoveBookCopyCommand): Promise<Book | null> {
-    return this.repository.findOne(command.bookId);
-  }
-
-  private async removeBookCopy(book: Book, command: RemoveBookCopyCommand) {
-    book.copies = book.copies.filter((it) => it.id != command.copyId);
+  private async findBookCopy(command: RemoveBookCopyCommand): Promise<Copy | null> {
+    return this.repository.findBookCopy(command.bookId, command.copyId);
   }
 }

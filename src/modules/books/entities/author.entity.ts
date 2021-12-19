@@ -15,7 +15,7 @@ import {
 export class Author extends BaseEntity {
   @PrimaryGeneratedColumn({
     name: 'id',
-    comment: 'Identyfikator rekordu',
+    comment: 'Identyfikator autora',
   })
   id: number;
 

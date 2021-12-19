@@ -1,4 +1,7 @@
 {
   "BookAlreadyExists": "Książka z ISBN {isbn} już istnieje",
-  "BookNotFound": "Nie znaleziono książki z id {id}"
+  "BookNotFound": "Nie znaleziono książki z id {id}",
+  "BookCopyNotFound": "Nie znaleziono egzemplarza o id {copyId} dla książki o id {bookId}",
+  "BookCopyAlreadyExists": "Egzemplarz o numerze {number} istnieje już dla książki o id {bookId}",
+  "BookCopyBorrowNotFound": "Nie znaleziono wypożyczenia o id {borrowId} dla egzemplarza o id {copyId}"
 }

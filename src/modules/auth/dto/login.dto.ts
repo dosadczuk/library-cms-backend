@@ -7,7 +7,7 @@ export class LoginBodyDto {
   @MaxLength(255)
   @ApiProperty({
     title: 'Email',
-    example: 'jnowak@example.com',
+    example: 'admin@example.pl',
     maxLength: 255,
     nullable: false,
   })
@@ -17,7 +17,7 @@ export class LoginBodyDto {
   @IsNotEmpty()
   @ApiProperty({
     title: 'Hasło',
-    example: 'P@ssword123',
+    example: 'admin123',
     nullable: false,
   })
   password: string;

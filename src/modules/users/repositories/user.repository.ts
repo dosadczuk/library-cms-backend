@@ -10,7 +10,7 @@ export class UserRepository {
   }
 
   /**
-   * Pobiera użytkownika na podstawie id.
+   * Pobiera użytkownika na podstawie bookId.
    */
   async findOne(id: number): Promise<User | null> {
     return User.findOne(id);

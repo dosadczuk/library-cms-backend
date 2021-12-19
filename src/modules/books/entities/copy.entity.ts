@@ -10,6 +10,7 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  Unique,
   UpdateDateColumn,
 } from 'typeorm';
 
@@ -17,10 +18,11 @@ import {
   name: 'copies',
   orderBy: { id: 'ASC' },
 })
+@Unique(['number', 'book'])
 export class Copy extends BaseEntity {
   @PrimaryGeneratedColumn({
     name: 'id',
-    comment: 'Identyfikator rekordu',
+    comment: 'Identyfikator egzemplarza',
   })
   id: number;
 
@@ -28,7 +30,6 @@ export class Copy extends BaseEntity {
     name: 'number',
     comment: 'Numer',
     type: 'varchar',
-    unique: true,
     length: 50,
     nullable: false,
   })
@@ -42,6 +43,12 @@ export class Copy extends BaseEntity {
     referencedColumnName: 'id',
   })
   book: Book;
+
+  @Column({
+    name: 'book_id',
+    update: false,
+  })
+  bookId: number;
 
   @OneToMany(() => Borrow, (borrow) => borrow.copy, {
     nullable: true,

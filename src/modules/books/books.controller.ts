@@ -1,16 +1,22 @@
 import { JwtAuthGuard } from '@/modules/auth/guards';
 import {
   CreateBookCommand,
+  CreateBookCopyBorrowCommand,
+  CreateBookCopyBorrowResult,
   CreateBookCopyCommand,
   CreateBookCopyResult,
   CreateBookResult,
   RemoveBookCommand,
+  RemoveBookCopyBorrowCommand,
   RemoveBookCopyCommand,
   UpdateBookCommand,
   UpdateBookResult,
 } from '@/modules/books/commands';
 import {
   CreateBookCopyBodyDto,
+  CreateBookCopyBorrowBodyDto,
+  CreateBookCopyBorrowParamsDto,
+  CreateBookCopyBorrowResultDto,
   CreateBookCopyParamsDto,
   CreateBookCopyResultDto,
   CreateUpdateBookBodyDto,
@@ -31,6 +37,7 @@ import {
   FindPublishersResultDto,
   FindTagsFilterDto,
   FindTagsResultDto,
+  RemoveBookCopyBorrowParamsDto,
   RemoveBookCopyParamsDto,
   RemoveBookParamsDto,
   UpdateBookParamsDto,
@@ -249,7 +256,7 @@ export class BooksController extends BaseController {
     @Param() params: CreateBookCopyParamsDto,
     @Body() copy: CreateBookCopyBodyDto,
   ): Promise<CreateBookCopyResultDto> {
-    const command = new CreateBookCopyCommand(params.id, copy);
+    const command = new CreateBookCopyCommand(params.bookId, copy);
     const result = await this.executeCommand<CreateBookCopyResult>(command);
 
     return result.copy;
@@ -257,12 +264,47 @@ export class BooksController extends BaseController {
 
   @ApiOperation({ summary: 'Usuwanie egzemplarza książki' })
   @ApiOkResponse({ description: 'Egzemplarz książki został pomyślnie usunięty' })
-  @ApiBadRequestResponse({ description: 'Książka nie istnieje' })
+  @ApiBadRequestResponse({ description: 'Egzemplarz nie istnieje' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Delete(':id/copies/:copy_id')
   async removeBookCopy(@Param() params: RemoveBookCopyParamsDto): Promise<void> {
-    const command = new RemoveBookCopyCommand(params.id, params.copyId);
+    const command = new RemoveBookCopyCommand(params.bookId, params.copyId);
+
+    await this.executeCommand<void>(command);
+  }
+
+  @ApiOperation({ summary: 'Tworzenia wypożyczanie egzemplarza książki' })
+  @ApiOkResponse({
+    description: 'Egzemplarz został pomyślnie wypożyczony',
+    type: CreateBookCopyBorrowResultDto,
+  })
+  @ApiBadRequestResponse({
+    description: 'Egzemplarz nie istnieje / Użytkownik nie istnieje',
+  })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Post(':id/copies/:copy_id/borrows')
+  async createBookBorrow(
+    @Param() params: CreateBookCopyBorrowParamsDto,
+    @Body() borrow: CreateBookCopyBorrowBodyDto,
+  ) {
+    const command = new CreateBookCopyBorrowCommand(params.bookId, params.copyId, borrow);
+    const result = await this.executeCommand<CreateBookCopyBorrowResult>(command);
+
+    return result.borrow;
+  }
+
+  @ApiOperation({ summary: 'Usuwanie wypożyczenia egzemplarza książki' })
+  @ApiOkResponse({ description: 'Wypożyczenie egzemplarza książki zostało pomyślnie usunięte' })
+  @ApiBadRequestResponse({
+    description: 'Egzemplarz nie istnieje / Wypożyczenie nie istnieje',
+  })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Delete(':id/copies/:copy_id/borrows/:borrow_id')
+  async removeBookBorrow(@Param() params: RemoveBookCopyBorrowParamsDto) {
+    const command = new RemoveBookCopyBorrowCommand(params.bookId, params.copyId, params.borrowId);
 
     await this.executeCommand<void>(command);
   }

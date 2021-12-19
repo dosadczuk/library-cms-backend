@@ -6,7 +6,7 @@ import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 })
 export class File extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', {
-    comment: 'Identyfikator rekordu',
+    comment: 'Identyfikator pliku',
     name: 'id',
   })
   id: string;

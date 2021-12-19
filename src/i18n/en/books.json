@@ -1,4 +1,7 @@
 {
   "BookAlreadyExists": "Book with ISBN of {isbn} already exists",
-  "BookNotFound": "Book with id of {id} not found"
+  "BookNotFound": "Book with id of {id} not found",
+  "BookCopyNotFound": "Book copy with id of {copyId} not found for book with id of {bookId}",
+  "BookCopyAlreadyExists": "Book copy with number of {number} already exists for book with id of {bookId}",
+  "BookCopyBorrowNotFound": "Book borrow with id of {borrowId} not found for book copy with id of {copyId}"
 }

@@ -2,7 +2,7 @@ import { File } from '@/modules/files/entities';
 
 export class FileRepository {
   /**
-   * Pobiera plik na podstawie id.
+   * Pobiera plik na podstawie bookId.
    */
   async findOne(id: string): Promise<File | null> {
     return File.findOne(id);

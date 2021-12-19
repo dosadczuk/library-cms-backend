@@ -1,4 +1,5 @@
 export * from '@/modules/books/dto/create-book-copy.dto';
+export * from '@/modules/books/dto/create-book-copy-borrow.dto';
 export * from '@/modules/books/dto/create-update-author.dto';
 export * from '@/modules/books/dto/create-update-book.dto';
 export * from '@/modules/books/dto/create-update-genre.dto';
@@ -15,3 +16,4 @@ export * from '@/modules/books/dto/find-publishers.dto';
 export * from '@/modules/books/dto/find-tags.dto';
 export * from '@/modules/books/dto/remove-book.dto';
 export * from '@/modules/books/dto/remove-book-copy.dto';
+export * from '@/modules/books/dto/remove-book-copy-borrow.dto';

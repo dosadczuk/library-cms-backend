@@ -1,5 +1,5 @@
 import { FindBooksFilterDto } from '@/modules/books/dto';
-import { Book, Copy } from '@/modules/books/entities';
+import { Book, Borrow, Copy } from '@/modules/books/entities';
 import { Injectable } from '@nestjs/common';
 import { Equal, ILike, In } from 'typeorm';
 
@@ -38,7 +38,7 @@ export class BookRepository {
   }
 
   /**
-   * Pobiera książkę na podstawie id.
+   * Pobiera książkę na podstawie bookId.
    */
   async findOne(id: number): Promise<Book | null> {
     return Book.findOne(id);
@@ -47,8 +47,32 @@ export class BookRepository {
   /**
    * Pobiera egzemplarze książki.
    */
-  async findCopies(bookId: number): Promise<Copy[]> {
+  async findBookCopies(bookId: number): Promise<Copy[]> {
     return Copy.find({ where: { book: { id: Equal(bookId) } } });
+  }
+
+  /**
+   * Pobiera egzemplarz książki.
+   */
+  async findBookCopy(bookId: number, copyId: number): Promise<Copy | null> {
+    return Copy.findOne({
+      where: {
+        id: Equal(copyId),
+        book: { id: Equal(bookId) },
+      },
+    });
+  }
+
+  /**
+   * Pobiera wypożyczenie egzemplarza książki.
+   */
+  async findCopyBorrow(copyId: number, borrowId: number): Promise<Borrow | null> {
+    return Borrow.findOne({
+      where: {
+        id: Equal(borrowId),
+        copy: { id: Equal(copyId) },
+      },
+    });
   }
 
   /**
@@ -59,6 +83,20 @@ export class BookRepository {
   }
 
   /**
+   * Sprawdza, czy egzemplarz książki istnieje.
+   */
+  async isBookCopyExists(bookId: number, number: string): Promise<boolean> {
+    const copy = Copy.findOne({
+      where: {
+        number: Equal(number),
+        book: { id: Equal(bookId) },
+      },
+    });
+
+    return copy != null;
+  }
+
+  /**
    * Zapisuje książkę do bazy danych.
    */
   async persist(book: Book): Promise<Book> {
@@ -66,9 +104,37 @@ export class BookRepository {
   }
 
   /**
+   * Zapisuje egzemplarz do bazy danych.
+   */
+  async persistCopy(copy: Copy): Promise<Copy> {
+    return copy.save();
+  }
+
+  /**
+   * Zapisuje wypożyczenie do bazy danych.
+   */
+  async persistBorrow(borrow: Borrow): Promise<Borrow> {
+    return borrow.save();
+  }
+
+  /**
    * Usuwa książkę z bazy danych.
    */
   async remove(book: Book): Promise<Book> {
     return book.softRemove();
+  }
+
+  /**
+   * Usuwa egzemplarz książki.
+   */
+  async removeCopy(copy: Copy): Promise<Copy> {
+    return copy.remove();
+  }
+
+  /**
+   * Usuwa wypożyczenie egzemplarza książki.
+   */
+  async removeBorrow(borrow: Borrow): Promise<Borrow> {
+    return borrow.remove();
   }
 }

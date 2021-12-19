@@ -1,4 +1,5 @@
 import { Copy } from '@/modules/books/entities/copy.entity';
+import { User } from '@/modules/users/entities';
 import {
   BaseEntity,
   Column,
@@ -17,7 +18,7 @@ import {
 export class Borrow extends BaseEntity {
   @PrimaryGeneratedColumn({
     name: 'id',
-    comment: 'Identyfikator rekordu',
+    comment: 'Identyfikator wypożyczenia',
   })
   id: number;
 
@@ -38,6 +39,8 @@ export class Borrow extends BaseEntity {
   dateTo?: Date;
 
   @ManyToOne(() => Copy, (copy) => copy.borrows, {
+    lazy: true,
+    cascade: false,
     nullable: false,
   })
   @JoinColumn({
@@ -45,6 +48,17 @@ export class Borrow extends BaseEntity {
     referencedColumnName: 'id',
   })
   copy: Copy;
+
+  @ManyToOne(() => User, (user) => user.borrows, {
+    lazy: true,
+    cascade: false,
+    nullable: false,
+  })
+  @JoinColumn({
+    name: 'user_id',
+    referencedColumnName: 'id',
+  })
+  user: User;
 
   @CreateDateColumn({
     name: 'created_at',

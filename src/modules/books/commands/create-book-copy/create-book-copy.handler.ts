@@ -3,7 +3,9 @@ import { CreateBookCopyResult } from '@/modules/books/commands/create-book-copy/
 import { CreateBookCopyResultDto } from '@/modules/books/dto';
 import { Book, Copy } from '@/modules/books/entities';
 import { BookNotFoundError } from '@/modules/books/errors';
+import { BookCopyAlreadyExistsError } from '@/modules/books/errors/book-copy-already-exists.error';
 import { BookRepository } from '@/modules/books/repositories';
+import { CopyViewModel } from '@/modules/books/vms';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 @CommandHandler(CreateBookCopyCommand)
@@ -18,22 +20,31 @@ export class CreateBookCopyHandler
       throw new BookNotFoundError(command.bookId);
     }
 
+    if (await this.findBookCopyExists(command)) {
+      throw new BookCopyAlreadyExistsError(command.bookId, command.number);
+    }
+
     const copy = await this.createBookCopy(book, command);
 
-    await this.repository.persist(book);
+    await this.repository.persistCopy(copy);
 
-    return new CreateBookCopyResult(new CreateBookCopyResultDto(copy));
+    const result = new CreateBookCopyResultDto(new CopyViewModel(copy));
+
+    return new CreateBookCopyResult(result);
   }
 
   private async findBook(command: CreateBookCopyCommand): Promise<Book | null> {
     return this.repository.findOne(command.bookId);
   }
 
+  private async findBookCopyExists(command: CreateBookCopyCommand): Promise<boolean> {
+    return this.repository.isBookCopyExists(command.bookId, command.number);
+  }
+
   private async createBookCopy(book: Book, command: CreateBookCopyCommand): Promise<Copy> {
     const copy = new Copy();
     copy.number = command.copy.number;
-
-    book.copies.push(copy);
+    copy.book = book;
 
     return copy;
   }
