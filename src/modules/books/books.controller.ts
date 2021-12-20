@@ -5,10 +5,13 @@ import {
   CreateBookCopyBorrowResult,
   CreateBookCopyCommand,
   CreateBookCopyResult,
+  CreateBookRatingCommand,
+  CreateBookRatingResult,
   CreateBookResult,
   RemoveBookCommand,
   RemoveBookCopyBorrowCommand,
   RemoveBookCopyCommand,
+  RemoveBookRatingCommand,
   UpdateBookCommand,
   UpdateBookResult,
 } from '@/modules/books/commands';
@@ -20,6 +23,9 @@ import {
   CreateBookCopyParamsDto,
   CreateBookCopyResultDto,
   CreateUpdateBookBodyDto,
+  CreateUpdateBookRatingBodyDto,
+  CreateUpdateBookRatingParamsDto,
+  CreateUpdateBookRatingResultDto,
   CreateUpdateBookResultDto,
   FindAuthorsFilterDto,
   FindAuthorsResultDto,
@@ -42,6 +48,7 @@ import {
   RemoveBookCopyBorrowParamsDto,
   RemoveBookCopyParamsDto,
   RemoveBookParamsDto,
+  RemoveBookRatingParamsDto,
   UpdateBookParamsDto,
 } from '@/modules/books/dto';
 import {
@@ -345,6 +352,37 @@ export class BooksController extends BaseController {
   @Delete(':id/copies/:copy_id/borrows/:borrow_id')
   async removeBookCopyBorrow(@Param() params: RemoveBookCopyBorrowParamsDto) {
     const command = new RemoveBookCopyBorrowCommand(params.bookId, params.copyId, params.borrowId);
+
+    await this.executeCommand<void>(command);
+  }
+
+  @ApiOperation({ summary: 'Tworzenie oceny książki' })
+  @ApiOkResponse({
+    description: 'Ocena została pomyślnie utworzona',
+    type: CreateUpdateBookRatingResultDto,
+  })
+  @ApiBadRequestResponse({ description: 'Książka nie istnieje' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Post(':id/ratings')
+  async createBookRating(
+    @Param() params: CreateUpdateBookRatingParamsDto,
+    @Body() rating: CreateUpdateBookRatingBodyDto,
+  ) {
+    const command = new CreateBookRatingCommand(params.bookId, rating);
+    const result = await this.executeCommand<CreateBookRatingResult>(command);
+
+    return result.rating;
+  }
+
+  @ApiOperation({ summary: 'Usuwanie oceny książki' })
+  @ApiOkResponse({ description: 'Ocena została pomyślnie usunięta' })
+  @ApiBadRequestResponse({ description: 'Ocena nie istnieje' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Delete(':id/ratings/:rating_id')
+  async removeBookRating(@Param() params: RemoveBookRatingParamsDto) {
+    const command = new RemoveBookRatingCommand(params.bookId, params.ratingId);
 
     await this.executeCommand<void>(command);
   }

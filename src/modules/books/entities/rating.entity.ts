@@ -24,7 +24,9 @@ export class Rating extends BaseEntity {
   @Column({
     name: 'value',
     comment: 'Wartość',
-    type: 'int',
+    type: 'decimal',
+    precision: 2,
+    scale: 1,
     nullable: false,
   })
   value: number;
@@ -33,9 +35,9 @@ export class Rating extends BaseEntity {
     name: 'comment',
     comment: 'Komentarz',
     type: 'text',
-    nullable: false,
+    nullable: true,
   })
-  comment: string;
+  comment?: string;
 
   @ManyToOne(() => Book, (book) => book.ratings, {
     nullable: false,
@@ -45,6 +47,12 @@ export class Rating extends BaseEntity {
     referencedColumnName: 'id',
   })
   book: Book;
+
+  @Column({
+    name: 'book_id',
+    update: false,
+  })
+  bookId: number;
 
   @CreateDateColumn({
     name: 'created_at',

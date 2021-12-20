@@ -48,6 +48,12 @@ export const IsObject = (options?: Options): PropertyDecorator =>
 export const IsString = (options?: Options): PropertyDecorator =>
   validator.IsString(i18n('IsString', options));
 
+export const Min = (value: number, options?: Options): PropertyDecorator =>
+  validator.Min(value, i18n('Min', options));
+
+export const Max = (value: number, options?: Options): PropertyDecorator =>
+  validator.Max(value, i18n('Max', options));
+
 const i18n = (fn: string, options?: Options): Options => ({
   message({ property, constraints }) {
     return JSON.stringify({

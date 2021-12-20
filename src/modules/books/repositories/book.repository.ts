@@ -1,5 +1,5 @@
 import { FindBooksFilterDto } from '@/modules/books/dto';
-import { Book, Borrow, Copy } from '@/modules/books/entities';
+import { Book, Borrow, Copy, Rating } from '@/modules/books/entities';
 import { Injectable } from '@nestjs/common';
 import { Equal, ILike, In } from 'typeorm';
 
@@ -83,6 +83,18 @@ export class BookRepository {
   }
 
   /**
+   * Pobiera ocenę książki.
+   */
+  async findBookRating(bookId: number, ratingId: number): Promise<Rating | null> {
+    return Rating.findOne({
+      where: {
+        id: Equal(ratingId),
+        bookId: Equal(bookId),
+      },
+    });
+  }
+
+  /**
    * Sprawdza, czy książka o podanym ISBN już istnieje.
    */
   async isBookExists(isbn: string): Promise<boolean> {
@@ -125,6 +137,13 @@ export class BookRepository {
   }
 
   /**
+   * Zapisuje ocenę do bazy danych.
+   */
+  async persistRating(rating: Rating): Promise<Rating> {
+    return rating.save();
+  }
+
+  /**
    * Usuwa książkę z bazy danych.
    */
   async remove(book: Book): Promise<Book> {
@@ -143,5 +162,12 @@ export class BookRepository {
    */
   async removeBorrow(borrow: Borrow): Promise<Borrow> {
     return borrow.remove();
+  }
+
+  /**
+   * Usuwa ocenę książki.
+   */
+  async removeRating(rating: Rating): Promise<Rating> {
+    return rating.remove();
   }
 }
