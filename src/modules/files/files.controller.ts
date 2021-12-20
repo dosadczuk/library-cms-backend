@@ -36,7 +36,7 @@ export class FilesController extends BaseController {
   @ApiBadRequestResponse({ description: 'Plik nie istnieje' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @Get(':bookId')
+  @Get(':id')
   async findOne(@Param() params: FindFileParamsDto, @Res({ passthrough: true }) res) {
     const query = new FindFileQuery(params.id);
     const result = await this.executeQuery<FindFileResult>(query);
@@ -71,7 +71,7 @@ export class FilesController extends BaseController {
   @ApiBadRequestResponse({ description: 'Plik nie istnieje' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @Delete(':bookId')
+  @Delete(':id')
   async removeFile(@Param() params: RemoveFileParamsDto) {
     const command = new RemoveFileCommand(params.id);
 

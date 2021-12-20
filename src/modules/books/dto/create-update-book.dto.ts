@@ -119,7 +119,7 @@ export class CreateUpdateBookBodyDto {
   })
   readonly genre: CreateUpdateGenreBodyDto;
 
-  @IsArray()
+  @IsObject()
   @IsNotEmpty()
   @ValidateNested()
   @Type(() => CreateUpdateLanguageBodyDto)

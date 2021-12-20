@@ -57,7 +57,7 @@ export class UsersController extends BaseController {
   @ApiBadRequestResponse({ description: 'Użytkownik nie istnieje' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @Get(':bookId')
+  @Get(':id')
   async findOne(@Param() params: FindUserParamsDto): Promise<FindUserResultDto> {
     const query = new FindUserQuery(params.id);
     const result = await this.executeQuery<FindUserResult>(query);
@@ -70,7 +70,7 @@ export class UsersController extends BaseController {
   @ApiBadRequestResponse({ description: 'Użytkownik nie istnieje' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @Delete(':bookId')
+  @Delete(':id')
   async removeUser(@Param() params: RemoveUserParamsDto) {
     const command = new RemoveUserCommand(params.id);
 

@@ -51,6 +51,7 @@ export class Copy extends BaseEntity {
   bookId: number;
 
   @OneToMany(() => Borrow, (borrow) => borrow.copy, {
+    lazy: true,
     nullable: true,
   })
   borrows: Borrow[];
@@ -58,6 +59,7 @@ export class Copy extends BaseEntity {
   @CreateDateColumn({
     name: 'created_at',
     comment: 'Moment utworzenia rekordu',
+    type: 'timestamp',
     nullable: false,
   })
   createdAt: Date;
@@ -65,6 +67,7 @@ export class Copy extends BaseEntity {
   @UpdateDateColumn({
     name: 'modified_at',
     comment: 'Moment modyfikacji rekordu',
+    type: 'timestamp',
     nullable: true,
   })
   modifiedAt?: Date;
@@ -72,6 +75,7 @@ export class Copy extends BaseEntity {
   @DeleteDateColumn({
     name: 'removed_at',
     comment: 'Moment usunięcie rekordu',
+    type: 'timestamp',
     nullable: true,
   })
   removedAt: Date;

@@ -202,7 +202,7 @@ export class BooksController extends BaseController {
     return result.book;
   }
 
-  @ApiOperation({ summary: 'Modyfikacja książki' })
+  @ApiOperation({ summary: 'Modyfikowanie książki' })
   @ApiOkResponse({
     type: CreateUpdateBookResultDto,
     description: 'Książka została pomyślnie zmodyfikowana',
@@ -325,7 +325,7 @@ export class BooksController extends BaseController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Post(':id/copies/:copy_id/borrows')
-  async createBookBorrow(
+  async createBookCopyBorrow(
     @Param() params: CreateBookCopyBorrowParamsDto,
     @Body() borrow: CreateBookCopyBorrowBodyDto,
   ) {
@@ -343,7 +343,7 @@ export class BooksController extends BaseController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Delete(':id/copies/:copy_id/borrows/:borrow_id')
-  async removeBookBorrow(@Param() params: RemoveBookCopyBorrowParamsDto) {
+  async removeBookCopyBorrow(@Param() params: RemoveBookCopyBorrowParamsDto) {
     const command = new RemoveBookCopyBorrowCommand(params.bookId, params.copyId, params.borrowId);
 
     await this.executeCommand<void>(command);

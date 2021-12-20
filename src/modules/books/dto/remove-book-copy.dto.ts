@@ -15,10 +15,12 @@ export class RemoveBookCopyParamsDto {
   })
   readonly bookId: number;
 
+  @Expose({ name: 'copy_id' })
   @IsInt()
   @IsNotEmpty()
   @TypeNumber()
   @ApiProperty({
+    name: 'copy_id',
     title: 'Identyfikator egzemplarza',
     example: 1,
   })

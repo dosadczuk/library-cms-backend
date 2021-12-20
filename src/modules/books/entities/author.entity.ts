@@ -45,6 +45,7 @@ export class Author extends BaseEntity {
   @CreateDateColumn({
     name: 'created_at',
     comment: 'Moment utworzenia rekordu',
+    type: 'timestamp',
     nullable: false,
   })
   createdAt: Date;
@@ -52,6 +53,7 @@ export class Author extends BaseEntity {
   @UpdateDateColumn({
     name: 'modified_at',
     comment: 'Moment modyfikacji rekordu',
+    type: 'timestamp',
     nullable: true,
   })
   modifiedAt?: Date;

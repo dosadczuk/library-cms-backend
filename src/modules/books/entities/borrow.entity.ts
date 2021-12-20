@@ -49,8 +49,14 @@ export class Borrow extends BaseEntity {
   })
   copy: Copy;
 
+  @Column({
+    name: 'copy_id',
+    update: false,
+  })
+  copyId: number;
+
   @ManyToOne(() => User, (user) => user.borrows, {
-    lazy: true,
+    eager: true,
     cascade: false,
     nullable: false,
   })
@@ -60,9 +66,16 @@ export class Borrow extends BaseEntity {
   })
   user: User;
 
+  @Column({
+    name: 'user_id',
+    update: false,
+  })
+  userId: number;
+
   @CreateDateColumn({
     name: 'created_at',
     comment: 'Moment utworzenia rekordu',
+    type: 'timestamp',
     nullable: false,
   })
   createdAt: Date;
@@ -70,6 +83,7 @@ export class Borrow extends BaseEntity {
   @UpdateDateColumn({
     name: 'modified_at',
     comment: 'Moment modyfikacji rekordu',
+    type: 'timestamp',
     nullable: true,
   })
   modifiedAt?: Date;

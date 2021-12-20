@@ -48,7 +48,7 @@ export class BookRepository {
    * Pobiera egzemplarze książki.
    */
   async findBookCopies(bookId: number): Promise<Copy[]> {
-    return Copy.find({ where: { book: { id: Equal(bookId) } } });
+    return Copy.find({ where: { bookId: Equal(bookId) } });
   }
 
   /**
@@ -58,7 +58,7 @@ export class BookRepository {
     return Copy.findOne({
       where: {
         id: Equal(copyId),
-        book: { id: Equal(bookId) },
+        bookId: Equal(bookId),
       },
     });
   }
@@ -67,7 +67,7 @@ export class BookRepository {
    * Pobiera wypożyczenia egzemplarza książki.
    */
   async findCopyBorrows(copyId: number): Promise<Borrow[]> {
-    return Borrow.find({ where: { copy: { id: Equal(copyId) } } });
+    return Borrow.find({ where: { copyId: Equal(copyId) } });
   }
 
   /**
@@ -77,7 +77,7 @@ export class BookRepository {
     return Borrow.findOne({
       where: {
         id: Equal(borrowId),
-        copy: { id: Equal(copyId) },
+        copyId: Equal(copyId),
       },
     });
   }
@@ -93,10 +93,10 @@ export class BookRepository {
    * Sprawdza, czy egzemplarz książki istnieje.
    */
   async isBookCopyExists(bookId: number, number: string): Promise<boolean> {
-    const copy = Copy.findOne({
+    const copy = await Copy.findOne({
       where: {
         number: Equal(number),
-        book: { id: Equal(bookId) },
+        bookId: Equal(bookId),
       },
     });
 

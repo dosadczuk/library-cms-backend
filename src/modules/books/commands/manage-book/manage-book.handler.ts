@@ -13,7 +13,9 @@ import {
   PublisherRepository,
   TagRepository,
 } from '@/modules/books/repositories';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export abstract class ManageBookHandler {
   constructor(
     protected readonly authorRepository: AuthorRepository,

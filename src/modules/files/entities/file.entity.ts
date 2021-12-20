@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({
   name: 'files',
@@ -54,4 +54,12 @@ export class File extends BaseEntity {
     nullable: false,
   })
   sha256: string;
+
+  @CreateDateColumn({
+    name: 'created_at',
+    comment: 'Moment utworzenia rekordu',
+    type: 'timestamp',
+    nullable: false,
+  })
+  createdAt: Date;
 }

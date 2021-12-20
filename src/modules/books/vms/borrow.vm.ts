@@ -1,4 +1,5 @@
 import { Borrow } from '@/modules/books/entities';
+import { UserViewModel } from '@/modules/users/vms';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class BorrowViewModel {
@@ -20,9 +21,16 @@ export class BorrowViewModel {
   })
   readonly dateTo?: Date;
 
+  @ApiProperty({
+    title: 'Użytkownika',
+    example: 1,
+  })
+  readonly user: UserViewModel;
+
   constructor(borrow: Borrow) {
     this.id = borrow.id;
     this.dateFrom = borrow.dateFrom;
     this.dateTo = borrow.dateTo;
+    this.user = new UserViewModel(borrow.user);
   }
 }

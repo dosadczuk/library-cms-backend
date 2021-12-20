@@ -14,6 +14,8 @@ services:
       - ${APP_PORT}:${APP_PORT}
       - "9229:9229"
     command: npm run start:dev
+    environment:
+      TZ: 'Europe/Warsaw'
     env_file:
       - .env
     depends_on:
@@ -24,6 +26,7 @@ services:
     container_name: library-database
     image: postgres:12
     environment:
+      TZ: 'Europe/Warsaw'
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
@@ -40,6 +43,7 @@ services:
     container_name: pgadmin
     image: dpage/pgadmin4
     environment:
+      TZ: 'Europe/Warsaw'
       PGADMIN_DEFAULT_EMAIL: ${DB_PGADMIN_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${DB_PGADMIN_PASSWORD}
       PGADMIN_LISTEN_PORT: 5050

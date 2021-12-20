@@ -23,6 +23,10 @@ const titles = [
   'Szyfr Einsteina',
 ];
 
+export const randomBookId = (): number => {
+  return randomNumber(titles.length - 1, 0) + 1;
+};
+
 const randomBookType = (): BookType => {
   const bookTypes = Object.values(BookType);
   const randomIdx = randomNumber(bookTypes.length - 1, 0);
