@@ -34,6 +34,8 @@ import {
   FindBookCopyBorrowParamsDto,
   FindBookCopyBorrowsParamsDto,
   FindBookParamsDto,
+  FindBookRatingsParamsDto,
+  FindBookRatingsResultDto,
   FindBookResultDto,
   FindBooksFilterDto,
   FindBooksResultDto,
@@ -61,6 +63,8 @@ import {
   FindBookCopyBorrowsQuery,
   FindBookCopyBorrowsResult,
   FindBookQuery,
+  FindBookRatingsQuery,
+  FindBookRatingsResult,
   FindBookResult,
   FindBooksQuery,
   FindBooksResult,
@@ -354,6 +358,19 @@ export class BooksController extends BaseController {
     const command = new RemoveBookCopyBorrowCommand(params.bookId, params.copyId, params.borrowId);
 
     await this.executeCommand<void>(command);
+  }
+
+  @ApiOperation({ summary: 'Pobieranie ocen książki' })
+  @ApiOkResponse({
+    description: 'Znalezione oceny',
+    type: FindBookRatingsResultDto,
+  })
+  @Get(':id/ratings')
+  async findBookRatings(@Param() params: FindBookRatingsParamsDto) {
+    const query = new FindBookRatingsQuery(params.id);
+    const result = await this.executeQuery<FindBookRatingsResult>(query);
+
+    return result.ratings;
   }
 
   @ApiOperation({ summary: 'Tworzenie oceny książki' })

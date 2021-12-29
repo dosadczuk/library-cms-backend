@@ -95,6 +95,17 @@ export class BookRepository {
   }
 
   /**
+   * Pobiera oceny książki.
+   */
+  async findBookRatings(bookId: number): Promise<Rating[]> {
+    return Rating.find({
+      where: {
+        bookId: Equal(bookId),
+      },
+    });
+  }
+
+  /**
    * Sprawdza, czy książka o podanym ISBN już istnieje.
    */
   async isBookExists(isbn: string): Promise<boolean> {

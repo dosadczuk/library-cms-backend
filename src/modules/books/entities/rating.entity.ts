@@ -29,7 +29,7 @@ export class Rating extends BaseEntity {
     scale: 1,
     nullable: false,
   })
-  value: number;
+  value: string;
 
   @Column({
     name: 'comment',

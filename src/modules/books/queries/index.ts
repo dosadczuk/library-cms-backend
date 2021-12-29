@@ -3,6 +3,7 @@ import { FindBookHandler } from '@/modules/books/queries/find-book';
 import { FindBookCopiesHandler } from '@/modules/books/queries/find-book-copies';
 import { FindBookCopyBorrowHandler } from '@/modules/books/queries/find-book-copy-borrow';
 import { FindBookCopyBorrowsHandler } from '@/modules/books/queries/find-book-copy-borrows';
+import { FindBookRatingsHandler } from '@/modules/books/queries/find-book-ratings';
 import { FindBooksHandler } from '@/modules/books/queries/find-books';
 import { FindGenresHandler } from '@/modules/books/queries/find-genres';
 import { FindLanguagesHandler } from '@/modules/books/queries/find-languages';
@@ -14,6 +15,7 @@ export * from '@/modules/books/queries/find-book';
 export * from '@/modules/books/queries/find-book-copies';
 export * from '@/modules/books/queries/find-book-copy-borrow';
 export * from '@/modules/books/queries/find-book-copy-borrows';
+export * from '@/modules/books/queries/find-book-ratings';
 export * from '@/modules/books/queries/find-books';
 export * from '@/modules/books/queries/find-genres';
 export * from '@/modules/books/queries/find-languages';
@@ -26,6 +28,7 @@ export const QueryHandlers = [
   FindBookCopiesHandler,
   FindBookCopyBorrowHandler,
   FindBookCopyBorrowsHandler,
+  FindBookRatingsHandler,
   FindBooksHandler,
   FindGenresHandler,
   FindLanguagesHandler,

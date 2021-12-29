@@ -11,6 +11,7 @@ export * from '@/modules/books/dto/find-authors.dto';
 export * from '@/modules/books/dto/find-book-copies.dto';
 export * from '@/modules/books/dto/find-book-copy-borrow.dto';
 export * from '@/modules/books/dto/find-book-copy-borrows.dto';
+export * from '@/modules/books/dto/find-book-ratings.dto';
 export * from '@/modules/books/dto/find-book.dto';
 export * from '@/modules/books/dto/find-books.dto';
 export * from '@/modules/books/dto/find-genres.dto';

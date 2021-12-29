@@ -35,7 +35,7 @@ export class CreateUpdateBookRatingBodyDto {
     title: 'Ocena',
     example: 4.5,
   })
-  readonly value: number;
+  readonly value: string;
 
   @IsString()
   @IsOptional()

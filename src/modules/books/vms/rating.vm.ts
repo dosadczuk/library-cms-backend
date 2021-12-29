@@ -22,7 +22,7 @@ export class RatingViewModel {
 
   constructor(rating: Rating) {
     this.id = rating.id;
-    this.value = rating.value;
+    this.value = Number(rating.value);
     this.comment = rating.comment;
   }
 }
