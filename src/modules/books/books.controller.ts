@@ -365,6 +365,11 @@ export class BooksController extends BaseController {
     description: 'Znalezione oceny',
     type: FindBookRatingsResultDto,
   })
+  @ApiBadRequestResponse({
+    description: 'Książka nie istnieje',
+  })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Get(':id/ratings')
   async findBookRatings(@Param() params: FindBookRatingsParamsDto) {
     const query = new FindBookRatingsQuery(params.id);
