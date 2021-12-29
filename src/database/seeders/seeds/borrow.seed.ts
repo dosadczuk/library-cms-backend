@@ -1,6 +1,6 @@
 import { Borrow } from '@/modules/books/entities';
 
-const sample: Partial<Borrow>[] = [
+const samples: Partial<Borrow>[] = [
   {
     dateFrom: new Date(2021, 12, 20, 12, 20),
     copyId: 1,
@@ -18,7 +18,7 @@ const sample: Partial<Borrow>[] = [
   },
 ];
 
-export const BorrowSeed: Borrow[] = sample.map((it, idx) => {
+export const BorrowSeed: Borrow[] = samples.map((it, idx) => {
   const borrow = new Borrow();
   borrow.id = idx + 1;
   borrow.dateFrom = it.dateFrom;

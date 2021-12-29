@@ -24,7 +24,7 @@ export class CreateBookCopyHandler
       throw new BookCopyAlreadyExistsError(command.bookId, command.number);
     }
 
-    const copy = await this.createBookCopy(book, command);
+    const copy = this.createBookCopy(book, command);
 
     await this.repository.persistCopy(copy);
 
@@ -41,7 +41,7 @@ export class CreateBookCopyHandler
     return this.repository.isBookCopyExists(command.bookId, command.number);
   }
 
-  private async createBookCopy(book: Book, command: CreateBookCopyCommand): Promise<Copy> {
+  private createBookCopy(book: Book, command: CreateBookCopyCommand): Copy {
     const copy = new Copy();
     copy.number = command.copy.number;
     copy.book = book;
