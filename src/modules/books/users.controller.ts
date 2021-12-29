@@ -1,3 +1,4 @@
+import { JwtAuthGuard } from '@/modules/auth/guards';
 import { FindUserBorrowsParamsDto, FindUserBorrowsResultDto } from '@/modules/books/dto';
 import { FindUserBorrowsQuery, FindUserBorrowsResult } from '@/modules/books/queries';
 import { BaseController } from '@/shared/base.controller';
@@ -6,9 +7,10 @@ import {
   Controller,
   Get,
   Param,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('books')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -19,6 +21,8 @@ export class UsersController extends BaseController {
     type: FindUserBorrowsResultDto,
     description: 'Znalezione wypożyczenia',
   })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Get('/:id/borrows')
   async findUserBorrows(
     @Param() params: FindUserBorrowsParamsDto,
