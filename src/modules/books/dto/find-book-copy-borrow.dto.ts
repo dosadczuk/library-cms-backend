@@ -1,4 +1,4 @@
-import { BorrowViewModel } from '@/modules/books/vms/borrow.vm';
+import { BorrowWithUserViewModel } from '@/modules/books/vms';
 import { TypeNumber } from '@/shared/utils/class-transformer';
 import { IsInt, IsNotEmpty } from '@/shared/utils/class-validator';
 import { ApiProperty } from '@nestjs/swagger';
@@ -42,11 +42,11 @@ export class FindBookCopyBorrowParamsDto {
 export class FindBookCopyBorrowResultDto {
   @ApiProperty({
     title: 'Znalezione wypożyczenie',
-    type: BorrowViewModel,
+    type: BorrowWithUserViewModel,
   })
-  readonly borrow: BorrowViewModel;
+  readonly borrow: BorrowWithUserViewModel;
 
-  constructor(borrow: BorrowViewModel) {
+  constructor(borrow: BorrowWithUserViewModel) {
     this.borrow = borrow;
   }
 }

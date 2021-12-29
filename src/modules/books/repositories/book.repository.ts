@@ -83,6 +83,13 @@ export class BookRepository {
   }
 
   /**
+   * Pobiera wypożyczenia użytkownika.
+   */
+  async findUserBorrows(userId: number): Promise<Borrow[]> {
+    return Borrow.find({ where: { userId: Equal(userId) } });
+  }
+
+  /**
    * Sprawdza, czy książka o podanym ISBN już istnieje.
    */
   async isBookExists(isbn: string): Promise<boolean> {

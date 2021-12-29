@@ -36,6 +36,7 @@ export class Copy extends BaseEntity {
   number: string;
 
   @ManyToOne(() => Book, (book) => book.copies, {
+    eager: true,
     nullable: false,
   })
   @JoinColumn({

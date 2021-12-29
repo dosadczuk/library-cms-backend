@@ -39,7 +39,7 @@ export class Borrow extends BaseEntity {
   dateTo?: Date;
 
   @ManyToOne(() => Copy, (copy) => copy.borrows, {
-    lazy: true,
+    eager: true,
     cascade: false,
     nullable: false,
   })

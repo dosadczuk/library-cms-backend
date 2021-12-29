@@ -1,44 +1,13 @@
 import { Book } from '@/modules/books/entities';
-import { BookType } from '@/modules/books/entities/enums';
 import { AuthorViewModel } from '@/modules/books/vms/author.vm';
+import { BookBaseViewModel } from '@/modules/books/vms/book-base.vm';
 import { GenreViewModel } from '@/modules/books/vms/genre.vm';
 import { LanguageViewModel } from '@/modules/books/vms/language.vm';
 import { PublisherViewModel } from '@/modules/books/vms/publisher.vm';
 import { TagViewModel } from '@/modules/books/vms/tag.vm';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
-export class BookViewModel {
-  @ApiProperty({
-    title: 'Identyfikator',
-    example: 1,
-  })
-  readonly id: number;
-
-  @ApiProperty({
-    title: 'ISBN',
-    example: '3940023815418',
-  })
-  readonly isbn: string;
-
-  @ApiProperty({
-    enum: BookType,
-    title: 'Rodzaj książki',
-    example: BookType.MAGAZINE,
-  })
-  readonly type: BookType;
-
-  @ApiProperty({
-    title: 'Tytuł',
-    example: 'Kod Gutenberga',
-  })
-  readonly title: string;
-
-  @ApiPropertyOptional({
-    title: 'Opis',
-    example: 'Przykładowy opis książki',
-  })
-  readonly description?: string;
-
+export class BookViewModel extends BookBaseViewModel {
   @ApiProperty({
     title: 'Data wydania',
     example: '1982-02-02',
@@ -93,11 +62,8 @@ export class BookViewModel {
   readonly tags?: TagViewModel[] = null;
 
   constructor(book: Book) {
-    this.id = book.id;
-    this.isbn = book.isbn;
-    this.type = book.type;
-    this.title = book.title;
-    this.description = book.description;
+    super(book);
+
     this.issueDate = book.issueDate;
     if (book.publisher != null) {
       this.publisher = new PublisherViewModel(book.publisher);

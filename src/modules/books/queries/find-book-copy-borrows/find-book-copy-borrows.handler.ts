@@ -4,7 +4,7 @@ import { BookCopyNotFoundError } from '@/modules/books/errors';
 import { FindBookCopyBorrowsQuery } from '@/modules/books/queries/find-book-copy-borrows/find-book-copy-borrows.query';
 import { FindBookCopyBorrowsResult } from '@/modules/books/queries/find-book-copy-borrows/find-book-copy-borrows.result';
 import { BookRepository } from '@/modules/books/repositories';
-import { BorrowViewModel } from '@/modules/books/vms';
+import { BorrowWithUserViewModel } from '@/modules/books/vms';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
 @QueryHandler(FindBookCopyBorrowsQuery)
@@ -30,9 +30,9 @@ export class FindBookCopyBorrowsHandler
     return this.repository.findBookCopy(query.bookId, query.copyId);
   }
 
-  private async findCopyBorrows(copy: Copy): Promise<BorrowViewModel[]> {
+  private async findCopyBorrows(copy: Copy): Promise<BorrowWithUserViewModel[]> {
     const borrows = await this.repository.findCopyBorrows(copy.id);
 
-    return borrows.map((it) => new BorrowViewModel(it));
+    return borrows.map((it) => new BorrowWithUserViewModel(it));
   }
 }

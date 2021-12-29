@@ -4,7 +4,7 @@ import { CreateBookCopyBorrowResultDto } from '@/modules/books/dto';
 import { Borrow, Copy } from '@/modules/books/entities';
 import { BookCopyNotFoundError } from '@/modules/books/errors';
 import { BookRepository } from '@/modules/books/repositories';
-import { BorrowViewModel } from '@/modules/books/vms';
+import { BorrowWithUserViewModel } from '@/modules/books/vms';
 import { User } from '@/modules/users/entities';
 import { UserNotFoundError } from '@/modules/users/errors';
 import { UserRepository } from '@/modules/users/repositories';
@@ -34,7 +34,7 @@ export class CreateBookCopyBorrowHandler
 
     await this.bookRepository.persistBorrow(borrow);
 
-    const result = new CreateBookCopyBorrowResultDto(new BorrowViewModel(borrow));
+    const result = new CreateBookCopyBorrowResultDto(new BorrowWithUserViewModel(borrow));
 
     return new CreateBookCopyBorrowResult(result);
   }
