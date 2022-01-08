@@ -56,12 +56,15 @@ export class CreateBookHandler
   }
 
   private async createPublisher(command: ManageBookCommand): Promise<Publisher> {
-    if (command.publisher.id == null) {
-      await this.tryAssigningPublisher(command.publisher);
+    if (command.publisher.id != null) {
+      const publisher = await this.findPublisher(command.publisher);
+      if (publisher != null) {
+        return publisher; // jak jest to go zwracamy
+      }
     }
 
+    // jak nie ma to tworzymy
     const publisher = new Publisher();
-    publisher.id = command.publisher.id;
     publisher.name = command.publisher.name;
 
     return publisher;
@@ -70,12 +73,16 @@ export class CreateBookHandler
   private async createAuthors(command: ManageBookCommand): Promise<Author[]> {
     const authors: Author[] = [];
     for (const it of command.authors) {
-      if (it.id == null) {
-        await this.tryAssigningAuthor(it);
+      if (it.id != null) {
+        const author = await this.findAuthor(it);
+        if (author != null) {
+          authors.push(author); // jak jest to go dodajemy
+          continue;
+        }
       }
 
+      // jak nie ma to tworzymy
       const author = new Author();
-      author.id = it.id;
       author.firstName = it.firstName;
       author.lastName = it.lastName;
 
@@ -86,24 +93,30 @@ export class CreateBookHandler
   }
 
   private async createGenre(command: ManageBookCommand): Promise<Genre> {
-    if (command.genre.id == null) {
-      await this.tryAssigningGenre(command.genre);
+    if (command.genre.id != null) {
+      const genre = await this.findGenre(command.genre);
+      if (genre != null) {
+        return genre; // jak jest to go zwracamy
+      }
     }
 
+    // jak nie ma to tworzymy
     const genre = new Genre();
-    genre.id = command.genre.id;
     genre.value = command.genre.value;
 
     return genre;
   }
 
   private async createLanguage(command: ManageBookCommand): Promise<Language> {
-    if (command.language.id == null) {
-      await this.tryAssigningLanguage(command.language);
+    if (command.language.id != null) {
+      const language = await this.findLanguage(command.language);
+      if (language != null) {
+        return language; // jak jest to go zwracamy
+      }
     }
 
+    // jak nie ma to tworzymy
     const language = new Language();
-    language.id = command.language.id;
     language.value = command.language.value;
 
     return language;
@@ -112,12 +125,16 @@ export class CreateBookHandler
   private async createTags(command: ManageBookCommand): Promise<Tag[]> {
     const tags: Tag[] = [];
     for (const it of command.tags) {
-      if (it.id == null) {
-        await this.tryAssigningTag(it);
+      if (it.id != null) {
+        const tag = await this.findTag(it);
+        if (tag != null) {
+          tags.push(tag); // jak jest to go dodajemy
+          continue;
+        }
       }
 
+      // jak nie ma to tworzymy
       const tag = new Tag();
-      tag.id = it.id;
       tag.value = it.value;
 
       tags.push(tag);

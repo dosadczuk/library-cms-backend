@@ -14,6 +14,7 @@ import {
   TagRepository,
 } from '@/modules/books/repositories';
 import { Injectable } from '@nestjs/common';
+import { Author, Genre, Language, Publisher, Tag } from '@/modules/books/entities';
 
 @Injectable()
 export abstract class ManageBookHandler {
@@ -26,48 +27,23 @@ export abstract class ManageBookHandler {
     protected readonly tagRepository: TagRepository,
   ) {}
 
-  protected async tryAssigningPublisher(publisher: CreateUpdatePublisherBodyDto): Promise<void> {
-    const entity = await this.publisherRepository.findByName(publisher.name);
-    if (entity == null) {
-      return; // nie istnieje
-    }
-
-    publisher.id = entity.id;
+  protected async findPublisher(publisher: CreateUpdatePublisherBodyDto): Promise<Publisher> {
+    return this.publisherRepository.findByName(publisher.name);
   }
 
-  protected async tryAssigningAuthor(author: CreateUpdateAuthorBodyDto): Promise<void> {
-    const entity = await this.authorRepository.findByNames(author.firstName, author.lastName);
-    if (entity == null) {
-      return; // nie istnieje
-    }
-
-    author.id = entity.id;
+  protected async findAuthor(author: CreateUpdateAuthorBodyDto): Promise<Author> {
+    return this.authorRepository.findByNames(author.firstName, author.lastName);
   }
 
-  protected async tryAssigningGenre(genre: CreateUpdateGenreBodyDto): Promise<void> {
-    const entity = await this.genreRepository.findByValue(genre.value);
-    if (entity == null) {
-      return; // nie istnieje
-    }
-
-    genre.id = entity.id;
+  protected async findGenre(genre: CreateUpdateGenreBodyDto): Promise<Genre> {
+    return this.genreRepository.findByValue(genre.value);
   }
 
-  protected async tryAssigningLanguage(language: CreateUpdateLanguageBodyDto): Promise<void> {
-    const entity = await this.languageRepository.findByValue(language.value);
-    if (entity == null) {
-      return; // nie istnieje
-    }
-
-    language.id = entity.id;
+  protected async findLanguage(language: CreateUpdateLanguageBodyDto): Promise<Language> {
+    return this.languageRepository.findByValue(language.value);
   }
 
-  protected async tryAssigningTag(tag: CreateUpdateTagBodyDto): Promise<void> {
-    const entity = await this.tagRepository.findByNames(tag.value);
-    if (entity == null) {
-      return; // nie istnieje
-    }
-
-    tag.id = entity.id;
+  protected async findTag(tag: CreateUpdateTagBodyDto): Promise<Tag> {
+    return this.tagRepository.findByNames(tag.value);
   }
 }
