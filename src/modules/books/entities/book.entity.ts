@@ -179,6 +179,7 @@ export class Book extends BaseEntity {
   copies?: Copy[];
 
   @OneToMany(() => Rating, (rating) => rating.book, {
+    eager: true,
     nullable: true,
   })
   ratings?: Rating[];

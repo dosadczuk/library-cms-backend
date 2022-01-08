@@ -61,6 +61,11 @@ export class BookViewModel extends BookBaseViewModel {
   })
   readonly tags?: TagViewModel[] = null;
 
+  @ApiProperty({
+    title: 'Średnia ocena',
+  })
+  readonly ratingAverage: number;
+
   constructor(book: Book) {
     super(book);
 
@@ -82,6 +87,12 @@ export class BookViewModel extends BookBaseViewModel {
     this.details = book.details;
     if (book.tags != null) {
       this.tags = book.tags.map((it) => new TagViewModel(it));
+    }
+    if (book.ratings != null) {
+      const sum = book.ratings.reduce((avg, rating) => avg + Number(rating.value), 0);
+      const len = book.ratings.length;
+
+      this.ratingAverage = sum / len;
     }
   }
 }
