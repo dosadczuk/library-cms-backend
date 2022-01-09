@@ -14,6 +14,7 @@ import * as path from 'path';
       dest: path.join(process.cwd(), 'uploads'),
     }),
   ],
+  exports: [...Repositories],
   controllers: [FilesController],
   providers: [...CommandHandlers, ...QueryHandlers, ...Repositories],
 })

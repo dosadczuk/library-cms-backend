@@ -21,9 +21,16 @@ export class GenreRepository {
   }
 
   /**
+   * Pobiera gatunek na podstawie id.
+   */
+  async findOne(id: number): Promise<Genre | null> {
+    return Genre.findOne(id);
+  }
+
+  /**
    * Pobiera gatunek na postawie wartości.
    */
-  async findByValue(value: string): Promise<Genre> {
+  async findByValue(value: string): Promise<Genre | null> {
     return Genre.findOne({ where: { value: ILike(value) } });
   }
 }

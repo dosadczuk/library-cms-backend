@@ -6,6 +6,7 @@ import { LanguageViewModel } from '@/modules/books/vms/language.vm';
 import { PublisherViewModel } from '@/modules/books/vms/publisher.vm';
 import { TagViewModel } from '@/modules/books/vms/tag.vm';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { CopyViewModel } from '@/modules/books/vms/copy.vm';
 
 export class BookViewModel extends BookBaseViewModel {
   @ApiProperty({
@@ -61,6 +62,12 @@ export class BookViewModel extends BookBaseViewModel {
   })
   readonly tags?: TagViewModel[] = null;
 
+  @ApiPropertyOptional({
+    type: [CopyViewModel],
+    title: 'Egzemplarze',
+  })
+  readonly copies?: CopyViewModel[] = null;
+
   @ApiProperty({
     title: 'Średnia ocena',
   })
@@ -93,6 +100,9 @@ export class BookViewModel extends BookBaseViewModel {
       const len = book.ratings.length;
 
       this.ratingAverage = sum / len;
+    }
+    if (book.copies != null) {
+      this.copies = book.copies.map((it) => new CopyViewModel(it));
     }
   }
 }

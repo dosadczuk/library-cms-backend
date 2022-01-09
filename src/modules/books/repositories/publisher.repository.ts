@@ -21,9 +21,16 @@ export class PublisherRepository {
   }
 
   /**
+   * Pobiera wydawcę na podstawie id.
+   */
+  async findOne(id: number): Promise<Publisher | null> {
+    return Publisher.findOne(id);
+  }
+
+  /**
    * Pobiera wydawcę na podstawie podanej nazwy.
    */
-  async findByName(name: string): Promise<Publisher> {
+  async findByName(name: string): Promise<Publisher | null> {
     return Publisher.findOne({ where: { name: ILike(name) } });
   }
 }

@@ -1,4 +1,5 @@
 import {
+  CreateBookCopyBodyDto,
   CreateUpdateAuthorBodyDto,
   CreateUpdateBookBodyDto,
   CreateUpdateGenreBodyDto,
@@ -28,5 +29,9 @@ export abstract class ManageBookCommand {
 
   get tags(): CreateUpdateTagBodyDto[] {
     return this.book.tags;
+  }
+
+  get copies(): CreateBookCopyBodyDto[] {
+    return this.book.copies;
   }
 }

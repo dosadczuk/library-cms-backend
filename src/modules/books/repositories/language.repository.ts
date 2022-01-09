@@ -23,7 +23,14 @@ export class LanguageRepository {
   /**
    * Pobiera język na podstawie wartości.
    */
-  async findByValue(value: string): Promise<Language> {
+  async findOne(id: number): Promise<Language | null> {
+    return Language.findOne(id);
+  }
+
+  /**
+   * Pobiera język na podstawie wartości.
+   */
+  async findByValue(value: string): Promise<Language | null> {
     return Language.findOne({ where: { value: ILike(value) } });
   }
 }

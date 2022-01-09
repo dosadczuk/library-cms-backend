@@ -174,12 +174,14 @@ export class Book extends BaseEntity {
   tags: Tag[];
 
   @OneToMany(() => Copy, (copy) => copy.book, {
+    cascade: ['insert'],
     nullable: true,
   })
   copies?: Copy[];
 
   @OneToMany(() => Rating, (rating) => rating.book, {
     eager: true,
+    cascade: ['insert'],
     nullable: true,
   })
   ratings?: Rating[];

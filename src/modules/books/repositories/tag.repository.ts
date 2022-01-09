@@ -23,7 +23,14 @@ export class TagRepository {
   /**
    * Pobiera tag na podstawie wartości.
    */
-  async findByNames(value: string): Promise<Tag> {
+  async findOne(id: number): Promise<Tag | null> {
+    return Tag.findOne(id);
+  }
+
+  /**
+   * Pobiera tag na podstawie wartości.
+   */
+  async findByValue(value: string): Promise<Tag | null> {
     return Tag.findOne({ where: { value: ILike(value) } });
   }
 }

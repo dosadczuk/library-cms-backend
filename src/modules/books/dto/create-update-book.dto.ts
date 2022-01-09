@@ -21,6 +21,7 @@ import {
 } from '@/shared/utils/class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
+import { CreateBookCopyBodyDto } from '@/modules/books/dto/create-book-copy.dto';
 
 export class UpdateBookParamsDto {
   @IsInt()
@@ -165,6 +166,15 @@ export class CreateUpdateBookBodyDto {
     nullable: true,
   })
   readonly tags: CreateUpdateTagBodyDto[] = [];
+
+  @IsArray()
+  @IsOptional()
+  @ApiPropertyOptional({
+    title: 'Egzemplarze',
+    type: [CreateBookCopyBodyDto],
+    nullable: true,
+  })
+  readonly copies: CreateBookCopyBodyDto[] = [];
 }
 
 export class CreateUpdateBookResultDto {

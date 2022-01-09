@@ -3,7 +3,7 @@ import { CreateBookResult } from '@/modules/books/commands/create-book/create-bo
 import { ManageBookCommand } from '@/modules/books/commands/manage-book/manage-book.command';
 import { ManageBookHandler } from '@/modules/books/commands/manage-book/manage-book.handler';
 import { CreateUpdateBookResultDto } from '@/modules/books/dto';
-import { Author, Book, Genre, Language, Publisher, Tag } from '@/modules/books/entities';
+import { Author, Book, Copy, Genre, Language, Publisher, Tag } from '@/modules/books/entities';
 import { BookAlreadyExistsError } from '@/modules/books/errors';
 import { BookViewModel } from '@/modules/books/vms';
 import { File } from '@/modules/files/entities';
@@ -46,21 +46,19 @@ export class CreateBookHandler
     book.pages = command.book.pages;
     book.details = command.book.details;
     book.tags = await this.createTags(command);
+    book.copies = await this.createCopies(command);
 
     if (command.book.imageId != null) {
-      book.image = new File();
-      book.image.id = command.book.imageId;
+      book.image = await this.createImage(command.book.imageId);
     }
 
     return book;
   }
 
   private async createPublisher(command: ManageBookCommand): Promise<Publisher> {
-    if (command.publisher.id != null) {
-      const publisher = await this.findPublisher(command.publisher);
-      if (publisher != null) {
-        return publisher; // jak jest to go zwracamy
-      }
+    const foundPublisher = await this.findPublisher(command.publisher);
+    if (foundPublisher != null) {
+      return foundPublisher;
     }
 
     // jak nie ma to tworzymy
@@ -73,12 +71,10 @@ export class CreateBookHandler
   private async createAuthors(command: ManageBookCommand): Promise<Author[]> {
     const authors: Author[] = [];
     for (const it of command.authors) {
-      if (it.id != null) {
-        const author = await this.findAuthor(it);
-        if (author != null) {
-          authors.push(author); // jak jest to go dodajemy
-          continue;
-        }
+      const foundAuthor = await this.findAuthor(it);
+      if (foundAuthor != null) {
+        authors.push(foundAuthor);
+        continue;
       }
 
       // jak nie ma to tworzymy
@@ -93,11 +89,9 @@ export class CreateBookHandler
   }
 
   private async createGenre(command: ManageBookCommand): Promise<Genre> {
-    if (command.genre.id != null) {
-      const genre = await this.findGenre(command.genre);
-      if (genre != null) {
-        return genre; // jak jest to go zwracamy
-      }
+    const foundGenre = await this.findGenre(command.genre);
+    if (foundGenre != null) {
+      return foundGenre;
     }
 
     // jak nie ma to tworzymy
@@ -108,11 +102,9 @@ export class CreateBookHandler
   }
 
   private async createLanguage(command: ManageBookCommand): Promise<Language> {
-    if (command.language.id != null) {
-      const language = await this.findLanguage(command.language);
-      if (language != null) {
-        return language; // jak jest to go zwracamy
-      }
+    const foundLanguage = await this.findLanguage(command.language);
+    if (foundLanguage != null) {
+      return foundLanguage;
     }
 
     // jak nie ma to tworzymy
@@ -125,12 +117,10 @@ export class CreateBookHandler
   private async createTags(command: ManageBookCommand): Promise<Tag[]> {
     const tags: Tag[] = [];
     for (const it of command.tags) {
-      if (it.id != null) {
-        const tag = await this.findTag(it);
-        if (tag != null) {
-          tags.push(tag); // jak jest to go dodajemy
-          continue;
-        }
+      const foundTag = await this.findTag(it);
+      if (foundTag != null) {
+        tags.push(foundTag);
+        continue;
       }
 
       // jak nie ma to tworzymy
@@ -141,5 +131,21 @@ export class CreateBookHandler
     }
 
     return tags;
+  }
+
+  private async createImage(imageId: string): Promise<File | null> {
+    return await this.findImage(imageId);
+  }
+
+  private async createCopies(command: CreateBookCommand): Promise<Copy[]> {
+    const copies: Copy[] = [];
+    for (const it of command.copies) {
+      const copy = new Copy();
+      copy.number = it.number;
+
+      copies.push(copy);
+    }
+
+    return copies;
   }
 }

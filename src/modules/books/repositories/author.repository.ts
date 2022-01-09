@@ -25,9 +25,16 @@ export class AuthorRepository {
   }
 
   /**
+   * Pobiera autora na podstawie id.
+   */
+  async findOne(id: number): Promise<Author | null> {
+    return Author.findOne(id);
+  }
+
+  /**
    * Pobiera autora na podstawie podanego imienia i nazwiska.
    */
-  async findByNames(firstName: string, lastName: string): Promise<Author> {
+  async findByNames(firstName: string, lastName: string): Promise<Author | null> {
     return Author.findOne({
       where: {
         firstName: ILike(firstName),
