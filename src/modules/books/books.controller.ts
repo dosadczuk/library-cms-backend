@@ -8,6 +8,8 @@ import {
   CreateBookRatingCommand,
   CreateBookRatingResult,
   CreateBookResult,
+  GiveBackBookCopyCommand,
+  GiveBackBookCopyResult,
   RemoveBookCommand,
   RemoveBookCopyBorrowCommand,
   RemoveBookCopyCommand,
@@ -47,6 +49,8 @@ import {
   FindPublishersResultDto,
   FindTagsFilterDto,
   FindTagsResultDto,
+  GiveBackBookCopyParamsDto,
+  GiveBackBookCopyResultDto,
   RemoveBookCopyBorrowParamsDto,
   RemoveBookCopyParamsDto,
   RemoveBookParamsDto,
@@ -342,6 +346,24 @@ export class BooksController extends BaseController {
   ) {
     const command = new CreateBookCopyBorrowCommand(params.bookId, params.copyId, borrow);
     const result = await this.executeCommand<CreateBookCopyBorrowResult>(command);
+
+    return result.borrow;
+  }
+
+  @ApiOperation({ summary: 'Zwracanie wypożyczenie egzemplarza książki' })
+  @ApiOkResponse({
+    description: 'Wypożyczenie egzemplarza książki zostało pomyślnie zwrócone',
+    type: GiveBackBookCopyResultDto,
+  })
+  @ApiBadRequestResponse({
+    description: 'Egzemplarz książki nie istnieje / Wypożyczenie nie istnieje',
+  })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Put(':id/copies/:copy_id/borrows/:borrow_id')
+  async giveBackBookCopyBorrow(@Param() params: GiveBackBookCopyParamsDto) {
+    const command = new GiveBackBookCopyCommand(params.bookId, params.copyId, params.borrowId);
+    const result = await this.executeCommand<GiveBackBookCopyResult>(command);
 
     return result.borrow;
   }
