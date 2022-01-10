@@ -1,15 +1,16 @@
 import {
+  CreateBookBodyDto,
   CreateBookCopyBodyDto,
   CreateUpdateAuthorBodyDto,
-  CreateUpdateBookBodyDto,
   CreateUpdateGenreBodyDto,
   CreateUpdateLanguageBodyDto,
   CreateUpdatePublisherBodyDto,
   CreateUpdateTagBodyDto,
+  UpdateBookBodyDto,
 } from '@/modules/books/dto';
 
 export abstract class ManageBookCommand {
-  constructor(readonly book: CreateUpdateBookBodyDto) {}
+  constructor(readonly book: CreateBookBodyDto | UpdateBookBodyDto) {}
 
   get publisher(): CreateUpdatePublisherBodyDto {
     return this.book.publisher;

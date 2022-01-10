@@ -64,6 +64,17 @@ export class BookRepository {
   }
 
   /**
+   * Pobiera egzemplarz na podstawie numeru.
+   */
+  async findBookCopyByNumber(number: string): Promise<Copy | null> {
+    return Copy.findOne({
+      where: {
+        number: Equal(number),
+      },
+    });
+  }
+
+  /**
    * Pobiera wypożyczenia egzemplarza książki.
    */
   async findCopyBorrows(copyId: number): Promise<Borrow[]> {

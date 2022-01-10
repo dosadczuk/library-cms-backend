@@ -18,13 +18,13 @@ import {
   UpdateBookResult,
 } from '@/modules/books/commands';
 import {
+  CreateBookBodyDto,
   CreateBookCopyBodyDto,
   CreateBookCopyBorrowBodyDto,
   CreateBookCopyBorrowParamsDto,
   CreateBookCopyBorrowResultDto,
   CreateBookCopyParamsDto,
   CreateBookCopyResultDto,
-  CreateUpdateBookBodyDto,
   CreateUpdateBookRatingBodyDto,
   CreateUpdateBookRatingParamsDto,
   CreateUpdateBookRatingResultDto,
@@ -55,6 +55,7 @@ import {
   RemoveBookCopyParamsDto,
   RemoveBookParamsDto,
   RemoveBookRatingParamsDto,
+  UpdateBookBodyDto,
   UpdateBookParamsDto,
 } from '@/modules/books/dto';
 import {
@@ -210,7 +211,7 @@ export class BooksController extends BaseController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Post()
-  async create(@Body() book: CreateUpdateBookBodyDto): Promise<CreateUpdateBookResultDto> {
+  async create(@Body() book: CreateBookBodyDto): Promise<CreateUpdateBookResultDto> {
     const command = new CreateBookCommand(book);
     const result = await this.executeCommand<CreateBookResult>(command);
 
@@ -228,7 +229,7 @@ export class BooksController extends BaseController {
   @Put(':id')
   async update(
     @Param() params: UpdateBookParamsDto,
-    @Body() book: CreateUpdateBookBodyDto,
+    @Body() book: UpdateBookBodyDto,
   ): Promise<CreateUpdateBookResultDto> {
     const command = new UpdateBookCommand(params.id, book);
     const result = await this.executeCommand<UpdateBookResult>(command);

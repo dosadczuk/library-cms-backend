@@ -22,6 +22,7 @@ import {
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { CreateBookCopyBodyDto } from '@/modules/books/dto/create-book-copy.dto';
+import { PartialType } from '@nestjs/mapped-types';
 
 export class UpdateBookParamsDto {
   @IsInt()
@@ -34,7 +35,7 @@ export class UpdateBookParamsDto {
   readonly id: number;
 }
 
-export class CreateUpdateBookBodyDto {
+export class CreateBookBodyDto {
   @IsString()
   @IsNotEmpty()
   @MinLength(10)
@@ -176,6 +177,8 @@ export class CreateUpdateBookBodyDto {
   })
   readonly copies: CreateBookCopyBodyDto[] = [];
 }
+
+export class UpdateBookBodyDto extends PartialType(CreateBookBodyDto) {}
 
 export class CreateUpdateBookResultDto {
   @ApiProperty({
