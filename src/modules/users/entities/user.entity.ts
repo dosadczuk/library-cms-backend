@@ -4,6 +4,7 @@ import { genSaltSync, hashSync } from 'bcryptjs';
 import {
   BaseEntity,
   BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -117,6 +118,7 @@ export class User extends BaseEntity {
   removedAt?: Date;
 
   @BeforeInsert()
+  @BeforeUpdate()
   setPassword(password?: string) {
     this.password = hashSync(password ?? this.password, genSaltSync());
   }

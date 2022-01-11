@@ -12,6 +12,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HeaderResolver, I18nJsonParser, I18nModule } from 'nestjs-i18n';
 import * as path from 'path';
+import { RolesGuard } from './modules/auth/guards';
 
 @Module({
   imports: [

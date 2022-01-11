@@ -1,4 +1,4 @@
-import { JwtAuthGuard } from '@/modules/auth/guards';
+import { JwtAuthGuard, RolesGuard } from '@/modules/auth/guards';
 import { RemoveFileCommand, UploadFileCommand, UploadFileResult } from '@/modules/files/commands';
 import { FindFileParamsDto, RemoveFileParamsDto, UploadFileResultDto } from '@/modules/files/dto';
 import { FindFileQuery, FindFileResult } from '@/modules/files/queries';
@@ -26,6 +26,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { createReadStream } from 'fs';
+import { Roles } from '@/modules/auth/roles.decorator';
+import { Role } from '@/modules/users/entities/enums';
 
 @ApiTags('files')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -49,14 +51,15 @@ export class FilesController extends BaseController {
     return new StreamableFile(createReadStream(result.filePath));
   }
 
-  @ApiOperation({ summary: 'Wgrywanie pliku' })
+  @ApiOperation({ summary: 'Wgrywanie pliku', description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}` })
   @ApiOkResponse({
     type: UploadFileResultDto,
     description: 'Plik został pomyślnie wgrany',
   })
   @ApiConsumes('multipart/form-data')
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN, Role.EMPLOYEE)
   @UseInterceptors(FileInterceptor('file'))
   @Post('upload')
   async uploadFile(@UploadedFile() file: Express.Multer.File) {
@@ -66,11 +69,12 @@ export class FilesController extends BaseController {
     return result.file;
   }
 
-  @ApiOperation({ summary: 'Usuwanie pliku' })
+  @ApiOperation({ summary: 'Usuwanie pliku', description: `Wymagane role: ${Role.ADMIN}` })
   @ApiOkResponse({ description: 'Plik został pomyślnie usunięty' })
   @ApiBadRequestResponse({ description: 'Plik nie istnieje' })
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
   @Delete(':id')
   async removeFile(@Param() params: RemoveFileParamsDto) {
     const command = new RemoveFileCommand(params.id);

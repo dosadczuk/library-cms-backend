@@ -41,6 +41,6 @@ export class UserRepository {
    * Usuwa użytkownika z bazy danych.
    */
   async remove(user: User): Promise<User> {
-    return user.remove();
+    return user.softRemove();
   }
 }

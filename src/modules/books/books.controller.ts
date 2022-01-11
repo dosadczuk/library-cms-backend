@@ -1,4 +1,4 @@
-import { JwtAuthGuard } from '@/modules/auth/guards';
+import { JwtAuthGuard, RolesGuard } from '@/modules/auth/guards';
 import {
   CreateBookCommand,
   CreateBookCopyBorrowCommand,
@@ -87,6 +87,8 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import { Roles } from '@/modules/auth/roles.decorator';
+import { Role } from '@/modules/users/entities/enums';
 
 @ApiTags('books')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -186,14 +188,15 @@ export class BooksController extends BaseController {
     return result.book;
   }
 
-  @ApiOperation({ summary: 'Tworzenie książki' })
+  @ApiOperation({ summary: 'Tworzenie książki', description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}` })
   @ApiOkResponse({
     type: CreateUpdateBookResultDto,
     description: 'Książka została pomyślnie utworzona',
   })
   @ApiBadRequestResponse({ description: 'Książka z podanym ISBN już istnieje' })
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN, Role.EMPLOYEE)
   @Post()
   async create(@Body() book: CreateUpdateBookBodyDto): Promise<CreateUpdateBookResultDto> {
     const command = new CreateBookCommand(book);
@@ -202,14 +205,15 @@ export class BooksController extends BaseController {
     return result.book;
   }
 
-  @ApiOperation({ summary: 'Modyfikowanie książki' })
+  @ApiOperation({ summary: 'Modyfikowanie książki', description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}` })
   @ApiOkResponse({
     type: CreateUpdateBookResultDto,
     description: 'Książka została pomyślnie zmodyfikowana',
   })
   @ApiBadRequestResponse({ description: 'Książka nie istnieje' })
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN, Role.EMPLOYEE)
   @Put(':id')
   async update(
     @Param() params: UpdateBookParamsDto,
@@ -221,11 +225,12 @@ export class BooksController extends BaseController {
     return result.book;
   }
 
-  @ApiOperation({ summary: 'Usuwanie książki' })
+  @ApiOperation({ summary: 'Usuwanie książki', description: `Wymagane role: ${Role.ADMIN}` })
   @ApiOkResponse({ description: 'Książka została pomyślnie usunięta' })
   @ApiBadRequestResponse({ description: 'Książka nie istnieje' })
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
   @Delete(':id')
   async remove(@Param() params: RemoveBookParamsDto): Promise<void> {
     const command = new RemoveBookCommand(params.id);
@@ -233,14 +238,15 @@ export class BooksController extends BaseController {
     await this.executeCommand<void>(command);
   }
 
-  @ApiOperation({ summary: 'Pobieranie egzemplarzy książki' })
+  @ApiOperation({ summary: 'Pobieranie egzemplarzy książki', description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}` })
   @ApiOkResponse({
     type: FindBookCopiesResultDto,
     description: 'Znalezione egzemplarze książki',
   })
   @ApiBadRequestResponse({ description: 'Książka nie istnieje' })
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN, Role.EMPLOYEE)
   @Get(':id/copies')
   async findBookCopies(@Param() params: FindBookCopiesParamsDto): Promise<FindBookCopiesResultDto> {
     const query = new FindBookCopiesQuery(params.id);
@@ -249,14 +255,15 @@ export class BooksController extends BaseController {
     return result.bookCopies;
   }
 
-  @ApiOperation({ summary: 'Tworzenie egzemplarza książki' })
+  @ApiOperation({ summary: 'Tworzenie egzemplarza książki', description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}` })
   @ApiOkResponse({
     type: CreateBookCopyResultDto,
     description: 'Egzemplarz książki został pomyślnie utworzony',
   })
   @ApiBadRequestResponse({ description: 'Książka nie istnieje' })
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN, Role.EMPLOYEE)
   @Post(':id/copies')
   async createBookCopy(
     @Param() params: CreateBookCopyParamsDto,
@@ -268,11 +275,12 @@ export class BooksController extends BaseController {
     return result.copy;
   }
 
-  @ApiOperation({ summary: 'Usuwanie egzemplarza książki' })
+  @ApiOperation({ summary: 'Usuwanie egzemplarza książki', description: `Wymagane role: ${Role.ADMIN}` })
   @ApiOkResponse({ description: 'Egzemplarz książki został pomyślnie usunięty' })
   @ApiBadRequestResponse({ description: 'Egzemplarz książki nie istnieje' })
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN, Role.EMPLOYEE)
   @Delete(':id/copies/:copy_id')
   async removeBookCopy(@Param() params: RemoveBookCopyParamsDto): Promise<void> {
     const command = new RemoveBookCopyCommand(params.bookId, params.copyId);
