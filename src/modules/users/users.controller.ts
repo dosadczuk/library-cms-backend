@@ -1,10 +1,12 @@
 import { JwtAuthGuard, RolesGuard } from '@/modules/auth/guards';
 import { RemoveUserCommand } from '@/modules/users/commands';
+import { User as UserEntity } from '@/modules/users/entities';
 import {
   FindUserParamsDto,
   FindUserResultDto,
   FindUsersResultDto,
   RemoveUserParamsDto,
+  UpdateUserParamsDto,
 } from '@/modules/users/dto';
 import {
   FindUserQuery,
@@ -21,7 +23,6 @@ import {
   Get,
   Param,
   Put,
-  Req,
   UnauthorizedException,
   UseGuards,
   UseInterceptors,
@@ -37,6 +38,7 @@ import { Roles } from '@/modules/auth/roles.decorator';
 import { Role } from '@/modules/users/entities/enums';
 import { UpdateUserBodyDto, UpdateUserResultDto } from '@/modules/users/dto/update-user.dto';
 import { UpdateUserCommand, UpdateUserResult } from './commands/update-user';
+import { User } from '@/modules/users/user.decorator';
 
 @ApiTags('users')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -44,7 +46,7 @@ import { UpdateUserCommand, UpdateUserResult } from './commands/update-user';
 export class UsersController extends BaseController {
   @ApiOperation({
     summary: 'Pobieranie użytkowników',
-    description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}`,
+    description: `Metoda pozwala na pobranie wszystkich użytkowników. Wymagane role: ${Role.ADMIN}/${Role.EMPLOYEE}.`,
   })
   @ApiOkResponse({
     type: FindUsersResultDto,
@@ -63,7 +65,7 @@ export class UsersController extends BaseController {
 
   @ApiOperation({
     summary: 'Pobieranie użytkownika',
-    description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}`,
+    description: `Metoda pozwala na pobranie danego użytkownika. Wymagane role: ${Role.ADMIN}/${Role.EMPLOYEE}.`,
   })
   @ApiOkResponse({
     type: FindUserResultDto,
@@ -81,29 +83,38 @@ export class UsersController extends BaseController {
     return result.user;
   }
 
-  @ApiOperation({ summary: 'Zmiana danych użytkownika' })
+  @ApiOperation({
+    summary: 'Modyfikowanie użytkownika',
+    description: `Metoda pozwala na zaktualizowanie danych użytkownika. Wymagane role: ${Role.ADMIN}/${Role.EMPLOYEE}/${Role.CUSTOMER}.`,
+  })
   @ApiOkResponse({
     type: UpdateUserResultDto,
     description: 'Dane zostały pomyślnie zmienione',
   })
   @ApiBadRequestResponse({ description: 'Nie udało się zmienić danych użytkownika' })
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN, Role.EMPLOYEE, Role.CUSTOMER)
   @Put(':id')
-  async register(@Body() user: UpdateUserBodyDto, @Req() request): Promise<UpdateUserResultDto> {
-    const currentUser = request.user;
-    console.log(currentUser);
-    if (currentUser.id != user.id && currentUser.role != Role.ADMIN) {
-      throw new UnauthorizedException();
+  async updateUser(
+    @Param() params: UpdateUserParamsDto,
+    @Body() user: UpdateUserBodyDto,
+    @User() auth: UserEntity,
+  ): Promise<UpdateUserResultDto> {
+    if (auth.id !== params.id && auth.role !== Role.ADMIN) {
+      throw new UnauthorizedException(); // zwykły użytkownik może zmieniać tylko swoje dane
     }
-    const command = new UpdateUserCommand(user);
+
+    const command = new UpdateUserCommand(params.id, user);
     const result = await this.executeCommand<UpdateUserResult>(command);
 
     return result.user;
   }
 
-  @ApiOperation({ summary: 'Usuwanie użytkownika', description: `Wymagane role: ${Role.ADMIN}` })
+  @ApiOperation({
+    summary: 'Usuwanie użytkownika',
+    description: `Metoda pozwala na usunięcie użytkownika. Wymagane role: ${Role.ADMIN}.`,
+  })
   @ApiOkResponse({ description: 'Użytkownik został pomyślnie usunięty' })
   @ApiBadRequestResponse({ description: 'Użytkownik nie istnieje' })
   @ApiBearerAuth()

@@ -8,7 +8,7 @@ export class FindTagsFilterDto {
   @IsOptional()
   @MaxLength(50)
   @ApiPropertyOptional({
-    title: 'Wartość',
+    description: 'Wartość',
     maxLength: 50,
   })
   readonly value?: string;

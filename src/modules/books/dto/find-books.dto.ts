@@ -17,7 +17,7 @@ export class FindBooksFilterDto {
   @IsOptional()
   @MaxLength(255)
   @ApiPropertyOptional({
-    title: 'Tytuł',
+    description: 'Tytuł',
     maxLength: 255,
   })
   readonly title?: string;
@@ -25,7 +25,7 @@ export class FindBooksFilterDto {
   @IsEnum(BookType)
   @IsOptional()
   @ApiPropertyOptional({
-    title: 'Rodzaj',
+    description: 'Rodzaj',
     enum: BookType,
     nullable: false,
   })
@@ -36,7 +36,7 @@ export class FindBooksFilterDto {
   @IsOptional()
   @TypeNumber()
   @ApiPropertyOptional({
-    title: 'Gatunki',
+    description: 'Gatunki',
   })
   readonly genreIds?: number[];
 
@@ -45,7 +45,7 @@ export class FindBooksFilterDto {
   @IsOptional()
   @TypeNumber()
   @ApiPropertyOptional({
-    title: 'Języki',
+    description: 'Języki',
   })
   readonly languageIds?: number[];
 }

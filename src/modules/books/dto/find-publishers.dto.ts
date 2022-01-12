@@ -8,7 +8,7 @@ export class FindPublishersFilterDto {
   @IsOptional()
   @MaxLength(250)
   @ApiPropertyOptional({
-    title: 'Nazwa',
+    description: 'Nazwa',
     maxLength: 250,
   })
   readonly name?: string;

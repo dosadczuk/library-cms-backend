@@ -13,7 +13,7 @@ export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand, Upd
 
   async execute(command: UpdateUserCommand): Promise<UpdateUserResult> {
     if (await this.isUserNotExists(command)) {
-      throw new UserNotFoundError(command.user.id);
+      throw new UserNotFoundError(command.userId);
     }
 
     const user = await this.createUser(command);
@@ -26,14 +26,13 @@ export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand, Upd
   }
 
   private async isUserNotExists(command: UpdateUserCommand): Promise<boolean> {
-    return this.repository.findOne(command.user.id) == null;
+    return (await this.repository.findOne(command.userId)) == null;
   }
 
   private async createUser(command: UpdateUserCommand): Promise<User> {
-    const user = await this.repository.findOne(command.user.id);
+    const user = await this.repository.findOne(command.userId);
     user.firstName = command.user.firstName;
     user.lastName = command.user.lastName;
-    // user.role = command.user.role;
 
     return user;
   }

@@ -24,7 +24,10 @@ import { ApiBadRequestResponse, ApiOkResponse, ApiOperation, ApiTags } from '@ne
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('auth')
 export class AuthController extends BaseController {
-  @ApiOperation({ summary: 'Rejestrowanie użytkownika' })
+  @ApiOperation({
+    summary: 'Rejestrowanie użytkownika',
+    description: 'Metoda pozwala na utworzenie konta przez nowego użytkownika systemu.',
+  })
   @ApiOkResponse({
     type: RegisterResultDto,
     description: 'Użytkownik został pomyślnie zarejestrowany',
@@ -38,7 +41,10 @@ export class AuthController extends BaseController {
     return result.user;
   }
 
-  @ApiOperation({ summary: 'Logowanie użytkownika' })
+  @ApiOperation({
+    summary: 'Logowanie użytkownika',
+    description: 'Metoda pozwala na uwierzytelnienie się przez zarejestrowanego użytkownika.',
+  })
   @ApiOkResponse({
     type: LoginResultDto,
     description: 'Użytkownik został pomyślnie zalogowany',

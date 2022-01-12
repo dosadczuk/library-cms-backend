@@ -17,6 +17,7 @@ export class CreateUpdatePublisherBodyDto {
   @MaxLength(250)
   @ApiProperty({
     title: 'Nazwa',
+    example: 'Wydawnictwo Czarne',
     maxLength: 250,
     nullable: false,
   })

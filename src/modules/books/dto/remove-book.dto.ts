@@ -7,7 +7,7 @@ export class RemoveBookParamsDto {
   @IsNotEmpty()
   @TypeNumber()
   @ApiProperty({
-    title: 'Identyfikator książki',
+    description: 'Identyfikator książki',
     example: 1,
   })
   readonly id: number;

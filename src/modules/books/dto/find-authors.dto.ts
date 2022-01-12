@@ -7,7 +7,7 @@ export class FindAuthorsFilterDto {
   @IsNotEmpty()
   @IsOptional()
   @ApiPropertyOptional({
-    title: 'Imię',
+    description: 'Imię',
     example: 'Jan',
   })
   readonly firstName?: string;
@@ -16,7 +16,7 @@ export class FindAuthorsFilterDto {
   @IsNotEmpty()
   @IsOptional()
   @ApiPropertyOptional({
-    title: 'Nazwisko',
+    description: 'Nazwisko',
     example: 'Kowalski',
   })
   readonly lastName?: string;

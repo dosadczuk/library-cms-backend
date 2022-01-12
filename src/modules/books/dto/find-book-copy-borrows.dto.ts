@@ -11,7 +11,7 @@ export class FindBookCopyBorrowsParamsDto {
   @TypeNumber()
   @ApiProperty({
     name: 'id',
-    title: 'Identyfikator książki',
+    description: 'Identyfikator książki',
     example: 1,
   })
   readonly bookId: number;
@@ -22,7 +22,7 @@ export class FindBookCopyBorrowsParamsDto {
   @TypeNumber()
   @ApiProperty({
     name: 'copy_id',
-    title: 'Identyfikator egzemplarza',
+    description: 'Identyfikator egzemplarza',
     example: 1,
   })
   readonly copyId: number;

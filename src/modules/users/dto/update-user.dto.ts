@@ -3,16 +3,18 @@ import { IsInt, IsNotEmpty, IsOptional, IsString, MaxLength } from '@/shared/uti
 import { TypeNumber } from '@/shared/utils/class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
-export class UpdateUserBodyDto {
+export class UpdateUserParamsDto {
   @IsInt()
   @IsNotEmpty()
   @TypeNumber()
   @ApiProperty({
-    title: 'Identyfikator użytkownika',
+    description: 'Identyfikator użytkownika',
     example: 1,
   })
   readonly id: number;
+}
 
+export class UpdateUserBodyDto {
   @IsString()
   @IsOptional()
   @IsNotEmpty()
@@ -36,15 +38,6 @@ export class UpdateUserBodyDto {
     nullable: false,
   })
   lastName?: string;
-
-  // @IsEnum(Role)
-  // @IsOptional()
-  // @ApiPropertyOptional({
-  //   title: 'Rola',
-  //   example: Role.CUSTOMER,
-  //   enum: Role,
-  // })
-  // role?: Role;
 }
 
 export class UpdateUserResultDto {

@@ -8,7 +8,7 @@ export class FindLanguagesFilterDto {
   @IsOptional()
   @MaxLength(50)
   @ApiPropertyOptional({
-    title: 'Wartość',
+    description: 'Wartość',
     example: 'polski',
     maxLength: 50,
   })

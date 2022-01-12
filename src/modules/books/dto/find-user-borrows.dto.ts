@@ -8,7 +8,7 @@ export class FindUserBorrowsParamsDto {
   @IsNotEmpty()
   @TypeNumber()
   @ApiProperty({
-    title: 'Identyfikator użytkownika',
+    description: 'Identyfikator użytkownika',
     example: 1,
   })
   readonly id: number;

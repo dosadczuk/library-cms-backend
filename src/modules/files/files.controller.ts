@@ -33,11 +33,15 @@ import { Role } from '@/modules/users/entities/enums';
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('files')
 export class FilesController extends BaseController {
-  @ApiOperation({ summary: 'Pobieranie pliku' })
+  @ApiOperation({
+    summary: 'Pobieranie pliku',
+    description: `Metoda pozwala na pobranie wgranego wcześniej pliku. Wymagane role: ${Role.ADMIN}/${Role.EMPLOYEE}.`,
+  })
   @ApiOkResponse({ description: 'Zawartość pliku' })
   @ApiBadRequestResponse({ description: 'Plik nie istnieje' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @Roles(Role.ADMIN, Role.EMPLOYEE)
   @Get(':id')
   async findOne(@Param() params: FindFileParamsDto, @Res({ passthrough: true }) res) {
     const query = new FindFileQuery(params.id);
@@ -53,7 +57,7 @@ export class FilesController extends BaseController {
 
   @ApiOperation({
     summary: 'Wgrywanie pliku',
-    description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}`,
+    description: `Metoda pozwala na wgranie pliku na serwer. Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}.`,
   })
   @ApiOkResponse({
     type: UploadFileResultDto,
@@ -72,12 +76,15 @@ export class FilesController extends BaseController {
     return result.file;
   }
 
-  @ApiOperation({ summary: 'Usuwanie pliku', description: `Wymagane role: ${Role.ADMIN}` })
+  @ApiOperation({
+    summary: 'Usuwanie pliku',
+    description: `Metoda pozwala na usunięcie pliku z serwera. Wymagane role: ${Role.ADMIN}/${Role.EMPLOYEE}.`,
+  })
   @ApiOkResponse({ description: 'Plik został pomyślnie usunięty' })
   @ApiBadRequestResponse({ description: 'Plik nie istnieje' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.ADMIN)
+  @Roles(Role.ADMIN, Role.EMPLOYEE)
   @Delete(':id')
   async removeFile(@Param() params: RemoveFileParamsDto) {
     const command = new RemoveFileCommand(params.id);

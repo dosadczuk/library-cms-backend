@@ -12,7 +12,7 @@ export class CreateBookCopyBorrowParamsDto {
   @TypeNumber()
   @ApiProperty({
     name: 'id',
-    title: 'Identyfikator książki',
+    description: 'Identyfikator książki',
     example: 1,
   })
   readonly bookId: number;
@@ -21,9 +21,9 @@ export class CreateBookCopyBorrowParamsDto {
   @IsInt()
   @IsOptional()
   @TypeNumber()
-  @ApiPropertyOptional({
+  @ApiProperty({
     name: 'copy_id',
-    title: 'Identyfikator egzemplarza, jak pusty to dowolny',
+    description: 'Identyfikator egzemplarza',
     example: 1,
   })
   readonly copyId: number;
@@ -34,6 +34,7 @@ export class CreateBookCopyBorrowBodyDto {
   @IsNotEmpty()
   @ApiPropertyOptional({
     title: 'Data, od której obowiązuje wypożyczenie, jak pusta to dzisiejsza',
+    example: new Date().toISOString(),
   })
   dateFrom?: Date;
 

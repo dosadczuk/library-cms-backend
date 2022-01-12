@@ -8,7 +8,7 @@ export class FindGenresFilterDto {
   @IsOptional()
   @MaxLength(50)
   @ApiPropertyOptional({
-    title: 'Wartość',
+    description: 'Wartość',
     example: 'XX wiek',
     maxLength: 50,
   })

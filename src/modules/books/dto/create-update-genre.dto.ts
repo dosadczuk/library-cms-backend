@@ -9,7 +9,6 @@ export class CreateUpdateGenreBodyDto {
   @ApiPropertyOptional({
     title: 'Identyfikator',
     example: 1,
-    nullable: true,
   })
   id?: number;
 

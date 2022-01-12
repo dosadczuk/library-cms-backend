@@ -11,7 +11,7 @@ export class CreateBookCopyParamsDto {
   @TypeNumber()
   @ApiProperty({
     name: 'id',
-    title: 'Identyfikator książki',
+    description: 'Identyfikator książki',
     example: 1,
   })
   readonly bookId: number;

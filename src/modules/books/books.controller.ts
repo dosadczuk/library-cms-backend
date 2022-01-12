@@ -110,7 +110,10 @@ import { Role } from '@/modules/users/entities/enums';
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('books')
 export class BooksController extends BaseController {
-  @ApiOperation({ summary: 'Pobieranie autorów książek' })
+  @ApiOperation({
+    summary: 'Pobieranie autorów książek',
+    description: 'Metoda pozwala na pobranie autorów książek.',
+  })
   @ApiOkResponse({
     type: FindAuthorsResultDto,
     description: 'Znalezieni autorzy',
@@ -123,7 +126,10 @@ export class BooksController extends BaseController {
     return result.authors;
   }
 
-  @ApiOperation({ summary: 'Pobieranie gatunków książek' })
+  @ApiOperation({
+    summary: 'Pobieranie gatunków książek',
+    description: 'Metoda pozwala na pobranie gatunków książek.',
+  })
   @ApiOkResponse({
     type: FindGenresResultDto,
     description: 'Znalezione gatunki',
@@ -136,7 +142,10 @@ export class BooksController extends BaseController {
     return result.genres;
   }
 
-  @ApiOperation({ summary: 'Pobieranie języków książek' })
+  @ApiOperation({
+    summary: 'Pobieranie języków książek',
+    description: 'Metoda pozwala na pobranie języków książek.',
+  })
   @ApiOkResponse({
     type: FindLanguagesResultDto,
     description: 'Znalezione języki',
@@ -149,7 +158,10 @@ export class BooksController extends BaseController {
     return result.languages;
   }
 
-  @ApiOperation({ summary: 'Pobieranie wydawców książek' })
+  @ApiOperation({
+    summary: 'Pobieranie wydawców książek',
+    description: 'Metoda pozwala na pobranie wydawców książek.',
+  })
   @ApiOkResponse({
     type: FindPublishersResultDto,
     description: 'Znalezieni wydawcy',
@@ -164,7 +176,10 @@ export class BooksController extends BaseController {
     return result.publishers;
   }
 
-  @ApiOperation({ summary: 'Pobieranie tagów książek' })
+  @ApiOperation({
+    summary: 'Pobieranie tagów książek',
+    description: 'Metoda pozwala na pobranie tagów książek.',
+  })
   @ApiOkResponse({
     type: FindTagsResultDto,
     description: 'Znalezione tagi',
@@ -177,7 +192,10 @@ export class BooksController extends BaseController {
     return result.tags;
   }
 
-  @ApiOperation({ summary: 'Pobieranie książek' })
+  @ApiOperation({
+    summary: 'Pobieranie książek',
+    description: 'Metoda pozwala na pobranie książek.',
+  })
   @ApiOkResponse({
     type: FindBooksResultDto,
     description: 'Znalezione książki',
@@ -190,7 +208,10 @@ export class BooksController extends BaseController {
     return result.books;
   }
 
-  @ApiOperation({ summary: 'Pobieranie książki' })
+  @ApiOperation({
+    summary: 'Pobieranie książki',
+    description: 'Metoda pozwala na pobranie szczegółów książki.',
+  })
   @ApiOkResponse({
     type: FindBookResultDto,
     description: 'Znaleziona książka',
@@ -206,7 +227,7 @@ export class BooksController extends BaseController {
 
   @ApiOperation({
     summary: 'Tworzenie książki',
-    description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}`,
+    description: `Metoda pozwala na utworzenie książki. Wymagane role: ${Role.ADMIN}/${Role.EMPLOYEE}.`,
   })
   @ApiOkResponse({
     type: CreateUpdateBookResultDto,
@@ -226,7 +247,7 @@ export class BooksController extends BaseController {
 
   @ApiOperation({
     summary: 'Modyfikowanie książki',
-    description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}`,
+    description: `Metoda pozwala na zmodyfikowanie książki. Wymagane role: ${Role.ADMIN}/${Role.EMPLOYEE}.`,
   })
   @ApiOkResponse({
     type: CreateUpdateBookResultDto,
@@ -247,12 +268,15 @@ export class BooksController extends BaseController {
     return result.book;
   }
 
-  @ApiOperation({ summary: 'Usuwanie książki', description: `Wymagane role: ${Role.ADMIN}` })
+  @ApiOperation({
+    summary: 'Usuwanie książki',
+    description: `Metoda pozwala na usunięcia książki. Wymagane role: ${Role.ADMIN}/${Role.EMPLOYEE}.`,
+  })
   @ApiOkResponse({ description: 'Książka została pomyślnie usunięta' })
   @ApiBadRequestResponse({ description: 'Książka nie istnieje' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.ADMIN)
+  @Roles(Role.ADMIN, Role.EMPLOYEE)
   @Delete(':id')
   async remove(@Param() params: RemoveBookParamsDto): Promise<void> {
     const command = new RemoveBookCommand(params.id);
@@ -262,7 +286,7 @@ export class BooksController extends BaseController {
 
   @ApiOperation({
     summary: 'Pobieranie egzemplarzy książki',
-    description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}`,
+    description: `Metoda pozwala na pobranie egzemplarzy książki. Wymagane role: ${Role.ADMIN}/${Role.EMPLOYEE}/${Role.CUSTOMER}.`,
   })
   @ApiOkResponse({
     type: FindBookCopiesResultDto,
@@ -271,7 +295,7 @@ export class BooksController extends BaseController {
   @ApiBadRequestResponse({ description: 'Książka nie istnieje' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.ADMIN, Role.EMPLOYEE)
+  @Roles(Role.ADMIN, Role.EMPLOYEE, Role.CUSTOMER)
   @Get(':id/copies')
   async findBookCopies(@Param() params: FindBookCopiesParamsDto): Promise<FindBookCopiesResultDto> {
     const query = new FindBookCopiesQuery(params.id);
@@ -282,7 +306,7 @@ export class BooksController extends BaseController {
 
   @ApiOperation({
     summary: 'Tworzenie egzemplarza książki',
-    description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}`,
+    description: `Metoda pozwala na utworzenie egzemplarza książki. Wymagane role: ${Role.ADMIN}/${Role.EMPLOYEE}.`,
   })
   @ApiOkResponse({
     type: CreateBookCopyResultDto,
@@ -305,7 +329,7 @@ export class BooksController extends BaseController {
 
   @ApiOperation({
     summary: 'Usuwanie egzemplarza książki',
-    description: `Wymagane role: ${Role.ADMIN}`,
+    description: `Metoda pozwala na usunięcie egzemplarza książki. Wymagane role: ${Role.ADMIN}/${Role.EMPLOYEE}.`,
   })
   @ApiOkResponse({ description: 'Egzemplarz książki został pomyślnie usunięty' })
   @ApiBadRequestResponse({ description: 'Egzemplarz książki nie istnieje' })
@@ -319,14 +343,18 @@ export class BooksController extends BaseController {
     await this.executeCommand<void>(command);
   }
 
-  @ApiOperation({ summary: 'Wyszukiwanie wypożyczeń egzemplarza książki' })
+  @ApiOperation({
+    summary: 'Wyszukiwanie wypożyczeń egzemplarza książki',
+    description: `Metoda pozwala na wyszukiwanie wypożyczeń egzemplarza książki. Wymagane role: ${Role.ADMIN}/${Role.EMPLOYEE}.`,
+  })
   @ApiOkResponse({
     type: FindBookCopyBorrowsResult,
     description: 'Znalezione wypożyczenia egzemplarza książki',
   })
   @ApiBadRequestResponse({ description: 'Egzemplarz książki nie istnieje' })
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN, Role.EMPLOYEE)
   @Get(':id/copies/:copy_id/borrows')
   async findBookCopyBorrows(@Param() params: FindBookCopyBorrowsParamsDto) {
     const query = new FindBookCopyBorrowsQuery(params.bookId, params.copyId);
@@ -335,7 +363,10 @@ export class BooksController extends BaseController {
     return result.borrows;
   }
 
-  @ApiOperation({ summary: 'Wyszukiwanie wypożyczenia egzemplarza książki' })
+  @ApiOperation({
+    summary: 'Wyszukiwanie wypożyczenia egzemplarza książki',
+    description: `Metoda pozwala na wyszukiwanie wypożyczenia egzemplarza książki. Wymagane role: ${Role.ADMIN}/${Role.EMPLOYEE}.`,
+  })
   @ApiOkResponse({
     type: FindBookCopyBorrowResult,
     description: 'Znalezione wypożyczenie egzemplarza książki',
@@ -344,7 +375,8 @@ export class BooksController extends BaseController {
     description: 'Egzemplarz książki nie istnieje / Wypożyczenie nie istnieje',
   })
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN, Role.EMPLOYEE)
   @Get(':id/copies/:copy_id/borrows/:borrow_id')
   async findBookCopyBorrow(@Param() params: FindBookCopyBorrowParamsDto) {
     const query = new FindBookCopyBorrowQuery(params.bookId, params.copyId, params.borrowId);
@@ -353,7 +385,10 @@ export class BooksController extends BaseController {
     return result.borrow;
   }
 
-  @ApiOperation({ summary: 'Tworzenie wypożyczanie egzemplarza książki' })
+  @ApiOperation({
+    summary: 'Tworzenie wypożyczanie egzemplarza książki',
+    description: `Metoda pozwala na utworzenie wypożyczenia egzemplarza książki. ${Role.ADMIN}/${Role.EMPLOYEE}/${Role.CUSTOMER}.`,
+  })
   @ApiOkResponse({
     description: 'Egzemplarz został pomyślnie wypożyczony',
     type: CreateBookCopyBorrowResultDto,
@@ -362,7 +397,8 @@ export class BooksController extends BaseController {
     description: 'Egzemplarz książki nie istnieje / Użytkownik nie istnieje',
   })
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN, Role.EMPLOYEE, Role.CUSTOMER)
   @Post(':id/copies/:copy_id/borrows')
   async createBookCopyBorrow(
     @Param() params: CreateBookCopyBorrowParamsDto,
@@ -374,7 +410,10 @@ export class BooksController extends BaseController {
     return result.borrow;
   }
 
-  @ApiOperation({ summary: 'Zwracanie wypożyczenie egzemplarza książki' })
+  @ApiOperation({
+    summary: 'Zwracanie wypożyczenie egzemplarza książki',
+    description: `Metoda pozwala na zwrócenie egzemplarza książki. Wymagane role: ${Role.ADMIN}/${Role.EMPLOYEE}/${Role.CUSTOMER}.`,
+  })
   @ApiOkResponse({
     description: 'Wypożyczenie egzemplarza książki zostało pomyślnie zwrócone',
     type: GiveBackBookCopyResultDto,
@@ -383,7 +422,8 @@ export class BooksController extends BaseController {
     description: 'Egzemplarz książki nie istnieje / Wypożyczenie nie istnieje',
   })
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN, Role.EMPLOYEE, Role.CUSTOMER)
   @Put(':id/copies/:copy_id/borrows/:borrow_id')
   async giveBackBookCopyBorrow(@Param() params: GiveBackBookCopyParamsDto) {
     const command = new GiveBackBookCopyCommand(params.bookId, params.copyId, params.borrowId);
@@ -392,13 +432,17 @@ export class BooksController extends BaseController {
     return result.borrow;
   }
 
-  @ApiOperation({ summary: 'Usuwanie wypożyczenia egzemplarza książki' })
+  @ApiOperation({
+    summary: 'Usuwanie wypożyczenia egzemplarza książki',
+    description: `Metoda pozwala na usunięcie wypożyczenia egzemplarza książki. Wymagane role: ${Role.ADMIN}/${Role.EMPLOYEE}/${Role.CUSTOMER}.`,
+  })
   @ApiOkResponse({ description: 'Wypożyczenie egzemplarza książki zostało pomyślnie usunięte' })
   @ApiBadRequestResponse({
     description: 'Egzemplarz książki nie istnieje / Wypożyczenie nie istnieje',
   })
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN, Role.EMPLOYEE, Role.CUSTOMER)
   @Delete(':id/copies/:copy_id/borrows/:borrow_id')
   async removeBookCopyBorrow(@Param() params: RemoveBookCopyBorrowParamsDto) {
     const command = new RemoveBookCopyBorrowCommand(params.bookId, params.copyId, params.borrowId);
@@ -406,7 +450,10 @@ export class BooksController extends BaseController {
     await this.executeCommand<void>(command);
   }
 
-  @ApiOperation({ summary: 'Pobieranie ocen książki' })
+  @ApiOperation({
+    summary: 'Pobieranie ocen książki',
+    description: 'Metoda pozwala na pobranie ocen książki.',
+  })
   @ApiOkResponse({
     description: 'Znalezione oceny',
     type: FindBookRatingsResultDto,
@@ -414,8 +461,6 @@ export class BooksController extends BaseController {
   @ApiBadRequestResponse({
     description: 'Książka nie istnieje',
   })
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   @Get(':id/ratings')
   async findBookRatings(@Param() params: FindBookRatingsParamsDto) {
     const query = new FindBookRatingsQuery(params.id);
@@ -424,14 +469,18 @@ export class BooksController extends BaseController {
     return result.ratings;
   }
 
-  @ApiOperation({ summary: 'Tworzenie oceny książki' })
+  @ApiOperation({
+    summary: 'Tworzenie oceny książki',
+    description: `Metoda pozwala na utworzenia oceny książki. Wymagane role: ${Role.ADMIN}/${Role.EMPLOYEE}/${Role.CUSTOMER}.`,
+  })
   @ApiOkResponse({
     description: 'Ocena została pomyślnie utworzona',
     type: CreateUpdateBookRatingResultDto,
   })
   @ApiBadRequestResponse({ description: 'Książka nie istnieje' })
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN, Role.EMPLOYEE, Role.CUSTOMER)
   @Post(':id/ratings')
   async createBookRating(
     @Param() params: CreateUpdateBookRatingParamsDto,
@@ -443,7 +492,10 @@ export class BooksController extends BaseController {
     return result.rating;
   }
 
-  @ApiOperation({ summary: 'Usuwanie oceny książki' })
+  @ApiOperation({
+    summary: 'Usuwanie oceny książki',
+    description: `Metoda pozwala na usunięcie oceny książki. Wymagane role: ${Role.ADMIN}/${Role.EMPLOYEE}/${Role.CUSTOMER}.`,
+  })
   @ApiOkResponse({ description: 'Ocena została pomyślnie usunięta' })
   @ApiBadRequestResponse({ description: 'Ocena nie istnieje' })
   @ApiBearerAuth()

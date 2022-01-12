@@ -6,7 +6,7 @@ export class FindFileParamsDto {
   @IsUUID('4')
   @IsNotEmpty()
   @ApiProperty({
-    title: 'Identyfikator pliku',
+    description: 'Identyfikator pliku',
     example: 'd3f275c3-77bd-4753-96ab-e84efb95e712',
   })
   id: string;

@@ -32,7 +32,7 @@ function setUpSwagger(app: INestApplication) {
   const builder = new DocumentBuilder()
     .setTitle(name)
     .setDescription(desc)
-    .setVersion('1.0.0')
+    .setVersion('0.1.0')
     .addBearerAuth()
     .build();
 
