@@ -1,13 +1,5 @@
-import { Role } from '@/modules/users/entities/enums';
 import { UserViewModel } from '@/modules/users/vms';
-import {
-  IsEnum,
-  IsInt,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  MaxLength,
-} from '@/shared/utils/class-validator';
+import { IsInt, IsNotEmpty, IsOptional, IsString, MaxLength } from '@/shared/utils/class-validator';
 import { TypeNumber } from '@/shared/utils/class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 

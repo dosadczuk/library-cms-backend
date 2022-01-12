@@ -2,10 +2,10 @@ import { Borrow } from '@/modules/books/entities';
 import { Role } from '@/modules/users/entities/enums';
 import { genSaltSync, hashSync } from 'bcryptjs';
 import {
+  AfterLoad,
   BaseEntity,
   BeforeInsert,
   BeforeUpdate,
-  AfterLoad,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -118,17 +118,17 @@ export class User extends BaseEntity {
   })
   removedAt?: Date;
 
-  private tempPassword: string
+  private tempPassword: string;
 
   @AfterLoad()
   private loadTempPassword(): void {
-      this.tempPassword = this.password;
+    this.tempPassword = this.password;
   }
 
   @BeforeInsert()
   @BeforeUpdate()
   setPassword(password?: string) {
-    if (this.tempPassword !== this.password){
+    if (this.tempPassword !== this.password) {
       this.password = hashSync(password ?? this.password, genSaltSync());
     }
   }

@@ -14,18 +14,17 @@ import {
 } from '@/modules/users/queries';
 import { BaseController } from '@/shared/base.controller';
 import {
+  Body,
   ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
-  Post,
   Param,
+  Put,
   Req,
-  Body,
+  UnauthorizedException,
   UseGuards,
   UseInterceptors,
-  UnauthorizedException,
-  Put,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -38,8 +37,6 @@ import { Roles } from '@/modules/auth/roles.decorator';
 import { Role } from '@/modules/users/entities/enums';
 import { UpdateUserBodyDto, UpdateUserResultDto } from '@/modules/users/dto/update-user.dto';
 import { UpdateUserCommand, UpdateUserResult } from './commands/update-user';
-import { User } from './entities';
-import { Console } from 'console';
 
 @ApiTags('users')
 @UseInterceptors(ClassSerializerInterceptor)
