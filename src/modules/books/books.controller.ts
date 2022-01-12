@@ -204,7 +204,10 @@ export class BooksController extends BaseController {
     return result.book;
   }
 
-  @ApiOperation({ summary: 'Tworzenie książki', description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}` })
+  @ApiOperation({
+    summary: 'Tworzenie książki',
+    description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}`,
+  })
   @ApiOkResponse({
     type: CreateUpdateBookResultDto,
     description: 'Książka została pomyślnie utworzona',
@@ -221,7 +224,10 @@ export class BooksController extends BaseController {
     return result.book;
   }
 
-  @ApiOperation({ summary: 'Modyfikowanie książki', description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}` })
+  @ApiOperation({
+    summary: 'Modyfikowanie książki',
+    description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}`,
+  })
   @ApiOkResponse({
     type: CreateUpdateBookResultDto,
     description: 'Książka została pomyślnie zmodyfikowana',
@@ -254,7 +260,10 @@ export class BooksController extends BaseController {
     await this.executeCommand<void>(command);
   }
 
-  @ApiOperation({ summary: 'Pobieranie egzemplarzy książki', description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}` })
+  @ApiOperation({
+    summary: 'Pobieranie egzemplarzy książki',
+    description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}`,
+  })
   @ApiOkResponse({
     type: FindBookCopiesResultDto,
     description: 'Znalezione egzemplarze książki',
@@ -271,7 +280,10 @@ export class BooksController extends BaseController {
     return result.bookCopies;
   }
 
-  @ApiOperation({ summary: 'Tworzenie egzemplarza książki', description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}` })
+  @ApiOperation({
+    summary: 'Tworzenie egzemplarza książki',
+    description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}`,
+  })
   @ApiOkResponse({
     type: CreateBookCopyResultDto,
     description: 'Egzemplarz książki został pomyślnie utworzony',
@@ -291,7 +303,10 @@ export class BooksController extends BaseController {
     return result.copy;
   }
 
-  @ApiOperation({ summary: 'Usuwanie egzemplarza książki', description: `Wymagane role: ${Role.ADMIN}` })
+  @ApiOperation({
+    summary: 'Usuwanie egzemplarza książki',
+    description: `Wymagane role: ${Role.ADMIN}`,
+  })
   @ApiOkResponse({ description: 'Egzemplarz książki został pomyślnie usunięty' })
   @ApiBadRequestResponse({ description: 'Egzemplarz książki nie istnieje' })
   @ApiBearerAuth()

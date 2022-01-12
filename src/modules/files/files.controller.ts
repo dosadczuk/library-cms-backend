@@ -51,7 +51,10 @@ export class FilesController extends BaseController {
     return new StreamableFile(createReadStream(result.filePath));
   }
 
-  @ApiOperation({ summary: 'Wgrywanie pliku', description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}` })
+  @ApiOperation({
+    summary: 'Wgrywanie pliku',
+    description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}`,
+  })
   @ApiOkResponse({
     type: UploadFileResultDto,
     description: 'Plik został pomyślnie wgrany',
