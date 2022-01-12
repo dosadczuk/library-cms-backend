@@ -9,8 +9,8 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  private readonly repository:UserRepository;
-  constructor(config: ConfigService, repository:UserRepository) {
+  private readonly repository: UserRepository;
+  constructor(config: ConfigService, repository: UserRepository) {
     const jwt: JwtModuleOptions = config.get('jwt');
 
     super({
@@ -18,12 +18,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       secretOrKey: jwt.secret,
       ignoreExpiration: false,
     });
-    this.repository = repository
+    this.repository = repository;
   }
 
   async validate(payload: JwtPayload) {
-    const user = await this.repository.findOne(payload.sub)
-    if(user == null){
+    const user = await this.repository.findOne(payload.sub);
+    if (user == null) {
       throw new UnauthorizedException();
     }
     return user;

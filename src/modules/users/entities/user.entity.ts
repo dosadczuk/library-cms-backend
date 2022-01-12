@@ -5,6 +5,7 @@ import {
   BaseEntity,
   BeforeInsert,
   BeforeUpdate,
+  AfterLoad,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -117,9 +118,18 @@ export class User extends BaseEntity {
   })
   removedAt?: Date;
 
+  private tempPassword: string
+
+  @AfterLoad()
+  private loadTempPassword(): void {
+      this.tempPassword = this.password;
+  }
+
   @BeforeInsert()
   @BeforeUpdate()
   setPassword(password?: string) {
-    this.password = hashSync(password ?? this.password, genSaltSync());
+    if (this.tempPassword !== this.password){
+      this.password = hashSync(password ?? this.password, genSaltSync());
+    }
   }
 }

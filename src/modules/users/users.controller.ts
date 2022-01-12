@@ -45,7 +45,10 @@ import { Console } from 'console';
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('users')
 export class UsersController extends BaseController {
-  @ApiOperation({ summary: 'Pobieranie użytkowników', description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}` })
+  @ApiOperation({
+    summary: 'Pobieranie użytkowników',
+    description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}`,
+  })
   @ApiOkResponse({
     type: FindUsersResultDto,
     description: 'Znalezieni użytkownicy',
@@ -61,7 +64,10 @@ export class UsersController extends BaseController {
     return result.users;
   }
 
-  @ApiOperation({ summary: 'Pobieranie użytkownika', description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}` })
+  @ApiOperation({
+    summary: 'Pobieranie użytkownika',
+    description: `Wymagane role: ${Role.ADMIN}, ${Role.EMPLOYEE}`,
+  })
   @ApiOkResponse({
     type: FindUserResultDto,
     description: 'Znaleziony użytkownik',
@@ -74,7 +80,7 @@ export class UsersController extends BaseController {
   async findOne(@Param() params: FindUserParamsDto): Promise<FindUserResultDto> {
     const query = new FindUserQuery(params.id);
     const result = await this.executeQuery<FindUserResult>(query);
-    
+
     return result.user;
   }
 
@@ -91,7 +97,7 @@ export class UsersController extends BaseController {
   async register(@Body() user: UpdateUserBodyDto, @Req() request): Promise<UpdateUserResultDto> {
     const currentUser = request.user;
     console.log(currentUser);
-    if((currentUser.id != user.id) && (currentUser.role != Role.ADMIN)){
+    if (currentUser.id != user.id && currentUser.role != Role.ADMIN) {
       throw new UnauthorizedException();
     }
     const command = new UpdateUserCommand(user);
