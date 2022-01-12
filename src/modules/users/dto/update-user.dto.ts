@@ -2,21 +2,32 @@ import { Role } from '@/modules/users/entities/enums';
 import { UserViewModel } from '@/modules/users/vms';
 import {
   IsEnum,
+  IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
   MaxLength,
 } from '@/shared/utils/class-validator';
+import { TypeNumber } from '@/shared/utils/class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class UpdateUserBodyDto {
+  @IsInt()
+  @IsNotEmpty()
+  @TypeNumber()
+  @ApiProperty({
+    title: 'Identyfikator użytkownika',
+    example: 1,
+  })
+  readonly id: number;
+
   @IsString()
   @IsOptional()
   @IsNotEmpty()
   @MaxLength(50)
   @ApiPropertyOptional({
     title: 'Imię',
-    example: 'Jan',
+    example: 'Adam',
     maxLength: 50,
     nullable: false,
   })
@@ -28,20 +39,20 @@ export class UpdateUserBodyDto {
   @MaxLength(50)
   @ApiPropertyOptional({
     title: 'Nazwisko',
-    example: 'Nowak',
+    example: 'Kowalski',
     maxLength: 50,
     nullable: false,
   })
   lastName?: string;
 
-  @IsEnum(Role)
-  @IsOptional()
-  @ApiPropertyOptional({
-    title: 'Rola',
-    example: Role.CUSTOMER,
-    enum: Role,
-  })
-  role?: Role;
+  // @IsEnum(Role)
+  // @IsOptional()
+  // @ApiPropertyOptional({
+  //   title: 'Rola',
+  //   example: Role.CUSTOMER,
+  //   enum: Role,
+  // })
+  // role?: Role;
 }
 
 export class UpdateUserResultDto {
