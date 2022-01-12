@@ -70,11 +70,12 @@ export class CreateUserBodyDto {
 
 export class CreateUserResultDto {
   @ApiProperty({
-    title: 'Utworzony użytkownik',
+    title: 'E-mail utworzonego użytkownika',
+    example: 'example@library.pl',
   })
-  readonly user: UserViewModel;
+  readonly email: string;
 
   constructor(user: UserViewModel) {
-    this.user = user;
+    this.email = user.email;
   }
 }
