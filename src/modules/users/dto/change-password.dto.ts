@@ -1,10 +1,9 @@
 import { UserViewModel } from '@/modules/users/vms';
-import { Role } from '@/modules/users/entities/enums';
-import { IsInt, IsNotEmpty, IsEnum } from '@/shared/utils/class-validator';
+import { IsInt, IsNotEmpty, IsString, MaxLength, MinLength } from '@/shared/utils/class-validator';
 import { TypeNumber } from '@/shared/utils/class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class ChangeRoleParamsDto {
+export class ChangePasswordParamsDto {
   @IsInt()
   @IsNotEmpty()
   @TypeNumber()
@@ -15,20 +14,23 @@ export class ChangeRoleParamsDto {
   readonly id: number;
 }
 
-export class ChangeRoleBodyDto {
-  @IsEnum(Role)
+export class ChangePasswordBodyDto {
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(8)
+  @MaxLength(32)
   @ApiProperty({
-    title: 'Rola',
-    example: Role.CUSTOMER,
-    default: Role.CUSTOMER,
-    enum: Role,
+    title: 'Hasło',
+    minLength: 8,
+    maxLength: 32,
+    nullable: false,
   })
-  role: Role = Role.CUSTOMER;
+  password: string;
 }
 
-export class ChangeRoleResultDto {
+export class ChangePasswordResultDto {
   @ApiProperty({
-    title: 'Zmodyfikowany użytkownik',
+    title: 'Zmieniono hasło',
   })
   readonly user: UserViewModel;
 
