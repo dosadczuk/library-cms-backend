@@ -1,5 +1,9 @@
 import { JwtAuthGuard, RolesGuard } from '@/modules/auth/guards';
-import { RemoveUserCommand } from '@/modules/users/commands';
+import { 
+  RemoveUserCommand,
+  ChangeRoleCommand,
+  ChangeRoleResult,
+} from '@/modules/users/commands';
 import { User as UserEntity } from '@/modules/users/entities';
 import {
   FindUserParamsDto,
@@ -7,6 +11,9 @@ import {
   FindUsersResultDto,
   RemoveUserParamsDto,
   UpdateUserParamsDto,
+  ChangeRoleParamsDto,
+  ChangeRoleResultDto,
+  ChangeRoleBodyDto,
 } from '@/modules/users/dto';
 import {
   FindUserQuery,
@@ -107,6 +114,29 @@ export class UsersController extends BaseController {
 
     const command = new UpdateUserCommand(params.id, user);
     const result = await this.executeCommand<UpdateUserResult>(command);
+
+    return result.user;
+  }
+
+  @ApiOperation({
+    summary: 'Zmiana roli użytkownika',
+    description: `Metoda pozwala na zmianę roli użytkownika. Wymagane role: ${Role.ADMIN}.`,
+  })
+  @ApiOkResponse({
+    type: ChangeRoleResultDto,
+    description: 'Rola została pomyślnie zmieniona',
+  })
+  @ApiBadRequestResponse({ description: 'Nie udało się zmienić roli użytkownika' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  @Put(':id/role')
+  async changeRole(
+    @Param() params: ChangeRoleParamsDto,
+    @Body() user: ChangeRoleBodyDto,
+  ): Promise<ChangeRoleResultDto> {
+    const command = new ChangeRoleCommand(params.id, user);
+    const result = await this.executeCommand<ChangeRoleResult>(command);
 
     return result.user;
   }
