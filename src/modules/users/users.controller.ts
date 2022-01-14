@@ -1,5 +1,11 @@
 import { JwtAuthGuard, RolesGuard } from '@/modules/auth/guards';
-import { RemoveUserCommand } from '@/modules/users/commands';
+import { 
+  RemoveUserCommand,
+  ChangeRoleCommand,
+  ChangeRoleResult,
+  ChangePasswordCommand,
+  ChangePasswordResult,
+} from '@/modules/users/commands';
 import { User as UserEntity } from '@/modules/users/entities';
 import {
   FindUserParamsDto,
@@ -7,6 +13,12 @@ import {
   FindUsersResultDto,
   RemoveUserParamsDto,
   UpdateUserParamsDto,
+  ChangeRoleParamsDto,
+  ChangeRoleResultDto,
+  ChangeRoleBodyDto,
+  ChangePasswordParamsDto,
+  ChangePasswordResultDto,
+  ChangePasswordBodyDto
 } from '@/modules/users/dto';
 import {
   FindUserQuery,
@@ -107,6 +119,57 @@ export class UsersController extends BaseController {
 
     const command = new UpdateUserCommand(params.id, user);
     const result = await this.executeCommand<UpdateUserResult>(command);
+
+    return result.user;
+  }
+
+  @ApiOperation({
+    summary: 'Zmiana hasła',
+    description: `Metoda pozwala na zmianę hasła użytkownika. Wymagane role: ${Role.ADMIN}/${Role.EMPLOYEE}/${Role.CUSTOMER}.`,
+  })
+  @ApiOkResponse({
+    type: ChangePasswordResultDto,
+    description: 'Hasło zostało pomyślnie zmienione',
+  })
+  @ApiBadRequestResponse({ description: 'Nie udało się zmienić hasła użytkownika' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN, Role.EMPLOYEE, Role.CUSTOMER)
+  @Put(':id/password')
+  async changePassword(
+    @Param() params: ChangePasswordParamsDto,
+    @Body() user: ChangePasswordBodyDto,
+    @User() auth: UserEntity,
+  ): Promise<ChangePasswordResultDto> {
+    if (auth.id !== params.id && auth.role !== Role.ADMIN) {
+      throw new UnauthorizedException(); // zwykły użytkownik może zmieniać tylko swoje dane
+    }
+
+    const command = new ChangePasswordCommand(params.id, user);
+    const result = await this.executeCommand<ChangePasswordResult>(command);
+
+    return result.user;
+  }
+
+  @ApiOperation({
+    summary: 'Zmiana roli użytkownika',
+    description: `Metoda pozwala na zmianę roli użytkownika. Wymagane role: ${Role.ADMIN}.`,
+  })
+  @ApiOkResponse({
+    type: ChangeRoleResultDto,
+    description: 'Rola została pomyślnie zmieniona',
+  })
+  @ApiBadRequestResponse({ description: 'Nie udało się zmienić roli użytkownika' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  @Put(':id/role')
+  async changeRole(
+    @Param() params: ChangeRoleParamsDto,
+    @Body() user: ChangeRoleBodyDto,
+  ): Promise<ChangeRoleResultDto> {
+    const command = new ChangeRoleCommand(params.id, user);
+    const result = await this.executeCommand<ChangeRoleResult>(command);
 
     return result.user;
   }
