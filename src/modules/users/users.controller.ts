@@ -1,5 +1,5 @@
 import { JwtAuthGuard, RolesGuard } from '@/modules/auth/guards';
-import { 
+import {
   RemoveUserCommand,
   ChangeRoleCommand,
   ChangeRoleResult,
@@ -18,7 +18,7 @@ import {
   ChangeRoleBodyDto,
   ChangePasswordParamsDto,
   ChangePasswordResultDto,
-  ChangePasswordBodyDto
+  ChangePasswordBodyDto,
 } from '@/modules/users/dto';
 import {
   FindUserQuery,

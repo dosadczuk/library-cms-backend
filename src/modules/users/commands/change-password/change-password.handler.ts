@@ -8,7 +8,9 @@ import { UserViewModel } from '@/modules/users/vms';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 
 @CommandHandler(ChangePasswordCommand)
-export class ChangePasswordHandler implements ICommandHandler<ChangePasswordCommand, ChangePasswordResult> {
+export class ChangePasswordHandler
+  implements ICommandHandler<ChangePasswordCommand, ChangePasswordResult>
+{
   constructor(private readonly repository: UserRepository) {}
 
   async execute(command: ChangePasswordCommand): Promise<ChangePasswordResult> {
