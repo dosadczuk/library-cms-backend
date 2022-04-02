@@ -1,44 +1,32 @@
-## Description
+# LibraryCMS
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+[Nest](https://github.com/nestjs/nest) framework with TypeScript.
 
-## Installation
+## Wymagania
 
-```bash
-$ npm install
-```
+* Node.js
+* NPM
 
-## Running the app
+Informacje o wersjach dostępne w _package.json_.
 
-```bash
-# development
-$ npm run start
+## Instalacja
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-
-# generate migration
-$ npm run migration:generate -- <migration_name>
-
-# run migration
-$ npm run migration:run
-
-# revert migration
-$ npm run migration:revert
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
+1. Klonujemy repozytorium na swój komputer
+2. Przechodzimy do repozytorium i instalujemy zależności:
+   ```shell
+   npm install
+   ```
+3. Kopiujemy plik .env.dist i zapisujemy pod nazwą .env
+    1. można użyć przykładowych wartości lub wpisać własne
+4. Wykorzystując Docker, budujemy i uruchamiamy aplikację:
+   ```shell
+   npm docker:build
+   ```
+5. Uruchamiamy migrację bazy danych:
+   ```shell
+   npm run migration:run
+   ```
+6. Zasilamy bazę danych przykładowymi danymi:
+   ```shell
+   npm run seeder:run
+   ```
