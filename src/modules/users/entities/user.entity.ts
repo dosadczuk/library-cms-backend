@@ -1,4 +1,4 @@
-import { Borrow } from '@/modules/books/entities';
+import { Borrow, Rating } from '@/modules/books/entities'
 import { Role } from '@/modules/users/entities/enums';
 import { genSaltSync, hashSync } from 'bcryptjs';
 import {
@@ -93,6 +93,11 @@ export class User extends BaseEntity {
     nullable: true,
   })
   borrows: Borrow[];
+
+  @OneToMany(() => Rating, (rating) => rating.user, {
+    nullable: true,
+  })
+  ratings: Rating[];
 
   @CreateDateColumn({
     name: 'created_at',

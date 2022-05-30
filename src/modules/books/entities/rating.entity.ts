@@ -1,4 +1,5 @@
 import { Book } from '@/modules/books/entities/book.entity';
+import { User } from '@/modules/users/entities'
 import {
   BaseEntity,
   Column,
@@ -53,6 +54,23 @@ export class Rating extends BaseEntity {
     update: false,
   })
   bookId: number;
+
+  @ManyToOne(() => User, (user) => user.ratings, {
+    eager: true,
+    cascade: false,
+    nullable: false,
+  })
+  @JoinColumn({
+    name: 'user_id',
+    referencedColumnName: 'id',
+  })
+  user: User;
+
+  @Column({
+    name: 'user_id',
+    update: false,
+  })
+  userId: number;
 
   @CreateDateColumn({
     name: 'created_at',
