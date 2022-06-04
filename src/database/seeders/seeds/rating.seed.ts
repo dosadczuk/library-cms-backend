@@ -1,58 +1,18 @@
+import { getRandomBook } from '@/database/seeders/seeds/book.seed';
+import { getRandomUser } from '@/database/seeders/seeds/user.seed';
 import { Rating } from '@/modules/books/entities';
+import { randomNumber } from '@/utils/random';
+import { faker } from '@faker-js/faker';
 
-const samples: Partial<Rating>[] = [
-  {
-    bookId: 1,
-    userId: 1,
-    value: '5',
-    comment: 'Polecam!1!!!',
-  },
-  {
-    bookId: 1,
-    userId: 2,
-    value: '4',
-  },
-  {
-    bookId: 1,
-    userId: 3,
-    value: '4.5',
-  },
-  {
-    bookId: 2,
-    userId: 1,
-    value: '4',
-  },
-  {
-    bookId: 2,
-    userId: 2,
-    value: '4',
-  },
-  {
-    bookId: 2,
-    userId: 3,
-    value: '2.5',
-    comment: 'Bez komentarza',
-  },
-  {
-    bookId: 3,
-    userId: 1,
-    value: '4',
-  },
-  {
-    bookId: 3,
-    userId: 2,
-    value: '2',
-    comment: 'Nie polecam !!!',
-  },
-];
-
-export const RatingSeed: Rating[] = samples.map((it, idx) => {
+export const RatingSeed: Rating[] = Array.from({ length: 7500 }, (_, i) => {
   const rating = new Rating();
-  rating.id = idx + 1;
-  rating.bookId = it.bookId;
-  rating.userId = it.userId;
-  rating.value = it.value;
-  rating.comment = it.comment;
+  rating.id = i + 1;
+  rating.bookId = getRandomBook().id;
+  rating.userId = getRandomUser().id;
+  rating.value = randomNumber(5, 1).toString();
+  if (i % 3 === 0) {
+    rating.comment = faker.commerce.productDescription();
+  }
 
   return rating;
 });

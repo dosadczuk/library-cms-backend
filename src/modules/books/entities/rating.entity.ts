@@ -1,5 +1,5 @@
 import { Book } from '@/modules/books/entities/book.entity';
-import { User } from '@/modules/users/entities'
+import { User } from '@/modules/users/entities';
 import {
   BaseEntity,
   Column,

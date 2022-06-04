@@ -1,4 +1,4 @@
-import { Genre } from '@/modules/books/entities/genre.entity';
+import { Genre } from '@/modules/books/entities';
 import { randomNumber } from '@/utils/random';
 
 const samples: string[] = [
@@ -12,20 +12,14 @@ const samples: string[] = [
   'edukacyjny',
 ];
 
-export const GenreSeed: Genre[] = samples.map((it, idx) => {
+export const GenreSeed: Genre[] = samples.map((v, i) => {
   const genre = new Genre();
-  genre.id = idx + 1;
-  genre.value = it;
+  genre.id = i + 1;
+  genre.value = v;
 
   return genre;
 });
 
-export const randomGenre = (): Genre => {
-  const idx = randomNumber(samples.length - 1, 0);
-
-  const genre = new Genre();
-  genre.id = idx + 1;
-  genre.value = samples[idx];
-
-  return genre;
+export const getRandomGenre = (): Genre => {
+  return GenreSeed.at(randomNumber(GenreSeed.length - 1, 0));
 };

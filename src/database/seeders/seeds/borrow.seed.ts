@@ -1,29 +1,14 @@
+import { getRandomCopy } from '@/database/seeders/seeds/copy.seed';
+import { getRandomUser } from '@/database/seeders/seeds/user.seed';
 import { Borrow } from '@/modules/books/entities';
+import { faker } from '@faker-js/faker';
 
-const samples: Partial<Borrow>[] = [
-  {
-    dateFrom: new Date(2021, 12, 20, 12, 20),
-    copyId: 1,
-    userId: 1,
-  },
-  {
-    dateFrom: new Date(2021, 12, 13, 12, 10),
-    copyId: 2,
-    userId: 1,
-  },
-  {
-    dateFrom: new Date(2021, 12, 20, 20, 4),
-    copyId: 3,
-    userId: 1,
-  },
-];
-
-export const BorrowSeed: Borrow[] = samples.map((it, idx) => {
+export const BorrowSeed: Borrow[] = Array.from({ length: 10000 }, (_, i) => {
   const borrow = new Borrow();
-  borrow.id = idx + 1;
-  borrow.dateFrom = it.dateFrom;
-  borrow.copyId = it.copyId;
-  borrow.userId = it.userId;
+  borrow.id = i + 1;
+  borrow.copyId = getRandomCopy().id;
+  borrow.userId = getRandomUser().id;
+  borrow.dateFrom = faker.date.past(10);
 
   return borrow;
 });

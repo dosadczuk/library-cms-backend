@@ -1,7 +1,7 @@
-import { Language } from '@/modules/books/entities/language.entity';
+import { Language } from '@/modules/books/entities';
 import { randomNumber } from '@/utils/random';
 
-const samples: string[] = [
+const samples = [
   'polski',
   'angielski',
   'niemiecki',
@@ -11,20 +11,14 @@ const samples: string[] = [
   'japoński',
 ];
 
-export const LanguageSeed: Language[] = samples.map((it, idx) => {
+export const LanguageSeed: Language[] = samples.map((v, i) => {
   const language = new Language();
-  language.id = idx + 1;
-  language.value = it;
+  language.id = i + 1;
+  language.value = v;
 
   return language;
 });
 
-export const randomLanguage = (): Language => {
-  const idx = randomNumber(samples.length - 1, 0);
-
-  const language = new Language();
-  language.id = idx + 1;
-  language.value = samples[idx];
-
-  return language;
+export const getRandomLanguage = (): Language => {
+  return LanguageSeed.at(randomNumber(LanguageSeed.length - 1, 0));
 };

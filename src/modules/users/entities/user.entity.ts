@@ -1,4 +1,4 @@
-import { Borrow, Rating } from '@/modules/books/entities'
+import { Borrow, Rating } from '@/modules/books/entities';
 import { Role } from '@/modules/users/entities/enums';
 import { genSaltSync, hashSync } from 'bcryptjs';
 import {

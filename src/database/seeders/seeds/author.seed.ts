@@ -1,75 +1,35 @@
-import { Author } from '@/modules/books/entities/author.entity';
+import { Author } from '@/modules/books/entities';
 import { randomNumber } from '@/utils/random';
+import { faker, Gender } from '@faker-js/faker';
 
-const samples: Partial<Author>[] = [
-  {
-    firstName: 'Antoni',
-    lastName: 'Nowak',
-  },
-  {
-    firstName: 'Antoni',
-    lastName: 'Kowalski',
-  },
-  {
-    firstName: 'Jan',
-    lastName: 'Wiśniewski',
-  },
-  {
-    firstName: 'Jan',
-    lastName: 'Kamiński',
-  },
-  {
-    firstName: 'Aleksander',
-    lastName: 'Nowak',
-  },
-  {
-    firstName: 'Aleksander',
-    lastName: 'Kamiński',
-  },
-  {
-    firstName: 'Jakub',
-    lastName: 'Kowalski',
-  },
-  {
-    firstName: 'Jakub',
-    lastName: 'Wiśniewski',
-  },
-];
+export const AuthorSeed: Author[] = Array.from({ length: 200 }, (_, i) => {
+  const gender = i % 3 === 0 ? Gender.female : Gender.male;
 
-export const AuthorSeed: Author[] = samples.map((it, idx) => {
   const author = new Author();
-  author.id = idx + 1;
-  author.firstName = it.firstName;
-  author.lastName = it.lastName;
+  author.id = i + 1;
+  author.firstName = faker.name.firstName(gender);
+  author.lastName = faker.name.lastName(gender);
 
   return author;
 });
 
-export const randomAuthor = (): Author => {
-  const idx = randomNumber(samples.length - 1, 0);
-  const data = samples[idx];
-
-  const author = new Author();
-  author.id = idx + 1;
-  author.firstName = data.firstName;
-  author.lastName = data.lastName;
-
-  return author;
+export const getRandomAuthor = (): Author => {
+  return AuthorSeed.at(randomNumber(AuthorSeed.length - 1, 0));
 };
 
-export const randomAuthors = (): Author[] => {
+export const getRandomAuthors = (): Author[] => {
   const count = randomNumber(3, 1);
 
-  const authors: Author[] = [];
+  const authors = new Map<number, Author>();
+  for (let i = 0; i < count; i++) {
+    let author: Author;
 
-  for (let idx = 0; idx < count; idx++) {
-    let author = randomAuthor();
-    while (authors.find((it) => it.id === author.id)) {
-      author = randomAuthor();
-    }
+    do {
+      author = getRandomAuthor();
+    } while (authors.has(author.id));
 
-    authors.push(author);
+    authors.set(author.id, author);
   }
 
-  return authors;
+  return Array.from(authors.values());
 };

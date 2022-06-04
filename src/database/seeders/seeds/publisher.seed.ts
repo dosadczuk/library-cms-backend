@@ -1,29 +1,15 @@
-import { Publisher } from '@/modules/books/entities/publisher.entity';
+import { Publisher } from '@/modules/books/entities';
 import { randomNumber } from '@/utils/random';
+import { faker } from '@faker-js/faker';
 
-const samples: string[] = [
-  'Tajfuny',
-  'Wydawnictwo Czarne',
-  'Wydawnictwo Karakter',
-  'Wydawnictwo w Podwórku',
-  'Krytyka Polityczna',
-  'Big Book Cafe',
-];
-
-export const PublisherSeed: Publisher[] = samples.map((it, idx) => {
+export const PublisherSeed: Publisher[] = Array.from({ length: 100 }, (_, i) => {
   const publisher = new Publisher();
-  publisher.id = idx + 1;
-  publisher.name = it;
+  publisher.id = i + 1;
+  publisher.name = faker.unique(faker.company.companyName, null, { maxRetries: 200 });
 
   return publisher;
 });
 
-export const randomPublisher = (): Publisher => {
-  const idx = randomNumber(samples.length - 1, 0);
-
-  const publisher = new Publisher();
-  publisher.id = idx + 1;
-  publisher.name = samples[idx];
-
-  return publisher;
+export const getRandomPublisher = (): Publisher => {
+  return PublisherSeed.at(randomNumber(PublisherSeed.length - 1, 0));
 };

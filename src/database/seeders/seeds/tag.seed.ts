@@ -1,46 +1,32 @@
-import { Tag } from '@/modules/books/entities/tag.entity';
+import { Tag } from '@/modules/books/entities';
 import { randomNumber } from '@/utils/random';
+import { faker } from '@faker-js/faker';
 
-const samples: string[] = [
-  'historia',
-  'dramat',
-  'przygoda',
-  'podróże',
-  'komedia',
-  'powieść',
-  'XX wiek',
-];
-
-export const TagSeed: Tag[] = samples.map((it, idx) => {
+export const TagSeed: Tag[] = Array.from({ length: 150 }, (_, i) => {
   const tag = new Tag();
-  tag.id = idx + 1;
-  tag.value = it;
+  tag.id = i + 1;
+  tag.value = faker.unique(faker.word.verb, null, { maxRetries: 300 });
 
   return tag;
 });
 
-export const randomTag = (): Tag => {
-  const idx = randomNumber(samples.length - 1, 0);
-
-  const tag = new Tag();
-  tag.id = idx + 1;
-  tag.value = samples[idx];
-
-  return tag;
+export const getRandomTag = (): Tag => {
+  return TagSeed.at(randomNumber(TagSeed.length - 1, 0));
 };
 
-export const randomTags = (): Tag[] => {
+export const getRandomTags = (): Tag[] => {
   const count = randomNumber(5, 2);
 
-  const tags: Tag[] = [];
-  for (let idx = 0; idx < count; idx++) {
-    let tag = randomTag();
-    while (tags.find((it) => it.id === tag.id)) {
-      tag = randomTag();
-    }
+  const tags = new Map<number, Tag>();
+  for (let i = 0; i < count; i++) {
+    let tag: Tag;
 
-    tags.push(tag);
+    do {
+      tag = getRandomTag();
+    } while (tags.has(tag.id));
+
+    tags.set(tag.id, tag);
   }
 
-  return tags;
+  return Array.from(tags.values());
 };

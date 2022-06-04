@@ -1,53 +1,39 @@
-import { randomAuthors } from '@/database/seeders/seeds/author.seed';
-import { randomGenre } from '@/database/seeders/seeds/genre.seed';
-import { randomLanguage } from '@/database/seeders/seeds/language.seed';
-import { randomPublisher } from '@/database/seeders/seeds/publisher.seed';
-import { randomTags } from '@/database/seeders/seeds/tag.seed';
-import { Book } from '@/modules/books/entities/book.entity';
-import { BookType } from '@/modules/books/entities/enums/book-type.enum';
+import { getRandomAuthors } from '@/database/seeders/seeds/author.seed';
+import { getRandomGenre } from '@/database/seeders/seeds/genre.seed';
+import { getRandomLanguage } from '@/database/seeders/seeds/language.seed';
+import { getRandomPublisher } from '@/database/seeders/seeds/publisher.seed';
+import { getRandomTags } from '@/database/seeders/seeds/tag.seed';
+import { Book } from '@/modules/books/entities';
+import { BookType } from '@/modules/books/entities/enums';
 import { randomNumber } from '@/utils/random';
+import { faker } from '@faker-js/faker';
 
-const titles = [
-  'Niewiadoma Elvisa',
-  'Bogactwo McDonalda',
-  'Precjoza Kolumba',
-  'Hasło Washingtona',
-  'Szarada Newtona',
-  'Tajemnica Disneya',
-  'Enigma Dionizosa',
-  'Fortuna Billa Gatesa',
-  'Skarb Afrodyty',
-  'Zagadka Neila Armstronga',
-  'Kod Gutenberga',
-  'Klejnot Forda',
-  'Szyfr Einsteina',
-];
+export const BookSeed: Book[] = Array.from({ length: 1000 }, (_, i) => {
+  const book = new Book();
+  book.id = i + 1;
+  book.isbn = faker.random.numeric(13, { allowLeadingZeros: true });
+  book.type = randomBookType();
+  book.title = faker.unique(faker.commerce.productName, null, { maxRetries: 2000 });
+  book.description = faker.commerce.productDescription();
+  book.issueDate = faker.date.past(40);
+  book.publisher = getRandomPublisher();
+  book.authors = getRandomAuthors();
+  book.genre = getRandomGenre();
+  book.language = getRandomLanguage();
+  book.pages = randomNumber(1000, 50);
+  book.details = {};
+  book.tags = getRandomTags();
 
-export const randomBookId = (): number => {
-  return randomNumber(titles.length - 1, 0) + 1;
+  return book;
+});
+
+export const getRandomBook = (): Book => {
+  return BookSeed.at(randomNumber(BookSeed.length - 1, 0));
 };
 
-const randomBookType = (): BookType => {
+function randomBookType(): BookType {
   const bookTypes = Object.values(BookType);
   const randomIdx = randomNumber(bookTypes.length - 1, 0);
 
   return bookTypes[randomIdx] as BookType;
-};
-
-export const BookSeed: Book[] = Array.from({ length: 10 }, (_, idx) => {
-  const book = new Book();
-  book.id = idx + 1;
-  book.isbn = String(Math.floor(Math.random() * 10 ** 13));
-  book.type = randomBookType();
-  book.title = titles.pop();
-  book.issueDate = new Date(+new Date() - Math.floor(Math.random() * 10 ** 12));
-  book.publisher = randomPublisher();
-  book.authors = randomAuthors();
-  book.genre = randomGenre();
-  book.language = randomLanguage();
-  book.pages = randomNumber(1000, 50);
-  book.details = {};
-  book.tags = randomTags();
-
-  return book;
-});
+}
